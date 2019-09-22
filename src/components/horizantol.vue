@@ -1,0 +1,122 @@
+<template>
+  <div class="content" :style="{transform: `translateX(calc((-80px - 100%) * ${page})`}">
+    <component
+      v-if="Number.isInteger(current.level)"
+      :is="`h${current.level + 1}`"
+    >{{current.title}}</component>
+    <div class="paragraphs" v-html="current.content" ref="content"></div>
+  </div>
+</template>
+
+<script>
+export default {
+  props: ["sections"],
+
+  data: () => ({
+    section: 0,
+    page: 0,
+    pageCount: 1
+  }),
+
+  computed: {
+    current() {
+      return this.sections[this.section] || {};
+    },
+
+    progress() {
+      const step = 1 / this.sections.length;
+      const { page, pageCount, section } = this;
+
+      return ((page + 1) / pageCount + section) * step;
+    }
+  },
+
+  updated() {
+    const { children } = this.$refs.content;
+    const last = children[children.length - 1];
+
+    if (!last) {
+      this.pageCount = 1;
+      return;
+    }
+
+    const { width } = getComputedStyle(last);
+    const widthNumber = parseInt(width) + 80;
+    this.pageCount = Math.floor(last.offsetLeft / widthNumber) + 1;
+  },
+
+  methods: {
+    emitProgress() {
+      Promise.resolve().then(() => this.$emit("read", this.progress));
+    },
+
+    nextSection() {
+      if (this.section >= this.sections.length - 1) {
+        return;
+      }
+
+      this.section += 1;
+      this.page = 0;
+    },
+
+    prevSection() {
+      if (this.section < 1) {
+        return Promise.resolve();
+      }
+
+      this.section -= 1;
+      this.page = 10000;
+      return Promise.resolve().then(() => (this.page = this.pageCount - 1));
+    },
+
+    next() {
+      if (this.page + 1 === this.pageCount) {
+        this.nextSection();
+      } else {
+        this.page += 1;
+      }
+      this.emitProgress();
+    },
+
+    prev() {
+      if (this.page < 1) {
+        this.prevSection().then(this.emitProgress);
+        return;
+      }
+
+      this.page -= 1;
+      this.emitProgress();
+    }
+  }
+};
+</script>
+
+<style scoped>
+.content {
+  width: 100%;
+  column-width: 620px;
+  column-gap: 80px;
+  box-sizing: border-box;
+  height: 100%;
+  line-height: 1.8;
+}
+
+@media only screen and (max-width: 768px) {
+  .content {
+    column-width: calc(100vw - 80px);
+  }
+}
+</style>
+
+<style>
+.paragraphs > * {
+  text-indent: 2em !important;
+  margin: 0.8rem 0;
+}
+
+@media only screen and (max-width: 768px) {
+  .paragraphs > * {
+    text-indent: 0 !important;
+  }
+}
+</style>

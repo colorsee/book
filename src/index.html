@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<meta name="Keywords" content="" />
+		<meta http-equiv="Pragma" content="no-cache" />
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<link rel="stylesheet" href="css/swiper.min.css" />
+		<link rel="stylesheet" href="css/style.css" />
+		<link rel="stylesheet" href="css/iconfont.css" />
+		<title>图书</title>
+	</head>
+
+	<body>
+		<div class="box" id="app">
+			<div class="box_l">
+				<div class="out_read">
+					<strong>&lt;</strong>
+					<span>退出阅读</span>
+				</div>
+				<div class="this_bok">
+					<div class="tit">{{baseinfo.title}}</div>
+					<div class="money" :style="{backgroundImage: 'url(' + baseinfo.cover_src + ')' }">
+						<span>￥{{baseinfo.price}}</span>
+					</div>
+					<div class="buy_but">购买</div>
+					<div class="colect_but" @click='collection'>收藏</div>
+				</div>
+				<div class="about_bok">
+					<div class="txt"><span>分享（100）</span></div>
+					<div class="txt"><span>收藏（100）</span></div>
+				</div>
+				<div class="erm_box">
+					<span>扫一扫手机阅读</span>
+					<img src="img/ewm.png" />
+				</div>
+				<div class="erm_box">
+					<span>手机APP下载</span>
+					<img src="img/ewm.png" />
+				</div>
+				<div class="close_but">
+					<span>&nbsp;</span>
+				</div>
+			</div>
+			<div class="box_r">
+				<h3>大家都在看</h3>
+				<div class="swiper-container">
+					<div class="swiper-wrapper">
+						<div class="swiper-slide">
+							<div class="ment_list">
+								<a href="">
+									<div class="pic" style="background-image: url(img/bok.jpg);"><span>免费</span></div>
+									<div class="txt">这里时第一本推荐</div>
+								</a>
+							</div>
+							<div class="ment_list">
+								<a href="">
+									<div class="pic" style="background-image: url(img/bok.jpg);"><span>免费</span></div>
+									<div class="txt">这里时第一本推荐</div>
+								</a>
+							</div>
+							<div class="ment_list">
+								<a href="">
+									<div class="pic" style="background-image: url(img/bok.jpg);"><span>免费</span></div>
+									<div class="txt">世界十大古奇迹之谜推荐</div>
+								</a>
+							</div>
+						</div>
+						<div class="swiper-slide">
+							<div class="ment_list">
+								<a href="">
+									<div class="pic" style="background-image: url(img/bok.jpg);"><span>免费</span></div>
+									<div class="txt">这里时第一本推荐</div>
+								</a>
+							</div>
+							<div class="ment_list">
+								<a href="">
+									<div class="pic" style="background-image: url(img/bok.jpg);"><span>免费</span></div>
+									<div class="txt">这里时第一本推荐</div>
+								</a>
+							</div>
+							<div class="ment_list">
+								<a href="">
+									<div class="pic" style="background-image: url(img/bok.jpg);"><span>免费</span></div>
+									<div class="txt">世界十大古奇迹之谜推荐</div>
+								</a>
+							</div>
+						</div>
+					</div>
+					<div class="swiper-pagination"></div>
+				</div>
+				<div class="close_but">
+					<span>&nbsp;</span>
+				</div>
+			</div>
+			<div class="book">
+				<div class="bok_page_num">{{progress | percent}}</div>
+				<reader
+					ref="reader"
+					class="bok_item scrol_none"
+					id="content"
+					:items="content_list"
+					:info="baseinfo"
+					:bookmarks="lmarkList"
+					@read="handleRead"
+				></reader>
+				<!-- <div class="bok_item scrol_none" id="content">
+					<div class="scrollview">
+						<div class="bok_item_list act">
+							<p><img :style="{backgroundImage: 'url(' + baseinfo.cover_src + ')' }" :src="baseinfo.cover_src" /></p>
+						</div>
+						<div :id="getArticleId(item)" class="bok_item_list" v-for="(item,index) in content_list" :key="item.id">
+							<h4 align="center">{{item.title}}</h4>
+							<p v-html="item.content"></p>
+						</div>
+						
+					</div>
+				</div> -->
+				<div class="bok_mark">&#xe62e;</div>
+				<div class="monse_thr">
+					<div class="monse_thr_list">
+						<span class="l">划线</span>
+						<span class="c">复制</span>
+						<span class="r">批注</span>
+					</div>
+					<div class="gary bot"></div>
+					<div class="withe bot"></div>
+					<!--<iframe src="monse.html"></iframe>-->
+				</div>
+				<div class="monse_do">
+					<div class="text">
+						<textarea></textarea>
+						<p class="chose">
+							<input type="checkbox" name="" id="" value="" />
+							<span>仅自己可见</span>
+						</p>
+						<input class="ok" type="button" id="" value="确认" />
+						<input class="cance" type="button" id="" value="取消" />
+					</div>
+					<div class="gary top"></div>
+					<div class="withe top"></div>
+				</div>
+				<div class="book_topl">
+					<div class="book_topl_but">
+						<span class="bt_1" title="显示设置" @click="handleControlShow('isSettingsShow')">&#xe635;</span>
+						<span class="bt_2" title="目录">&#xe64e;</span>
+						<span class="bt_3" title="内容检索">&#xe62e;</span>
+						<span class="bt_4" title="整页复制">&#xe64e;</span>
+						<span class="bt_5" title="其他格式">&#xe635;</span>
+					</div>
+				</div>
+				<div class="book_topr">
+					<div class="book_topr_but">
+						<span class="bt_6" title="书签" @click='lmark'>&#xe696;</span>
+						<span class="bt_7" title="我的划线/批注" @click='lscribling(0)'>&#xe633;</span>
+						<span class="bt_8" title="全部批注">&#xe633;</span>
+					</div>
+				</div>
+				<div class="book_botomr">
+					<span class="prve" @click="prev()">上一页</span>
+					<span class="next" @click="next()">下一页</span>
+					<input class="num" type="tel" name="" id="" placeholder="%" />
+					<input class="but" type="button" id="" value="跳转" />
+				</div>
+			
+				<div class="bok_Catalog scroll_book">
+					<div class="scrollview">
+						<h3>目录</h3>
+						<div class="bok_Catalog_list">
+							<div class="txt_indet_0" v-for="(item,index) in baseinfo.catalog_list" :key="item.id">
+								<div class="ready_buy">
+									<p>
+										<a href="#" @click.prevent='loadArticle(item.id)'>{{item.title}}</a><i></i>
+										<a href="">0%</a>
+									</p>
+								</div>
+								<div class="txt_indet_1" v-for="(bitem,index) in item.child" :key="bitem.id">
+									<div class="need_buy">
+										<p>
+											<a href="" @click.prevent='loadArticle(bitem.id)'>{{bitem.title}}</a><i></i>
+											<a href="">未购买</a>
+										</p>
+									</div>
+									
+									<div class="txt_indet_2"  v-for="(citem,index) in bitem.child" :key="citem.id">
+										<div class="need_buy">
+											<p>
+												<a href="" @click.prevent='showArticle(bitem.id,citem.id)'>{{citem.title}}</a><i></i>
+												<a href="">未购买</a>
+											</p>
+										</div>
+										<div class="txt_indet_3" v-for="(ditem,index) in citem.child" :key="ditem.id">
+											<div class="need_buy">
+												<p>
+													<a href="" @click.prevent='showArticle(bitem.id,ditem.id)'>{{ditem.title}}</a><i></i>
+													<a href="">未购买</a>
+												</p>
+											</div>
+										</div>
+									</div>
+
+								</div>
+							</div>
+						
+						
+						</div>
+					</div>
+				</div>
+				<div class="search_box scroll_book">
+					<div class="search_box_h">
+						<h3>全文搜索</h3>
+						<div class="close">&Chi;</div>
+						<div class="search_into">
+							<input type="text" name="" id="" placeholder="输入要检索的内容" />
+						</div>
+						<div class="search_list">
+							<div class="scrollview">
+								<h4>搜索结果<span>10</span>个</h4>
+								<div class="search_list_item">
+									<div class="t">
+										<span>这里是章节的名称这里是章节的名称这里是章节的名称</span>
+										<span>15</span>
+									</div>
+									<div class="b">...,内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容 容内容内容内容内容
+									</div>
+								</div>
+								<div class="search_list_item">
+									<div class="t">
+										<span>这里是章节的名称</span>
+										<span>15</span>
+									</div>
+									<div class="b">...,内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容</div>
+								</div>
+								<div class="search_list_item">
+									<div class="t">
+										<span>这里是章节的名称</span>
+										<span>15</span>
+									</div>
+									<div class="b">...,内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容</div>
+								</div>
+								<div class="search_list_item">
+									<div class="t">
+										<span>这里是章节的名称</span>
+										<span>15</span>
+									</div>
+									<div class="b">...,内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容</div>
+								</div>
+								<div class="search_list_item">
+									<div class="t">
+										<span>这里是章节的名称</span>
+										<span>15</span>
+									</div>
+									<div class="b">...,内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容</div>
+								</div>
+								<div class="search_list_item">
+									<div class="t">
+										<span>这里是章节的名称</span>
+										<span>15</span>
+									</div>
+									<div class="b">...,内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容</div>
+								</div>
+								<div class="search_list_item">
+									<div class="t">
+										<span>这里是章节的名称</span>
+										<span>15</span>
+									</div>
+									<div class="b">...,内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容</div>
+								</div>
+								<div class="search_list_item">
+									<div class="t">
+										<span>这里是章节的名称</span>
+										<span>15</span>
+									</div>
+									<div class="b">...,内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="change_form scroll_book">
+					<h3>其他格式阅读</h3>
+					<div class="PDF_read" v-show="baseinfo.read_pdf == '0' ? false:true">PDF格式</div>
+					<div class="EPUB_read" v-show="baseinfo.read_epub == '0'?false:true">EPUB格式</div>
+				</div>
+				<div class="mypsg mypsg_1 scroll_book">
+					<div class="scrollview">
+						<h3>我的书签</h3>
+						<div class="mypsg_1_list_box" v-for="(item,index) in lmarkList" :key="item.id">
+							<div class="tit">{{item.excerpt}}</div>
+							<div class="mypsg_1_list">
+								<div class="txt">这里是内容这里是内容这里是内容这里是内容这里是内容这里是内容这这里是内容这里是内容这里是内容这里是内容这里是内容这里是内容这里是内容这里是内容这里是内容这里是内容这里是内容这里是内容里是内容这里是内容这里是内容这里是内容这里是内容这里是内容</div>
+								<div class="time">
+									<span class="spet">进度：13%</span>
+									<span class="open">点击打开此页</span>
+									<span class="del">删除</span>
+									<span class="tmr">2019-09-03 11:43:15</span>
+								</div>
+							</div>
+							<div class="mypsg_1_list">
+								<div class="txt">这里是内容这里是内容这里是内容这里是内容这里是内容这里是内容这里是内容这里是内容这里是内容这里是内容这里是内容这里是内容这里是内容这里是内容</div>
+								<div class="time">
+									<span class="spet">进度：13%</span>
+									<span class="open">点击打开此页</span>
+									<span class="del">删除</span>
+									<span class="tmr">2019-09-03 11:43:15</span>
+								</div>
+							</div>
+						</div>
+						
+					</div>
+				</div>
+				<div class="mypsg mypsg_2 scroll_book">
+					<div class="scrollview">
+						<h3>我的划线/批注</h3>
+						<div class="mypsg_rice mypsg_2_spet">
+							<span class="bg_gary" @click='lscribling(0)'>按批注时间</span>
+							<span @click='lscribling(1)'>按内容顺序</span>
+						</div>
+						<div class="mypsg_2_list" v-for="(item,index) in lscribingList" :key="item.id">
+							<div class="t">{{item.excerpt}}</div>
+							<div class="c"><span>{{item.note}}</span><i></i></div>
+							<div class="b">
+								<span>赞 10</span>
+								<span>转发 10</span>
+								<span>进度：{{item.percent}}%</span>
+								<span class="open">打开此页</span>
+								<span class="set">修改</span>
+								<span class="del" @click='delete_scribing(item)'>删除</span>
+								<span class="tmr">{{item.create_time}}</span>
+							</div>
+						</div>
+						
+					</div>
+				</div>
+				<div class="mypsg mypsg_3 scroll_book">
+					<div class="scrollview">
+						<h3>全部批注</h3>
+						<div class="mypsg_rice mypsg_3_spet">
+							<span class="bg_gary">按批注时间</span>
+							<span>按内容顺序</span>
+						</div>
+						<div class="mypsg_3_list">
+							<div class="t">
+								<span>明哥的批注</span>
+								<span>2019-09-03 14：40：50</span>
+							</div>
+							<div class="c">
+								<p>这里是划线的内容这里是划线的内容这里是划线的内容这里是划线的内容，这里是划线的内容这里是划线的内容这里是划线的内容</p>
+								<p><span>这里是我之前批注的内容这里是我之前批注的内容....这里是我之前批注的内容....这里是我之前批注的内容...这里是我之前批注的内容...这里是我之前批注的内容...这里是我之前批注的内容...这里是我之前批注的内容</span><i></i></p>
+							</div>
+							<div class="b">
+								<span>赞10</span>
+								<span>转发10</span>
+								<span>进度：13%</span>
+								<span class="open">打开此页</span>
+							</div>
+						</div>
+						<div class="mypsg_3_list">
+							<div class="t">
+								<span>明哥的批注</span>
+								<span>2019-09-03 14：40：50</span>
+							</div>
+							<div class="c">
+								<p>这里是划线的内容这里是划线的内容这里是划线的内容这里是划线的内容，这里是划线的内容这里是划线的内容这里是划线的内容</p>
+								<p><span>这里是我之前批注的内容这里是我之前批注的内容....这里是我之前批注的内容....这里是我之前批注的内容...这里是我之前批注的内容...这里是我之前批注的内容...这里是我之前批注的内容...这里是我之前批注的内容</span><i></i></p>
+							</div>
+							<div class="b">
+								<span>赞10</span>
+								<span>转发10</span>
+								<span>进度：13%</span>
+								<span class="open">打开此页</span>
+							</div>
+						</div>
+						<div class="mypsg_3_list">
+							<div class="t">
+								<span>明哥的批注</span>
+								<span>2019-09-03 14：40：50</span>
+							</div>
+							<div class="c">
+								<p>这里是划线的内容这里是划线的内容这里是划线的内容这里是划线的内容，这里是划线的内容这里是划线的内容这里是划线的内容</p>
+								<p><span>这里是我之前批注的内容这里是我之前批注的内容....这里是我之前批注的内容....这里是我之前批注的内容...这里是我之前批注的内容...这里是我之前批注的内容...这里是我之前批注的内容...这里是我之前批注的内容</span><i></i></p>
+							</div>
+							<div class="b">
+								<span>赞10</span>
+								<span>转发10</span>
+								<span>进度：13%</span>
+								<span class="open">打开此页</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="phone_list phone phone_list_1">
+					<div class="phone_list_box">
+						<div class="tit">
+							<h3>目录</h3>
+							<div class="close">X</div>
+						</div>
+						<div class="phone_list_scroll">
+							<div class="scrollview">
+								<div class="text_ind_0">
+									<div class="ready_buy item">
+										<a href="">这是第一章节</a><i></i>
+										<a href="">1%</a>
+									</div>
+									<div class="text_ind_1">
+										<div class="neet_buy item">
+											<a href="">这是第一章节</a><i></i>
+											<a href="">未购买</a>
+										</div>
+										<div class="text_ind_2">
+											<div class="neet_buy item">
+												<a href="">这是第一章节</a><i></i>
+												<a href="">未购买</a>
+											</div>
+											<div class="text_ind_3">
+												<div class="neet_buy item">
+													<a href="">这是第一章节</a><i></i>
+													<a href="">未购买</a>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="text_ind_0">
+									<div class="ready_buy item">
+										<a href="">这是第一章节</a><i></i>
+										<a href="">1%</a>
+									</div>
+									<div class="text_ind_1">
+										<div class="neet_buy item">
+											<a href="">这是第一章节</a><i></i>
+											<a href="">未购买</a>
+										</div>
+										<div class="text_ind_2">
+											<div class="neet_buy item">
+												<a href="">这是第一章节</a><i></i>
+												<a href="">未购买</a>
+											</div>
+											<div class="text_ind_3">
+												<div class="neet_buy item">
+													<a href="">这是第一章节</a><i></i>
+													<a href="">未购买</a>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="text_ind_0">
+									<div class="ready_buy item">
+										<a href="">这是第一章节</a><i></i>
+										<a href="">1%</a>
+									</div>
+									<div class="text_ind_1">
+										<div class="neet_buy item">
+											<a href="">这是第一章节</a><i></i>
+											<a href="">未购买</a>
+										</div>
+										<div class="text_ind_2">
+											<div class="neet_buy item">
+												<a href="">这是第一章节</a><i></i>
+												<a href="">未购买</a>
+											</div>
+											<div class="text_ind_3">
+												<div class="neet_buy item">
+													<a href="">这是第一章节</a><i></i>
+													<a href="">未购买</a>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="phone_list phone phone_list_2">
+					<div class="phone_list_box">
+						<div class="tit">
+							<h3>书签</h3>
+							<div class="close">X</div>
+						</div>
+						<div class="phone_list_scroll">
+							<div class="scrollview">
+								<div class="phone_list_actibe">
+									<h4>我是书签的章节名称</h4>
+									<div class="actibe">
+										<p>...这里是书签页面段落的一部分摘录语句这里是书签页面段落的一部分摘录语句这里是书签页面段落的一部分摘录语句</p>
+										<p>
+											<span>进度：13%</span>
+											<span class="open">点击打开此页</span>
+											<span class="del">删除</span>
+											<span>2019-09-03 17:14:10</span>
+										</p>
+									</div>
+									<div class="actibe">
+										<p>...这里是书签页面段落的一部分摘录语句这里是书签页面段落的一部分摘录语句这里是书签页面段落的一部分摘录语句</p>
+										<p>
+											<span>进度：13%</span>
+											<span class="open">点击打开此页</span>
+											<span class="del">删除</span>
+											<span>2019-09-03 17:14:10</span>
+										</p>
+									</div>
+								</div>
+								<div class="phone_list_actibe">
+									<h4>我是书签的章节名称</h4>
+									<div class="actibe">
+										<p>...这里是书签页面段落的一部分摘录语句这里是书签页面段落的一部分摘录语句这里是书签页面段落的一部分摘录语句</p>
+										<p>
+											<span>进度：13%</span>
+											<span class="open">点击打开此页</span>
+											<span class="del">删除</span>
+											<span>2019-09-03 17:14:10</span>
+										</p>
+									</div>
+									<div class="actibe">
+										<p>...这里是书签页面段落的一部分摘录语句这里是书签页面段落的一部分摘录语句这里是书签页面段落的一部分摘录语句</p>
+										<p>
+											<span>进度：13%</span>
+											<span class="open">点击打开此页</span>
+											<span class="del">删除</span>
+											<span>2019-09-03 17:14:10</span>
+										</p>
+									</div>
+								</div>
+								<div class="phone_list_actibe">
+									<h4>我是书签的章节名称</h4>
+									<div class="actibe">
+										<p>...这里是书签页面段落的一部分摘录语句这里是书签页面段落的一部分摘录语句这里是书签页面段落的一部分摘录语句</p>
+										<p>
+											<span>进度：13%</span>
+											<span class="open">点击打开此页</span>
+											<span class="del">删除</span>
+											<span>2019-09-03 17:14:10</span>
+										</p>
+									</div>
+									<div class="actibe">
+										<p>...这里是书签页面段落的一部分摘录语句这里是书签页面段落的一部分摘录语句这里是书签页面段落的一部分摘录语句</p>
+										<p>
+											<span>进度：13%</span>
+											<span class="open">点击打开此页</span>
+											<span class="del">删除</span>
+											<span>2019-09-03 17:14:10</span>
+										</p>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="phone_set phone">
+					<div class="phone_set_list">
+						<input type="range" name="" id="" value="16" min="12" max="22" />
+						<span class="les">A-</span>
+						<span class="add">A+</span>
+					</div>
+					<div class="phone_set_list">
+						<span class="color faf7ed"></span>
+						<span class="color e6f2e6"></span>
+						<span class="color e4f1f5"></span>
+						<span class="color e0e0e0"></span>
+						<span class="color f5e4e4"></span>
+						<span class="color c_191b1c"></span>
+						<span class="color c_52585c"></span>
+					</div>
+					<div class="phone_set_list">
+						<p>
+							<span class="read h selcte">&#xe661; 左右翻页</span>
+							<span class="read s">&#xe662; 上下翻页</span>
+						</p>
+					</div>
+				</div>
+				<div class="phone_speet phone">
+					<div class="phone_speet_list">
+						<div class="tit">
+							<span>这里是章节的标题</span>
+							<span>1.27%</span>
+						</div>
+						<div class="prve">&lt;上一章</div>
+						<div class="next">下一章&gt;</div>
+					</div>
+					<div class="phone_speet_list">
+						<input type="range" value="10" />
+					</div>
+				</div>
+			</div>
+			<div class="alt_page">
+				<span>第一页</span>
+			</div>
+		</div>
+		<script type="text/javascript" src="/bundle.js"></script>
+		<script type="text/javascript" src="js/swiper.min.js"></script>
+		<script type="text/javascript" src="js/jquery-2.1.0.js"></script>
+		<script type="text/javascript" src="js/sweetalert2@8.js"></script>
+		<script type="text/javascript" src="js/set.js"></script>
+		<script type="text/javascript" src="js/script.js"></script>
+		<script type="text/javascript" src="js/iconfont.js"></script>
+		<script>
+			// var oContent = document.getElementById('content');
+			// oContent.onmousedown = function(e) {
+			// 	$(".monse_thr").hide();
+			// 	$(".monse_do").hide();
+			// 	console.log('X：' + e.offsetX + '\n Y:' + e.screenY);
+			// 	if(e.screenY < 300) {
+			// 		$(".monse_thr").css({
+			// 			"top": e.screenY - 50 + "px",
+			// 			"left": e.offsetX + "px"
+			// 		});
+			// 		$(".monse_do").css({
+			// 			"top": e.screenY - 45 + "px",
+			// 			"left": e.offsetX - 50 + "px"
+			// 		});
+			// 		$(".gary ,.withe").addClass("top").removeClass("bot");
+			// 	} else {
+			// 		$(".monse_thr").css({
+			// 			"top": e.screenY - 116 + "px",
+			// 			"left": e.offsetX + "px"
+			// 		});
+			// 		$(".monse_do").css({
+			// 			"top": e.screenY - 256 + "px",
+			// 			"left": e.offsetX - 50 + "px"
+			// 		});
+			// 		$(".gary ,.withe").addClass("bot").removeClass("top");
+			// 	}
+			// };
+
+			// oContent.onmouseup = function(e) {
+			// 	if(selectText().length > 0) {
+			// 		$(".monse_thr").show();
+			// 		document.execCommand("Copy");
+			// 	}
+			// };
+
+			$(".monse_thr_list .c").click(function(e) {
+				alt_page("成功复制到粘贴板");
+				$(".monse_thr").hide();
+			});
+
+			$(".monse_thr_list .r").click(function(e) {
+				$(".monse_do").show();
+				$(".monse_thr").hide();
+			});
+			$(".monse_do .text .cance").click(function() {
+				$(".monse_do").hide();
+				$(".monse_do .text textarea").val("");
+			});
+			$(".monse_do .text .ok").click(function() {
+				$(".monse_do").hide();
+				$(".monse_do .text textarea").val("");
+				//提交数据
+			});
+
+			var mySwiper = new Swiper('.swiper-container', {
+				loop: true,
+				pagination: {
+					el: '.swiper-pagination',
+					clickable: true,
+				},
+			})
+
+			function selectText() {
+				if(document.Selection) {
+					return document.selection.createRange().text;
+				} else {
+					return window.getSelection().toString();
+				}
+			}
+
+			$(".search_into input").on("keypress", function(e) {
+				if(event.keyCode == 13) {
+					var search_h = $(".search_list_item").length * 120 > 690 ? 690 : $(".search_list_item").length * 120;
+					if(search_h == 0) {
+						$(".search_list").show().text("没有搜索到内容");
+					}
+					$(".search_list").show().css({
+						"height": search_h + "px"
+					});
+				}
+			});
+		
+		</script>
+	</body>
+
+</html>
