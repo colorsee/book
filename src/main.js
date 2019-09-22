@@ -9,6 +9,8 @@ Vue.use(VueJsonp)
 
 var locationURL = url.parse(window.location.href, true)
 var query = locationURL.query
+window.resource_id = query.resource_id
+window.resource_type = query.resource_type
 
 import userAPI from './api/user'
 import bookAPI from './api/book_content'
@@ -36,6 +38,7 @@ var vm = new Vue({
     lmarkList: [],
     lscribingList: [],
     progress: 0,
+    jump: '',
   },
   methods: {
     collection() {
@@ -113,6 +116,10 @@ var vm = new Vue({
 
     handleControlShow(key) {
       this.$refs.reader.handleControlShow(key)
+    },
+
+    jumpTo() {
+      this.$refs.reader.jumpTo(parseInt(this.jump))
     },
   },
   created: function() {

@@ -3,6 +3,7 @@
     :class="{viewport: true, vertical: settings.mode === 'vertical'}"
     :style="{background: settings.background, color: settings.color}"
     ref="viewport"
+    @scroll="handleViewportScroll"
   >
     <horizantol
       v-if="settings.mode === 'horizantol'"
@@ -80,6 +81,7 @@ export default {
 
   mounted() {
     this.loadSettings();
+    window.initThr();
   },
 
   watch: {
@@ -93,8 +95,8 @@ export default {
   },
 
   methods: {
-    emitProgress() {
-      Promise.resolve().then(() => this.$emit("read", this.progress));
+    emitProgress(progress) {
+      Promise.resolve().then(() => this.$emit("read", progress));
     },
 
     initMouseScroll() {
@@ -183,6 +185,28 @@ export default {
           st = null;
         }, 500);
       };
+    },
+
+    jumpTo(percent) {
+      percent = percent / 100;
+
+      if (this.settings.mode === "horizantol") {
+        return this.$refs.container.jumpTo(percent);
+      }
+
+      const { scrollHeight, clientHeight } = this.$refs.viewport;
+      const scrollTo = percent * scrollHeight - clientHeight;
+      console.log(scrollTo);
+      this.$refs.viewport.scrollTo(0, scrollTo);
+    },
+
+    handleViewportScroll() {
+      if (this.settings.mode !== "vertical") {
+        return;
+      }
+
+      const { scrollTop, scrollHeight, clientHeight } = this.$refs.viewport;
+      this.emitProgress((scrollTop + clientHeight) / scrollHeight);
     }
   },
 

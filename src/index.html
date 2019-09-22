@@ -145,7 +145,7 @@
 				<div class="book_topl">
 					<div class="book_topl_but">
 						<span class="bt_1" title="显示设置" @click="handleControlShow('isSettingsShow')">&#xe635;</span>
-						<span class="bt_2" title="目录">&#xe64e;</span>
+						<span class="bt_2" title="目录" @click="handleControlShow('isCatalogShow')">&#xe64e;</span>
 						<span class="bt_3" title="内容检索">&#xe62e;</span>
 						<span class="bt_4" title="整页复制">&#xe64e;</span>
 						<span class="bt_5" title="其他格式">&#xe635;</span>
@@ -161,8 +161,8 @@
 				<div class="book_botomr">
 					<span class="prve" @click="prev()">上一页</span>
 					<span class="next" @click="next()">下一页</span>
-					<input class="num" type="tel" name="" id="" placeholder="%" />
-					<input class="but" type="button" id="" value="跳转" />
+					<input class="num" type="number" min="1" max="100" placeholder="%" v-model="jump" />
+					<input class="but" type="button" id="" value="跳转" @click="jumpTo" />
 				</div>
 			
 				<div class="bok_Catalog scroll_book">
@@ -283,33 +283,6 @@
 					<h3>其他格式阅读</h3>
 					<div class="PDF_read" v-show="baseinfo.read_pdf == '0' ? false:true">PDF格式</div>
 					<div class="EPUB_read" v-show="baseinfo.read_epub == '0'?false:true">EPUB格式</div>
-				</div>
-				<div class="mypsg mypsg_1 scroll_book">
-					<div class="scrollview">
-						<h3>我的书签</h3>
-						<div class="mypsg_1_list_box" v-for="(item,index) in lmarkList" :key="item.id">
-							<div class="tit">{{item.excerpt}}</div>
-							<div class="mypsg_1_list">
-								<div class="txt">这里是内容这里是内容这里是内容这里是内容这里是内容这里是内容这这里是内容这里是内容这里是内容这里是内容这里是内容这里是内容这里是内容这里是内容这里是内容这里是内容这里是内容这里是内容里是内容这里是内容这里是内容这里是内容这里是内容这里是内容</div>
-								<div class="time">
-									<span class="spet">进度：13%</span>
-									<span class="open">点击打开此页</span>
-									<span class="del">删除</span>
-									<span class="tmr">2019-09-03 11:43:15</span>
-								</div>
-							</div>
-							<div class="mypsg_1_list">
-								<div class="txt">这里是内容这里是内容这里是内容这里是内容这里是内容这里是内容这里是内容这里是内容这里是内容这里是内容这里是内容这里是内容这里是内容这里是内容</div>
-								<div class="time">
-									<span class="spet">进度：13%</span>
-									<span class="open">点击打开此页</span>
-									<span class="del">删除</span>
-									<span class="tmr">2019-09-03 11:43:15</span>
-								</div>
-							</div>
-						</div>
-						
-					</div>
 				</div>
 				<div class="mypsg mypsg_2 scroll_book">
 					<div class="scrollview">
@@ -590,7 +563,6 @@
 				<span>第一页</span>
 			</div>
 		</div>
-		<script type="text/javascript" src="/bundle.js"></script>
 		<script type="text/javascript" src="js/swiper.min.js"></script>
 		<script type="text/javascript" src="js/jquery-2.1.0.js"></script>
 		<script type="text/javascript" src="js/sweetalert2@8.js"></script>
@@ -598,40 +570,54 @@
 		<script type="text/javascript" src="js/script.js"></script>
 		<script type="text/javascript" src="js/iconfont.js"></script>
 		<script>
-			// var oContent = document.getElementById('content');
-			// oContent.onmousedown = function(e) {
-			// 	$(".monse_thr").hide();
-			// 	$(".monse_do").hide();
-			// 	console.log('X：' + e.offsetX + '\n Y:' + e.screenY);
-			// 	if(e.screenY < 300) {
-			// 		$(".monse_thr").css({
-			// 			"top": e.screenY - 50 + "px",
-			// 			"left": e.offsetX + "px"
-			// 		});
-			// 		$(".monse_do").css({
-			// 			"top": e.screenY - 45 + "px",
-			// 			"left": e.offsetX - 50 + "px"
-			// 		});
-			// 		$(".gary ,.withe").addClass("top").removeClass("bot");
-			// 	} else {
-			// 		$(".monse_thr").css({
-			// 			"top": e.screenY - 116 + "px",
-			// 			"left": e.offsetX + "px"
-			// 		});
-			// 		$(".monse_do").css({
-			// 			"top": e.screenY - 256 + "px",
-			// 			"left": e.offsetX - 50 + "px"
-			// 		});
-			// 		$(".gary ,.withe").addClass("bot").removeClass("top");
-			// 	}
-			// };
+			window.initThr = function() {
+			let oContent = document.getElementById('content');
+			let selection = null
 
-			// oContent.onmouseup = function(e) {
-			// 	if(selectText().length > 0) {
-			// 		$(".monse_thr").show();
-			// 		document.execCommand("Copy");
-			// 	}
-			// };
+			oContent.onmousedown = function(e) {
+				selection = null
+
+				$(".monse_thr").hide();
+				$(".monse_do").hide();
+				console.log('X：' + e.offsetX + '\n Y:' + e.screenY);
+				if(e.screenY < 300) {
+					$(".monse_thr").css({
+						"top": e.screenY - 50 + "px",
+						"left": e.offsetX + "px"
+					});
+					$(".monse_do").css({
+						"top": e.screenY - 45 + "px",
+						"left": e.offsetX - 50 + "px"
+					});
+					$(".gary ,.withe").addClass("top").removeClass("bot");
+				} else {
+					$(".monse_thr").css({
+						"top": e.screenY - 116 + "px",
+						"left": e.offsetX + "px"
+					});
+					$(".monse_do").css({
+						"top": e.screenY - 256 + "px",
+						"left": e.offsetX - 50 + "px"
+					});
+					$(".gary ,.withe").addClass("bot").removeClass("top");
+				}
+			};
+
+			oContent.onmouseup = function(e) {
+				const tmp = document.getSelection()
+				
+				selection = {
+					parent: $(tmp.baseNode).parent(),
+					start_word: tmp.anchorOffset,
+					end_word: tmp.focusOffset,
+					value: tmp.toString(),
+				}
+
+				if(selectText().length > 0) {
+					$(".monse_thr").show();
+					document.execCommand("Copy");
+				}
+			};
 
 			$(".monse_thr_list .c").click(function(e) {
 				alt_page("成功复制到粘贴板");
@@ -647,9 +633,39 @@
 				$(".monse_do .text textarea").val("");
 			});
 			$(".monse_do .text .ok").click(function() {
+				const val = $(".monse_do .text textarea").val()
+				console.log(val)
 				$(".monse_do").hide();
 				$(".monse_do .text textarea").val("");
 				//提交数据
+
+				if (!selection) {
+					return
+				}
+
+
+				const part = selection.parent
+				const partcode = part.data('partcode')
+
+				const article = part.parent()
+				const article_id = parseInt(article.data('id'))
+
+				const { start_word, end_word, value } = selection
+
+				scribing.ascribing(
+					resource_id,
+					article_id,
+					partcode,
+					start_word,
+					partcode,
+					end_word,
+					value,
+					0.1,
+					1,
+					1,
+					'',
+					() => console.log('success')
+				)
 			});
 
 			var mySwiper = new Swiper('.swiper-container', {
@@ -679,8 +695,9 @@
 					});
 				}
 			});
-		
+			}
 		</script>
+		<script type="text/javascript" src="/bundle.js"></script>
 	</body>
 
 </html>

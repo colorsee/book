@@ -4,7 +4,7 @@
       v-if="Number.isInteger(current.level)"
       :is="`h${current.level + 1}`"
     >{{current.title}}</component>
-    <div class="paragraphs" v-html="current.content" ref="content"></div>
+    <div class="paragraphs" v-html="current.content" ref="content" :data-id="current.id"></div>
   </div>
 </template>
 
@@ -24,10 +24,10 @@ export default {
     },
 
     progress() {
-      const step = 1 / this.sections.length;
+      this.step = 1 / this.sections.length;
       const { page, pageCount, section } = this;
 
-      return ((page + 1) / pageCount + section) * step;
+      return ((page + 1) / pageCount + section) * this.step;
     }
   },
 
@@ -85,6 +85,11 @@ export default {
       }
 
       this.page -= 1;
+      this.emitProgress();
+    },
+
+    jumpTo(percent) {
+      this.section = Math.ceil(percent / this.step - 1);
       this.emitProgress();
     }
   }
