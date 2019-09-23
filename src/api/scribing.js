@@ -38,7 +38,7 @@ export default {
         member_token: token,
       }
 
-      return axios.post('/api/read/ascribing', data).then(handle)
+      return axios.post('/index/read/ascribing', data).then(handle)
     })
   },
   lscribing(resource_id, order, callback) {

@@ -46,9 +46,8 @@ module.exports = {
   },
   devServer: {
     proxy: {
-      '/api': {
-        target: 'http://xxsy.1i2.cn/index',
-        pathRewrite: { '^/api': '' },
+      '/index': {
+        target: 'http://xxsy.1i2.cn',
         secure: false,
         changeOrigin: true,
       },

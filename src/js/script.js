@@ -162,7 +162,7 @@ var alt_ps = true
 
 function alt_page(txt) {
   var timer = txt.length
-  console.log(timer)
+
   if (alt_ps) {
     alt_ps = false
     $('.alt_page').fadeIn()

@@ -114,13 +114,13 @@ export default {
 </style>
 
 <style>
-.paragraphs > * {
+.paragraphs > div {
   text-indent: 2em !important;
   margin: 0.8rem 0;
 }
 
 @media only screen and (max-width: 768px) {
-  .paragraphs > * {
+  .paragraphs > div {
     text-indent: 0 !important;
   }
 }

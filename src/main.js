@@ -64,29 +64,34 @@ var vm = new Vue({
       sliblingAPI.dscribing(item.id) //处理DOM，删除DOM
     },
     loadArticle(id) {
-      //加载内容
-      //1.加载篇章基础信息
-      var _that = this
-      if (this.resource_type == 1) {
-        articleID = id
-        console.log(id)
-        bookAPI.show(id, 2, 2, ret => {
-          _that.content_list = null
+      bookAPI.showart(id).then(data => {
+        console.log(data)
+        this.content_list = data.posts
+      })
+      // //加载内容
+      // //1.加载篇章基础信息
+      // var _that = this
+      // if (this.resource_type == 1) {
+      //   articleID = id
+      //   console.log(id)
+      //   bookAPI.show(id, 2, 2, ret => {
+      //     _that.content_list = null
 
-          _that.content_list = ret.posts
-          //                  $('.bt_2').trigger('click');
-          //$(".bok_item_list").eq(0).addClass("act");
-          //$(".next").trigger('click')
-        })
-      } else {
-        bookAPI.showart(id, ret => {
-          _that.content_list = null
-          _that.content_list = ret.posts
-          //                  $('.bt_2').trigger('click');
-          //$(".next").trigger('click')
-        })
-      }
-      console.log(content_list)
+      //     _that.content_list = ret.posts
+      //     //                  $('.bt_2').trigger('click');
+      //     //$(".bok_item_list").eq(0).addClass("act");
+      //     //$(".next").trigger('click')
+      //   })
+      // } else {
+
+      //   bookAPI.showart(id, ret => {
+      //     _that.content_list = null
+      //     _that.content_list = ret.posts
+      //     //                  $('.bt_2').trigger('click');
+      //     //$(".next").trigger('click')
+      //   })
+      // }
+      // console.log(content_list)
     },
     showArticle(pid, id) {
       //滚动到指定位置
@@ -125,7 +130,8 @@ var vm = new Vue({
   },
   created: function() {
     //判断类型
-    userAPI.login('caoxiaomo', '123456')
+    userAPI.login('caoxiaomo', '123456').then(() => this.loadArticle(2))
+
     var resource_id = this.resource_id
     var resource_type = this.resource_type
     if (resource_type == 1) {
@@ -146,7 +152,6 @@ var vm = new Vue({
       })
     } else {
       //章节
-
       bookAPI.article(resource_id, article => {
         this.baseinfo = article.posts
       })
