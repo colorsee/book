@@ -3,6 +3,7 @@ import Vue from 'vue'
 import VueJsonp from 'vue-jsonp'
 import url from 'url'
 import Reader from './components/reader.vue'
+import Thr from './components/thr.vue'
 import percent from './utils/percent'
 
 Vue.use(VueJsonp)
@@ -155,6 +156,11 @@ var vm = new Vue({
       })
     }
   },
-  components: { Reader },
+
+  mounted() {
+    this.$refs.thr.init()
+  },
+
+  components: { Reader, Thr },
   filters: { percent },
 })

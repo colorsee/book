@@ -100,7 +100,6 @@
 				<reader
 					ref="reader"
 					class="bok_item scrol_none"
-					id="content"
 					:items="content_list"
 					:info="baseinfo"
 					:bookmarks="lmarkList"
@@ -119,29 +118,7 @@
 					</div>
 				</div> -->
 				<div class="bok_mark">&#xe62e;</div>
-				<div class="monse_thr">
-					<div class="monse_thr_list">
-						<span class="l">划线</span>
-						<span class="c">复制</span>
-						<span class="r">批注</span>
-					</div>
-					<div class="gary bot"></div>
-					<div class="withe bot"></div>
-					<!--<iframe src="monse.html"></iframe>-->
-				</div>
-				<div class="monse_do">
-					<div class="text">
-						<textarea></textarea>
-						<p class="chose">
-							<input type="checkbox" name="" id="" value="" />
-							<span>仅自己可见</span>
-						</p>
-						<input class="ok" type="button" id="" value="确认" />
-						<input class="cance" type="button" id="" value="取消" />
-					</div>
-					<div class="gary top"></div>
-					<div class="withe top"></div>
-				</div>
+				<thr ref='thr' :progress="progress"></thr>
 				<div class="book_topl">
 					<div class="book_topl_but">
 						<span class="bt_1" title="显示设置" @click="handleControlShow('isSettingsShow')">&#xe635;</span>
@@ -570,103 +547,8 @@
 		<script type="text/javascript" src="js/script.js"></script>
 		<script type="text/javascript" src="js/iconfont.js"></script>
 		<script>
-			window.initThr = function() {
-			let oContent = document.getElementById('content');
-			let selection = null
+			function test() {
 
-			oContent.onmousedown = function(e) {
-				selection = null
-
-				$(".monse_thr").hide();
-				$(".monse_do").hide();
-				console.log('X：' + e.offsetX + '\n Y:' + e.screenY);
-				if(e.screenY < 300) {
-					$(".monse_thr").css({
-						"top": e.screenY - 50 + "px",
-						"left": e.offsetX + "px"
-					});
-					$(".monse_do").css({
-						"top": e.screenY - 45 + "px",
-						"left": e.offsetX - 50 + "px"
-					});
-					$(".gary ,.withe").addClass("top").removeClass("bot");
-				} else {
-					$(".monse_thr").css({
-						"top": e.screenY - 116 + "px",
-						"left": e.offsetX + "px"
-					});
-					$(".monse_do").css({
-						"top": e.screenY - 256 + "px",
-						"left": e.offsetX - 50 + "px"
-					});
-					$(".gary ,.withe").addClass("bot").removeClass("top");
-				}
-			};
-
-			oContent.onmouseup = function(e) {
-				const tmp = document.getSelection()
-				
-				selection = {
-					parent: $(tmp.baseNode).parent(),
-					start_word: tmp.anchorOffset,
-					end_word: tmp.focusOffset,
-					value: tmp.toString(),
-				}
-
-				if(selectText().length > 0) {
-					$(".monse_thr").show();
-					document.execCommand("Copy");
-				}
-			};
-
-			$(".monse_thr_list .c").click(function(e) {
-				alt_page("成功复制到粘贴板");
-				$(".monse_thr").hide();
-			});
-
-			$(".monse_thr_list .r").click(function(e) {
-				$(".monse_do").show();
-				$(".monse_thr").hide();
-			});
-			$(".monse_do .text .cance").click(function() {
-				$(".monse_do").hide();
-				$(".monse_do .text textarea").val("");
-			});
-			$(".monse_do .text .ok").click(function() {
-				const val = $(".monse_do .text textarea").val()
-				console.log(val)
-				$(".monse_do").hide();
-				$(".monse_do .text textarea").val("");
-				//提交数据
-
-				if (!selection) {
-					return
-				}
-
-
-				const part = selection.parent
-				const partcode = part.data('partcode')
-
-				const article = part.parent()
-				const article_id = parseInt(article.data('id'))
-
-				const { start_word, end_word, value } = selection
-
-				scribing.ascribing(
-					resource_id,
-					article_id,
-					partcode,
-					start_word,
-					partcode,
-					end_word,
-					value,
-					0.1,
-					1,
-					1,
-					'',
-					() => console.log('success')
-				)
-			});
 
 			var mySwiper = new Swiper('.swiper-container', {
 				loop: true,
@@ -675,14 +557,6 @@
 					clickable: true,
 				},
 			})
-
-			function selectText() {
-				if(document.Selection) {
-					return document.selection.createRange().text;
-				} else {
-					return window.getSelection().toString();
-				}
-			}
 
 			$(".search_into input").on("keypress", function(e) {
 				if(event.keyCode == 13) {

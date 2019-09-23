@@ -1,6 +1,6 @@
 import { jsonp } from 'vue'
 
-let token = localStorage.getItem('token')
+let token = ''
 
 export default {
   login(username, password) {
@@ -16,9 +16,6 @@ export default {
       if (data.code != 1) {
         throw new Error(data.msg)
       }
-
-      localStorage.setItem('token', data.posts)
-      localStorage.setItem('timestamp', Date.now())
 
       return (token = data.posts)
     })

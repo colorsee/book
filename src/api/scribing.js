@@ -1,10 +1,12 @@
 import * as API from '../main'
 import user from './user'
 import { jsonp } from 'vue'
+import axios from 'axios'
+import handle from '../utils/handle'
 
 let token = ''
 
-window.scribing = {
+export default {
   ascribing(
     resource_id,
     article_id,
@@ -29,16 +31,14 @@ window.scribing = {
         end_part,
         excerpt,
         percent,
+        end_word,
         public: _public,
         type,
         note,
-        callbacktype: 'jsonp',
         member_token: token,
       }
 
-      return jsonp('http://xxsy.1i2.cn/index/read/ascribing', data).then(
-        console.log
-      )
+      return axios.post('/api/read/ascribing', data).then(handle)
     })
   },
   lscribing(resource_id, order, callback) {
@@ -68,5 +68,3 @@ window.scribing = {
     )
   },
 }
-
-export default window.scribing

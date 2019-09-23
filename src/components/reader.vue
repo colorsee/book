@@ -5,22 +5,26 @@
     ref="viewport"
     @scroll="handleViewportScroll"
   >
-    <horizantol
-      v-if="settings.mode === 'horizantol'"
-      :sections="sections"
-      :style="{fontSize: settings.fontSize + 'px'}"
-      class="content"
-      ref="container"
-      v-on="$listeners"
-    ></horizantol>
-
-    <div v-else @click="handleVerticalClick">
-      <vertical
-        v-for="item in sections"
-        :key="item.id"
-        :current="item"
+    <div id="content">
+      <horizantol
+        v-if="settings.mode === 'horizantol'"
+        :sections="sections"
         :style="{fontSize: settings.fontSize + 'px'}"
-      ></vertical>
+        class="content"
+        ref="container"
+        v-on="$listeners"
+      ></horizantol>
+
+      <div v-else @click="handleVerticalClick">
+        <vertical
+          v-for="item in sections"
+          class="paragraphs"
+          :key="item.id"
+          :current="item"
+          :style="{fontSize: settings.fontSize + 'px'}"
+          :data-id="item.id"
+        ></vertical>
+      </div>
     </div>
 
     <control
@@ -81,7 +85,6 @@ export default {
 
   mounted() {
     this.loadSettings();
-    window.initThr();
   },
 
   watch: {

@@ -44,4 +44,14 @@ module.exports = {
       vue$: 'vue/dist/vue.js',
     },
   },
+  devServer: {
+    proxy: {
+      '/api': {
+        target: 'http://xxsy.1i2.cn/index',
+        pathRewrite: { '^/api': '' },
+        secure: false,
+        changeOrigin: true,
+      },
+    },
+  },
 }
