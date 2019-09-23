@@ -1,9 +1,8 @@
 import * as API from '../main'
-var token = ''
-let user = JSON.parse(localStorage.getItem('access-user'))
-if (user) {
-  token = user.token
-}
+import user from './user'
+import { jsonp } from 'vue'
+
+let token = ''
 
 window.scribing = {
   ascribing(
@@ -17,25 +16,29 @@ window.scribing = {
     percent,
     _public,
     type,
-    note,
-    callback
+    note
   ) {
-    API.POST('http://xxsy.1i2.cn/index/read/ascribing', {
-      resource_id,
-      resource_type: 1,
-      start_article_id: article_id,
-      start_part,
-      start_word,
-      end_article_id: article_id,
-      end_part,
-      excerpt,
-      percent,
-      public: _public,
-      type,
-      note,
-      callbacktype: 'jsonp',
-      Authorization: token,
-      callback,
+    return user.login().then(token => {
+      const data = {
+        resource_id,
+        resource_type: 1,
+        start_article_id: article_id,
+        start_part,
+        start_word,
+        end_article_id: article_id,
+        end_part,
+        excerpt,
+        percent,
+        public: _public,
+        type,
+        note,
+        callbacktype: 'jsonp',
+        member_token: token,
+      }
+
+      return jsonp('http://xxsy.1i2.cn/index/read/ascribing', data).then(
+        console.log
+      )
     })
   },
   lscribing(resource_id, order, callback) {

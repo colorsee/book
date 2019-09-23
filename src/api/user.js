@@ -1,21 +1,26 @@
-import * as API from '../main'
+import { jsonp } from 'vue'
 
-export default{
-    login(username,password){ //用户登录
-        API.POST('http://xxsy.1i2.cn/index/member/login',{
-            account:username,
-            password:password,
-            callbacktype:'jsonp'
-        },data=>{
-            if(data.code == 1 && data.msg == '成功！'){
-                let userInfo = {
-                    token:data.posts,
-                    timestamp: new Date().getTime()
-                  };
-                  localStorage.setItem('access-user', JSON.stringify(userInfo)); // 将用户信息存到localStorage中
-            }else{
-                return false;
-            }
-        })
+let token = localStorage.getItem('token')
+
+export default {
+  login(username, password) {
+    if (token) {
+      return Promise.resolve(token)
     }
+
+    return jsonp('http://xxsy.1i2.cn/index/member/login', {
+      account: username,
+      password: password,
+      callbacktype: 'jsonp',
+    }).then(data => {
+      if (data.code != 1) {
+        throw new Error(data.msg)
+      }
+
+      localStorage.setItem('token', data.posts)
+      localStorage.setItem('timestamp', Date.now())
+
+      return (token = data.posts)
+    })
+  },
 }
