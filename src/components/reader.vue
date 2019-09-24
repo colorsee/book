@@ -66,6 +66,8 @@ const defaultSettings = {
 };
 
 export default {
+  props: ["items", "info", "bookmarks", "resourceId"],
+
   data: () => ({
     isToolbarShow: false,
     isCatalogShow: false,
@@ -75,11 +77,9 @@ export default {
     settings: defaultSettings
   }),
 
-  props: ["items", "info", "bookmarks"],
-
   computed: {
     sections() {
-      return Section.list(this.items);
+      return this.items.map(i => Section.list(i)).flat();
     }
   },
 

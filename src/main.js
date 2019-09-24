@@ -5,13 +5,7 @@ import url from 'url'
 import Reader from './components/reader.vue'
 import Thr from './components/thr.vue'
 import percent from './utils/percent'
-
-Vue.use(VueJsonp)
-
-var locationURL = url.parse(window.location.href, true)
-var query = locationURL.query
-window.resource_id = query.resource_id
-window.resource_type = query.resource_type
+import query from './utils/query'
 
 import userAPI from './api/user'
 import bookAPI from './api/book_content'
@@ -20,7 +14,7 @@ import utilsAPI from './api/book_utils'
 import markAPI from './api/mark'
 import sliblingAPI from './api/scribing'
 
-var token = ''
+Vue.use(VueJsonp)
 
 export const POST = (url, params, callback) => {
   return Vue.jsonp(url, params).then(res => {
@@ -28,13 +22,17 @@ export const POST = (url, params, callback) => {
   })
 }
 
-var articleID
+const { resource_id, resource_type } = query()
+window.resource_id = resource_id
+window.resource_type = resource_type
+
+var articleID = null
 var vm = new Vue({
   el: '#app',
   data: {
     baseinfo: '',
-    resource_id: query.resource_id,
-    resource_type: query.resource_type,
+    resource_id,
+    resource_type,
     content_list: [],
     lmarkList: [],
     lscribingList: [],
@@ -64,8 +62,7 @@ var vm = new Vue({
       sliblingAPI.dscribing(item.id) //处理DOM，删除DOM
     },
     loadArticle(id) {
-      bookAPI.showart(id).then(data => {
-        console.log(data)
+      bookAPI.show(id).then(data => {
         this.content_list = data.posts
       })
       // //加载内容
@@ -130,36 +127,36 @@ var vm = new Vue({
   },
   created: function() {
     //判断类型
-    userAPI.login('caoxiaomo', '123456').then(() => this.loadArticle(2))
+    userAPI.login('caoxiaomo', '123456')
+    this.loadArticle(resource_id)
 
-    var resource_id = this.resource_id
-    var resource_type = this.resource_type
-    if (resource_type == 1) {
-      //图书
-      //图书基本信息
-      bookAPI.info(resource_id, article => {
-        var category = utilsAPI.calculatePercent(
-          article.posts.catalog_list,
-          article.posts.words_number
-        )
-        category = utilsAPI.calculatePercentAdd(category)
-        this.baseinfo = article.posts
-      })
-      //加载试读数据
-      bookAPI.probation(resource_id, resource_type, list => {
-        this.content_list = list.posts
-        // console.log(this.content_list)
-      })
-    } else {
-      //章节
-      bookAPI.article(resource_id, article => {
-        this.baseinfo = article.posts
-      })
-      bookAPI.probation(resource_id, resource_type, list => {
-        this.content_list = list.posts
-        // console.log(this.content_list)
-      })
-    }
+    // if (resource_type == 1) {
+    //   //图书
+    //   //图书基本信息
+    //   bookAPI.info(resource_id).then(article => {
+    //     var category = utilsAPI.calculatePercent(
+    //       article.posts.catalog_list,
+    //       article.posts.words_number
+    //     )
+    //     category = utilsAPI.calculatePercentAdd(category)
+    //     this.baseinfo = article.posts
+    //   })
+
+    //   //加载试读数据
+    //   bookAPI.probation(resource_id, resource_type, list => {
+    //     this.content_list = list.posts
+    //     // console.log(this.content_list)
+    //   })
+    // } else {
+    //   //章节
+    //   bookAPI.article(resource_id, article => {
+    //     this.baseinfo = article.posts
+    //   })
+    //   bookAPI.probation(resource_id, resource_type, list => {
+    //     this.content_list = list.posts
+    //     // console.log(this.content_list)
+    //   })
+    // }
   },
 
   mounted() {

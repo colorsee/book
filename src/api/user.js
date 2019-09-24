@@ -4,11 +4,15 @@ let token = ''
 
 export default {
   login(username, password) {
+    if (token instanceof Promise) {
+      return token
+    }
+
     if (token) {
       return Promise.resolve(token)
     }
 
-    return jsonp('http://xxsy.1i2.cn/index/member/login', {
+    token = jsonp('http://xxsy.1i2.cn/index/member/login', {
       account: username,
       password: password,
       callbacktype: 'jsonp',
@@ -19,5 +23,7 @@ export default {
 
       return (token = data.posts)
     })
+
+    return token
   },
 }

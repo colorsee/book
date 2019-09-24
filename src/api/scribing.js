@@ -1,8 +1,6 @@
 import * as API from '../main'
-import user from './user'
 import { jsonp } from 'vue'
-import axios from 'axios'
-import handle from '../utils/handle'
+import { post } from '../utils/request'
 
 let token = ''
 
@@ -38,7 +36,7 @@ export default {
         member_token: token,
       }
 
-      return axios.post('/index/read/ascribing', data).then(handle)
+      return post('/index/read/ascribing', data)
     })
   },
   lscribing(resource_id, order, callback) {
