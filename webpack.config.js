@@ -51,6 +51,11 @@ module.exports = {
         secure: false,
         changeOrigin: true,
       },
+      '/resourcePic': {
+        target: 'http://xxsy.1i2.cn',
+        secure: false,
+        changeOrigin: true,
+      },
     },
   },
 }

@@ -5,7 +5,7 @@
     ref="viewport"
     @scroll="handleViewportScroll"
   >
-    <div id="content">
+    <div id="content" :style="{height: settings.mode === 'horizantol' ? '100%' : 'unset'}">
       <horizantol
         v-if="settings.mode === 'horizantol'"
         :sections="sections"
@@ -79,7 +79,8 @@ export default {
 
   computed: {
     sections() {
-      return this.items.map(i => Section.list(i)).flat();
+      const t = this.items.map(i => Section.list(i)).flat();
+      return t;
     }
   },
 

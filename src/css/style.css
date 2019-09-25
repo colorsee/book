@@ -1745,3 +1745,13 @@ button {
   font-size: 20px;
   color: #333333;
 }
+
+.img_type0,
+.img_type1,
+.img_type2,
+.img_type3,
+.img_type4,
+.img_type5 {
+  width: 100% !important;
+  margin-left: -2em;
+}

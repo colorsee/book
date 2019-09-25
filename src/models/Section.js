@@ -18,18 +18,15 @@ export default class Section {
 
       if (!current.parent_id) {
         current.level = 0
-        map.set(current.id, current)
-        return
+      } else {
+        const parent = map.get(current.parent_id)
+        if (!parent) {
+          console.log(map)
+          return
+        }
+        current.level = parent.level + 1
       }
 
-      const parent = map.get(current.parent_id)
-
-      if (parent.level > 1) {
-        parent.content += `<h4>${i.title}</h4>` + i.content
-        return
-      }
-
-      current.level = parent.level + 1
       map.set(current.id, current)
     })
 
