@@ -161,6 +161,10 @@ $(document).ready(function() {
 var alt_ps = true
 
 function alt_page(txt) {
+  if (!txt) {
+    return
+  }
+
   var timer = txt.length
 
   if (alt_ps) {
