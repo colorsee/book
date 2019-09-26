@@ -18,26 +18,24 @@ export default {
     type,
     note
   ) {
-    return user.login().then(token => {
-      const data = {
-        resource_id,
-        resource_type: 1,
-        start_article_id: article_id,
-        start_part,
-        start_word,
-        end_article_id: article_id,
-        end_part,
-        excerpt,
-        percent,
-        end_word,
-        public: _public,
-        type,
-        note,
-        member_token: token,
-      }
+    const data = {
+      resource_id,
+      resource_type: 1,
+      start_article_id: article_id,
+      start_part,
+      start_word,
+      end_article_id: article_id,
+      end_part,
+      excerpt,
+      percent,
+      end_word,
+      public: _public,
+      type,
+      note,
+      member_token: token,
+    }
 
-      return post('/index/read/ascribing', data)
-    })
+    return post('/index/read/ascribing', data)
   },
   lscribing(resource_id, order, callback) {
     //列出我的批注

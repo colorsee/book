@@ -4,7 +4,15 @@
       <h3>目录</h3>
       <div class="close" @click="handleClose">X</div>
     </div>
-    <catalog-list :source="catalog" class="list"></catalog-list>
+    <catalog-list
+      :source="catalog"
+      :progress="progress"
+      :level="1"
+      :sum="0"
+      :index="1"
+      class="list"
+      @close="handleClose"
+    ></catalog-list>
   </action>
 </template>
 
@@ -13,7 +21,7 @@ import CatalogList from "./catalog-list.vue";
 import Action from "./action.vue";
 
 export default {
-  props: ["catalog"],
+  props: ["catalog", "progress"],
   methods: {
     handleClose() {
       this.$emit("close");

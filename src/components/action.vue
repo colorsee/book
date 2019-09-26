@@ -9,7 +9,12 @@
 <style scoped>
 .wrapper {
   background: rgba(0, 0, 0, 0.8);
-  padding-left: 10%;
+}
+
+@media screen and (max-width: 768px) {
+  .wrapper {
+    padding-left: 10%;
+  }
 }
 
 .container {

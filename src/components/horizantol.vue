@@ -1,8 +1,13 @@
 <template>
-  <div class="content" :style="{transform: `translateX(calc((-80px - 100%) * ${page})`}">
+  <div
+    class="content"
+    ref="container"
+    :style="{transform: `translateX(calc((-80px - 100%) * ${page})`}"
+  >
     <component
       v-if="Number.isInteger(current.level)"
       :is="`h${current.level + 1}`"
+      :id="`section-${current.id}`"
     >{{current.title}}</component>
     <div class="paragraphs" v-html="current.content" ref="content" :data-id="current.id"></div>
   </div>
@@ -28,7 +33,21 @@ export default {
       const { page, pageCount, section } = this;
 
       return ((page + 1) / pageCount + section) * this.step;
+    },
+
+    readerWidth() {
+      return window.innerWidth < 768 ? window.innerWidth : 800;
     }
+  },
+
+  mounted() {
+    this.initMouseScroll();
+    this.initHashChange();
+  },
+
+  destroyed() {
+    this.removeHashChange();
+    this.removeMouseScroll();
   },
 
   updated() {
@@ -91,6 +110,66 @@ export default {
     jumpTo(percent) {
       this.section = Math.ceil(percent / this.step - 1);
       this.emitProgress();
+    },
+
+    scroll() {
+      let st = null;
+
+      return delta => {
+        if (st) {
+          return;
+        }
+
+        if (delta < 0) {
+          this.prev();
+        } else {
+          this.next();
+        }
+
+        st = setTimeout(() => {
+          st = null;
+        }, 500);
+      };
+    },
+
+    content() {
+      return $(this.$refs.container)
+        .find("h1, .paragraphs > *")
+        .filter((_, e) => e.offsetLeft === this.readerWidth * this.page)
+        .text();
+    },
+
+    initHashChange() {
+      window.addEventListener("hashchange", this.handleHashChange);
+    },
+
+    removeHashChange() {
+      window.removeEventListener("hashchange", this.handleHashChange);
+    },
+
+    initMouseScroll() {
+      const scroll = this.scroll();
+      this._scrollListener = ({ deltaY }) => scroll(deltaY);
+      this.$refs.container.addEventListener("wheel", this._scrollListener);
+    },
+
+    removeMouseScroll() {
+      this.$refs.container.removeEventListener("wheel", this._scrollListener);
+      this._scrollListener = null;
+    },
+
+    handleHashChange() {
+      const { hash } = window.location;
+      const id = hash.substr(1, hash.length - 1);
+      this.section = this.sections.findIndex(s => s.content.includes(id));
+      this.page = 10000;
+
+      Promise.resolve().then(() => {
+        const target = document.getElementById(id);
+        console.log(target.offsetLeft);
+        this.page = target.offsetLeft / this.readerWidth;
+        this.emitProgress();
+      });
     }
   }
 };
@@ -114,13 +193,13 @@ export default {
 </style>
 
 <style>
-.paragraphs > div {
+.paragraphs p {
   text-indent: 2em !important;
   margin: 0.8rem 0;
 }
 
 @media only screen and (max-width: 768px) {
-  .paragraphs > div {
+  .paragraphs p {
     text-indent: 0 !important;
   }
 }

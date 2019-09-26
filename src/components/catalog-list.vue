@@ -1,20 +1,57 @@
 <template>
   <div class="list">
-    <div :key="item.id" class="item" v-for="item in source">
+    <a
+      :key="item.id"
+      class="item"
+      v-for="item in source"
+      :href="`#section-${item.id}`"
+      @click="handleClick"
+    >
       <div class="detail">
         <div class="title">{{item.title}}</div>
-        <div class="line"></div>
-        <div class="status">0%</div>
+        <!-- <div class="line"></div> -->
+        <!-- <div class="status">{{ percent(index) | percentFilter }}</div> -->
       </div>
-      <catalog-list v-for="it in item.child" :key="it.id" :source="Array.isArray(it) ? it : [it]"></catalog-list>
-    </div>
+      <catalog-list
+        v-for="(it, index) in item.child"
+        :key="it.id"
+        :progress="progress"
+        :sum="sum + step * index"
+        :source="Array.isArray(it) ? it : [it]"
+        :level="step"
+        :index="index"
+      ></catalog-list>
+    </a>
   </div>
 </template>
 
 <script>
+import percent from "../utils/percent";
+
 export default {
   name: "catalog-list",
-  props: ["source"]
+  props: ["source", "progress", "level", "sum", "index"],
+  computed: {
+    step() {
+      return (1 / this.source.length) * this.level;
+    }
+  },
+  methods: {
+    handleClick() {
+      this.$emit("close");
+    },
+
+    percent(index) {
+      const { step, progress, sum } = this;
+
+      if (progress < sum + step * index) {
+        return 1;
+      }
+
+      return 0;
+    }
+  },
+  filters: { percentFilter: percent }
 };
 </script>
 
@@ -25,6 +62,7 @@ export default {
 }
 
 .item {
+  display: block;
   margin-left: 2em;
 }
 

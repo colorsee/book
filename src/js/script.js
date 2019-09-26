@@ -18,14 +18,7 @@ $(document).ready(function() {
       '.bok_Catalog,.set_style,.change_form,.mypsg_1,.mypsg_2,.mypsg_3'
     ).removeClass('act')
   })
-  $('.book_topl_but .bt_4').click(function(e) {
-    alt_page('成功复制到粘贴板')
-    $(this).removeClass('bg_black')
-    $(
-      '.set_style,.bok_Catalog,.search_box,.change_form,.mypsg_1,.mypsg_2,.mypsg_3'
-    ).removeClass('act')
-    //复制整页
-  })
+
   $('.book_topl_but .bt_5').click(function() {
     $('.change_form').toggleClass('act')
     $(
@@ -92,10 +85,6 @@ $(document).ready(function() {
       .addClass('act')
       .siblings()
       .removeClass('act')
-  })
-
-  $('.search_box .close').click(function() {
-    $('.search_box').removeClass('act')
   })
 
   $('.mypsg_2_spet span,.mypsg_3_spet span').click(function() {

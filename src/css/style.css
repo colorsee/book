@@ -414,6 +414,7 @@ button {
   padding: 10px 5px;
   margin-bottom: 10px;
   background-color: #e0dcca;
+  user-select: none;
 }
 
 .book_botomr span:hover {
@@ -1729,18 +1730,6 @@ button {
   bottom: 0;
 }
 
-@media only screen and (max-width: 768px) {
-  .fullscreen {
-    position: fixed;
-  }
-}
-
-@media only screen and (min-width: 769px) {
-  .fullscreen {
-    position: absolute;
-  }
-}
-
 .close {
   font-size: 20px;
   color: #333333;
@@ -1753,5 +1742,25 @@ button {
 .img_type4,
 .img_type5 {
   width: 100% !important;
-  margin-left: -2em;
+}
+
+@media only screen and (max-width: 768px) {
+  .fullscreen {
+    position: fixed;
+  }
+}
+
+@media only screen and (min-width: 769px) {
+  .fullscreen {
+    position: absolute;
+  }
+
+  .img_type0,
+  .img_type1,
+  .img_type2,
+  .img_type3,
+  .img_type4,
+  .img_type5 {
+    margin-left: -2em;
+  }
 }

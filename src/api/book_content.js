@@ -1,5 +1,6 @@
 import * as API from '../main'
 import * as request from '../utils/request'
+import Section from '../models/Section'
 
 export default {
   showart(resource_id) {
@@ -27,11 +28,13 @@ export default {
     ).then(res => res.data)
   },
   show(resource_id) {
-    return request.post('/index/read/show', {
-      resource_id,
-      resource_type: 1,
-      page: 1,
-    })
+    return request
+      .post('/index/read/show', {
+        resource_id,
+        resource_type: 1,
+        page: 1,
+      })
+      .then(({ posts }) => posts.map(i => Section.list(i)).flat())
   },
   info(resource_id) {
     //图书阅读--加载基础信息

@@ -36,7 +36,12 @@
       @close="handleControlClose"
     ></control>
 
-    <catalog v-if="isCatalogShow" :catalog="info.catalog_list" @close="toggle('Catalog', false)"></catalog>
+    <catalog
+      v-if="isCatalogShow"
+      :catalog="info.catalog_list"
+      :progress="progress"
+      @close="toggle('Catalog', false)"
+    ></catalog>
     <bookmark v-if="isBookmarkShow" @close="toggle('Bookmark', false)"></bookmark>
     <settings
       v-if="isSettingsShow"
@@ -66,7 +71,7 @@ const defaultSettings = {
 };
 
 export default {
-  props: ["items", "info", "bookmarks", "resourceId"],
+  props: ["sections", "info", "bookmarks", "resourceId", "progress"],
 
   data: () => ({
     isToolbarShow: false,
@@ -74,44 +79,16 @@ export default {
     isBookmarkShow: false,
     isSettingsShow: false,
     isProgressShow: false,
-    settings: defaultSettings
+    settings: {}
   }),
-
-  computed: {
-    sections() {
-      const t = this.items.map(i => Section.list(i)).flat();
-      return t;
-    }
-  },
 
   mounted() {
     this.loadSettings();
   },
 
-  watch: {
-    settings() {
-      if (!this._scrollListener && this.settings.mode === "horizantol") {
-        this.initMouseScroll();
-      } else {
-        this.removeMouseScroll();
-      }
-    }
-  },
-
   methods: {
     emitProgress(progress) {
       Promise.resolve().then(() => this.$emit("read", progress));
-    },
-
-    initMouseScroll() {
-      const scroll = this.scroll();
-      this._scrollListener = ({ deltaY }) => scroll(deltaY);
-      this.$refs.viewport.addEventListener("wheel", this._scrollListener);
-    },
-
-    removeMouseScroll() {
-      this.$refs.viewport.removeEventListener("wheel", this._scrollListener);
-      this._scrollListener = null;
     },
 
     handleVerticalClick() {
@@ -171,26 +148,6 @@ export default {
       this.restoreSettings(value);
     },
 
-    scroll() {
-      let st = null;
-
-      return delta => {
-        if (st) {
-          return;
-        }
-
-        if (delta < 0) {
-          this.prev();
-        } else {
-          this.next();
-        }
-
-        st = setTimeout(() => {
-          st = null;
-        }, 500);
-      };
-    },
-
     jumpTo(percent) {
       percent = percent / 100;
 
@@ -200,7 +157,6 @@ export default {
 
       const { scrollHeight, clientHeight } = this.$refs.viewport;
       const scrollTo = percent * scrollHeight - clientHeight;
-      console.log(scrollTo);
       this.$refs.viewport.scrollTo(0, scrollTo);
     },
 
@@ -211,6 +167,24 @@ export default {
 
       const { scrollTop, scrollHeight, clientHeight } = this.$refs.viewport;
       this.emitProgress((scrollTop + clientHeight) / scrollHeight);
+    },
+
+    content() {
+      if (this.settings.mode === "horizantol") {
+        return this.$refs.container.content();
+      }
+
+      const { viewport } = this.$refs;
+      const { scrollTop } = viewport;
+      const { innerHeight } = window;
+
+      return $(viewport)
+        .find(".paragraphs > h1, .paragraphs > div > *")
+        .filter(
+          (_, e) =>
+            e.offsetTop >= scrollTop && e.offsetTop <= scrollTop + innerHeight
+        )
+        .text();
     }
   },
 

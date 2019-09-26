@@ -4,6 +4,9 @@ import VueJsonp from 'vue-jsonp'
 import url from 'url'
 import Reader from './components/reader.vue'
 import Thr from './components/thr.vue'
+import SearchBox from './components/search-box.vue'
+import Copier from './components/copier.vue'
+
 import percent from './utils/percent'
 import query from './utils/query'
 
@@ -62,8 +65,8 @@ var vm = new Vue({
       sliblingAPI.dscribing(item.id) //处理DOM，删除DOM
     },
     loadArticle(id) {
-      bookAPI.show(id).then(data => {
-        this.content_list = data.posts
+      bookAPI.show(id).then(sections => {
+        this.content_list = sections
       })
       // //加载内容
       // //1.加载篇章基础信息
@@ -89,6 +92,9 @@ var vm = new Vue({
       //   })
       // }
       // console.log(content_list)
+    },
+    loadInfo(id) {
+      bookAPI.info(id).then(({ posts }) => (this.baseinfo = posts))
     },
     showArticle(pid, id) {
       //滚动到指定位置
@@ -121,6 +127,14 @@ var vm = new Vue({
       this.$refs.reader.handleControlShow(key)
     },
 
+    handleWholePageCopy({ currentTarget }) {
+      $('.book_topl_but .bt_5').removeClass('bg_black')
+      $(
+        '.set_style,.bok_Catalog,.search_box,.change_form,.mypsg_1,.mypsg_2,.mypsg_3'
+      ).removeClass('act')
+      this.$refs.copier.copy(this.$refs.reader.content())
+    },
+
     jumpTo() {
       this.$refs.reader.jumpTo(parseInt(this.jump))
     },
@@ -128,7 +142,6 @@ var vm = new Vue({
   created: function() {
     //判断类型
     userAPI.login('caoxiaomo', '123456')
-    this.loadArticle(resource_id)
 
     // if (resource_type == 1) {
     //   //图书
@@ -161,8 +174,10 @@ var vm = new Vue({
 
   mounted() {
     this.$refs.thr.init()
+    this.loadArticle(resource_id)
+    this.loadInfo(resource_id)
   },
 
-  components: { Reader, Thr },
+  components: { Reader, Thr, SearchBox, Copier },
   filters: { percent },
 })

@@ -100,10 +100,11 @@
 				<reader
 					ref="reader"
 					class="bok_item scrol_none"
-					:items="content_list"
+					:sections="content_list"
 					:info="baseinfo"
 					:bookmarks="lmarkList"
 					:resource-id="resource_id"
+					:progress="progress"
 					@read="handleRead"
 				></reader>
 				<!-- <div class="bok_item scrol_none" id="content">
@@ -125,7 +126,7 @@
 						<span class="bt_1" title="显示设置" @click="handleControlShow('isSettingsShow')">&#xe635;</span>
 						<span class="bt_2" title="目录" @click="handleControlShow('isCatalogShow')">&#xe64e;</span>
 						<span class="bt_3" title="内容检索">&#xe62e;</span>
-						<span class="bt_4" title="整页复制">&#xe64e;</span>
+						<span class="bt_4" title="整页复制" @click="handleWholePageCopy">&#xe64e;</span>
 						<span class="bt_5" title="其他格式">&#xe635;</span>
 					</div>
 				</div>
@@ -186,77 +187,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="search_box scroll_book">
-					<div class="search_box_h">
-						<h3>全文搜索</h3>
-						<div class="close">&Chi;</div>
-						<div class="search_into">
-							<input type="text" name="" id="" placeholder="输入要检索的内容" />
-						</div>
-						<div class="search_list">
-							<div class="scrollview">
-								<h4>搜索结果<span>10</span>个</h4>
-								<div class="search_list_item">
-									<div class="t">
-										<span>这里是章节的名称这里是章节的名称这里是章节的名称</span>
-										<span>15</span>
-									</div>
-									<div class="b">...,内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容 容内容内容内容内容
-									</div>
-								</div>
-								<div class="search_list_item">
-									<div class="t">
-										<span>这里是章节的名称</span>
-										<span>15</span>
-									</div>
-									<div class="b">...,内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容</div>
-								</div>
-								<div class="search_list_item">
-									<div class="t">
-										<span>这里是章节的名称</span>
-										<span>15</span>
-									</div>
-									<div class="b">...,内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容</div>
-								</div>
-								<div class="search_list_item">
-									<div class="t">
-										<span>这里是章节的名称</span>
-										<span>15</span>
-									</div>
-									<div class="b">...,内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容</div>
-								</div>
-								<div class="search_list_item">
-									<div class="t">
-										<span>这里是章节的名称</span>
-										<span>15</span>
-									</div>
-									<div class="b">...,内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容</div>
-								</div>
-								<div class="search_list_item">
-									<div class="t">
-										<span>这里是章节的名称</span>
-										<span>15</span>
-									</div>
-									<div class="b">...,内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容</div>
-								</div>
-								<div class="search_list_item">
-									<div class="t">
-										<span>这里是章节的名称</span>
-										<span>15</span>
-									</div>
-									<div class="b">...,内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容</div>
-								</div>
-								<div class="search_list_item">
-									<div class="t">
-										<span>这里是章节的名称</span>
-										<span>15</span>
-									</div>
-									<div class="b">...,内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
+				<search-box :sections="content_list"></search-box>
 				<div class="change_form scroll_book">
 					<h3>其他格式阅读</h3>
 					<div class="PDF_read" v-show="baseinfo.read_pdf == '0' ? false:true">PDF格式</div>
@@ -540,6 +471,7 @@
 			<div class="alt_page">
 				<span>第一页</span>
 			</div>
+			<copier ref="copier"></copier>
 		</div>
 		<script type="text/javascript" src="js/swiper.min.js"></script>
 		<script type="text/javascript" src="js/jquery-2.1.0.js"></script>
@@ -559,17 +491,18 @@
 				},
 			})
 
-			$(".search_into input").on("keypress", function(e) {
-				if(event.keyCode == 13) {
-					var search_h = $(".search_list_item").length * 120 > 690 ? 690 : $(".search_list_item").length * 120;
-					if(search_h == 0) {
-						$(".search_list").show().text("没有搜索到内容");
-					}
-					$(".search_list").show().css({
-						"height": search_h + "px"
-					});
-				}
-			});
+			// $(".search_into input").on("keypress", function(e) {
+			// 	console.log(e)
+			// 	if(event.keyCode == 13) {
+			// 		var search_h = $(".search_list_item").length * 120 > 690 ? 690 : $(".search_list_item").length * 120;
+			// 		if(search_h == 0) {
+			// 			$(".search_list").show().text("没有搜索到内容");
+			// 		}
+			// 		$(".search_list").show().css({
+			// 			"height": search_h + "px"
+			// 		});
+			// 	}
+			// });
 			}
 		</script>
 		<script type="text/javascript" src="/bundle.js"></script>

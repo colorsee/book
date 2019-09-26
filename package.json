@@ -4,7 +4,7 @@
   "description": "",
   "main": "main.js",
   "scripts": {
-    "build": "webpack",
+    "build": "rm -rf dist/ && webpack && cp -r ./src/css ./src/img ./src/js ./src/index.html ./dist",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "webpack-dev-server --open  --contentBase src --hot"
   },
