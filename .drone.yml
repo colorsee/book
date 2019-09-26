@@ -1,0 +1,10 @@
+---
+kind: pipeline
+type: docker
+name: default
+
+steps:
+  - name: deloy
+    image: node:12.10.0
+    commands:
+      - npm build
