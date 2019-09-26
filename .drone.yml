@@ -7,4 +7,5 @@ steps:
   - name: deloy
     image: node:12.10.0
     commands:
-      - npm build
+      - npm install
+      - npm run build
