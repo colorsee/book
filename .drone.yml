@@ -2,7 +2,9 @@
 kind: pipeline
 type: docker
 name: default
-
+trigger:
+  branch: master
+  event: push
 steps:
   - name: initial
     image: node:12.10.0
@@ -21,9 +23,6 @@ steps:
 
   - name: scp
     image: appleboy/drone-scp
-    when:
-      branch: master
-      event: push
     settings:
       host:
         from_secret: ssh_host
@@ -39,9 +38,6 @@ steps:
 
   - name: deloy
     image: appleboy/drone-ssh
-    when:
-      branch: master
-      event: push
     settings:
       host:
         from_secret: ssh_host
