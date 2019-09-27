@@ -30,7 +30,7 @@ steps:
         from_secret: ssh_user
       password:
         from_secret: ssh_password
-      target: /tmp/dist.tar.gz
+      target: /tmp/ebook
       source: dist.tar.gz
       rm: true
 
@@ -46,6 +46,6 @@ steps:
       password:
         from_secret: ssh_password
       script:
-        - cd /tmp
+        - cd /tmp/ebook
         - tar zxvf dist.tar.gz
         - mv dist $PROJECTS/ebook
