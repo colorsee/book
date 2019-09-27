@@ -4,17 +4,17 @@ type: docker
 name: default
 
 steps:
-  - name: Initial
+  - name: initial
     image: node:12.10.0
     commands:
       - npm install
 
-  - name: Build
+  - name: initial
     image: node:12.10.0
     commands:
       - npm run build
 
-  - name: Pack
+  - name: pack
     image: node:12.10.0
     commands:
       - tar zcvf dist.tar.gz dist/*
@@ -30,9 +30,8 @@ steps:
         from_secret: ssh_user
       password:
         from_secret: ssh_password
-      target: $PROJECTS
+      target: $PROJECTS/dist.tar.gz
       source: dist.tar.gz
-      rm: true
 
   - name: deloy
     image: appleboy/drone-ssh
