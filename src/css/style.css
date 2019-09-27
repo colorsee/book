@@ -1045,6 +1045,7 @@ button {
   cursor: pointer;
   padding: 6px;
   margin-bottom: 10px;
+  user-select: none;
 }
 
 .book_topr_but span:hover {

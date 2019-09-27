@@ -160,13 +160,14 @@ export default {
 
     handleHashChange() {
       const { hash } = window.location;
-      const id = hash.substr(1, hash.length - 1);
-      this.section = this.sections.findIndex(s => s.content.includes(id));
+      const [_, id] = hash.match(/#section-(\d+)/);
+      this.section = this.sections.findIndex(
+        s => s.id == id || s.content.includes(`section-${id}`)
+      );
       this.page = 10000;
 
       Promise.resolve().then(() => {
-        const target = document.getElementById(id);
-        console.log(target.offsetLeft);
+        const target = document.getElementById(`section-${id}`);
         this.page = target.offsetLeft / this.readerWidth;
         this.emitProgress();
       });

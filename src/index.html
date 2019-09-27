@@ -144,49 +144,6 @@
 					<input class="but" type="button" id="" value="跳转" @click="jumpTo" />
 				</div>
 			
-				<div class="bok_Catalog scroll_book">
-					<div class="scrollview">
-						<h3>目录</h3>
-						<div class="bok_Catalog_list">
-							<div class="txt_indet_0" v-for="(item,index) in baseinfo.catalog_list" :key="item.id">
-								<div class="ready_buy">
-									<p>
-										<a href="#" @click.prevent='loadArticle(item.id)'>{{item.title}}</a><i></i>
-										<a href="">0%</a>
-									</p>
-								</div>
-								<div class="txt_indet_1" v-for="(bitem,index) in item.child" :key="bitem.id">
-									<div class="need_buy">
-										<p>
-											<a href="" @click.prevent='loadArticle(bitem.id)'>{{bitem.title}}</a><i></i>
-											<a href="">未购买</a>
-										</p>
-									</div>
-									
-									<div class="txt_indet_2"  v-for="(citem,index) in bitem.child" :key="citem.id">
-										<div class="need_buy">
-											<p>
-												<a href="" @click.prevent='showArticle(bitem.id,citem.id)'>{{citem.title}}</a><i></i>
-												<a href="">未购买</a>
-											</p>
-										</div>
-										<div class="txt_indet_3" v-for="(ditem,index) in citem.child" :key="ditem.id">
-											<div class="need_buy">
-												<p>
-													<a href="" @click.prevent='showArticle(bitem.id,ditem.id)'>{{ditem.title}}</a><i></i>
-													<a href="">未购买</a>
-												</p>
-											</div>
-										</div>
-									</div>
-
-								</div>
-							</div>
-						
-						
-						</div>
-					</div>
-				</div>
 				<search-box :sections="content_list"></search-box>
 				<div class="change_form scroll_book">
 					<h3>其他格式阅读</h3>
