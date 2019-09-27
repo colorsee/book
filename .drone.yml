@@ -4,8 +4,49 @@ type: docker
 name: default
 
 steps:
-  - name: deloy
+  - name: Initial
     image: node:12.10.0
     commands:
       - npm install
+
+  - name: Build
+    image: node:12.10.0
+    commands:
       - npm run build
+
+  - name: Pack
+    image: node:12.10.0
+    commands:
+      - rm -rf dist/
+      - tar zcvf dist.tar.gz dist/*
+
+  - name: scp
+    image: appleboy/drone-scp
+    settings:
+      host:
+        from_secret: ssh_host
+      port:
+        from_secret: ssh_port
+      user:
+        from_secret: ssh_user
+      password:
+        from_secret: ssh_password
+      target: $PROJECTS
+      source: dist.tar.gz
+      rm: true
+
+  - name: deloy
+    image: appleboy/drone-ssh
+    settings:
+      host:
+        from_secret: ssh_host
+      port:
+        from_secret: ssh_port
+      user:
+        from_secret: ssh_user
+      password:
+        from_secret: ssh_password
+      script:
+        - cd $PROJECTS
+        - tar zxvf dist.tar.gz
+        - mv dist ebook
