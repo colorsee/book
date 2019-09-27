@@ -9,7 +9,7 @@ steps:
     commands:
       - npm install
 
-  - name: initial
+  - name: build
     image: node:12.10.0
     commands:
       - npm run build
