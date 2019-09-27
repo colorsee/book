@@ -768,6 +768,7 @@ button {
 }
 
 .set_style_list .r .color {
+  box-sizing: border-box;
   display: block;
   width: 40px;
   height: 40px;
@@ -776,6 +777,11 @@ button {
   margin-right: 12px;
   margin-bottom: 10px;
   border: 1px solid #cccccc;
+}
+
+.set_style_list .r .color.active {
+  background-color: #ffeaea;
+  border: 2px solid #ff7171;
 }
 
 .set_style_list .r .color.faf7ed {

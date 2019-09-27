@@ -44,22 +44,27 @@
         <div class="set_style_list">
           <div class="l">阅读主题</div>
           <div class="r color_chose">
-            <span class="color faf7ed" @click="handleBackgroundChange('#faf7ed', 'black')"></span>
-            <span class="color e6f2e6" @click="handleBackgroundChange('#e6f2e6', '#999')"></span>
-            <span class="color e4f1f5" @click="handleBackgroundChange('#e4f1f5', '#666')"></span>
-            <span class="color e0e0e0" @click="handleBackgroundChange('#e0e0e0', '#333')"></span>
-            <span class="color f5e4e4" @click="handleBackgroundChange('#f5e4e4', '#111')"></span>
-            <span class="color c_191b1c" @click="handleBackgroundChange('#191b1c', '#f1f1f1')"></span>
-            <span class="color c_52585c" @click="handleBackgroundChange('#52585c', '#f9f9f9')"></span>
+            <span
+              v-for="c in colors"
+              :key="c[0]"
+              :class="{color: true, [c[2] || c[0]]: true, active: unit('background') === `#${c[0]}`}"
+              @click="handleBackgroundSettingChange('#' + c[0], c[1])"
+            ></span>
           </div>
         </div>
         <div class="set_style_list">
           <div class="l">字体大小</div>
           <div class="r">
             <p>
-              <span class="size lessen" @click="handleFontSizeClick(value.fontSize - 1)">A-</span>
-              <span class="size now">{{value.fontSize}}</span>
-              <span class="size add" @click="handleFontSizeClick(value.fontSize + 1)">A+</span>
+              <span
+                class="size lessen"
+                @click="handleSettingChange('fontSize', unit('fontSize') - 1)"
+              >A-</span>
+              <span class="size now">{{unit('fontSize')}}</span>
+              <span
+                class="size add"
+                @click="handleSettingChange('fontSize', unit('fontSize') + 1)"
+              >A+</span>
             </p>
           </div>
         </div>
@@ -67,19 +72,19 @@
           <div class="l">阅读方式</div>
           <div class="r">
             <span
-              :class="{rad: true, read_s: true, bg_red: value.mode === 'vertical'}"
-              @click="emitChange('mode', 'vertical')"
+              :class="{rad: true, read_s: true, bg_red: unit('mode') === 'vertical'}"
+              @click="handleSettingChange('mode', 'vertical')"
             >&#xe662; 竖</span>
             <span
-              :class="{rad: true, read_s: true, bg_red: value.mode === 'horizantol'}"
-              @click="emitChange('mode', 'horizantol')"
+              :class="{rad: true, read_s: true, bg_red: unit('mode') === 'horizantol'}"
+              @click="handleSettingChange('mode', 'horizantol')"
             >&#xe661; 横</span>
           </div>
         </div>
         <div class="set_style_list">
           <div class="l">&nbsp;</div>
           <div class="r">
-            <div class="but_sure" @click="handleClose">确认</div>
+            <div class="but_sure" @click="handleConfirm">确认</div>
             <div class="but_cance" @click="handleClose">取消</div>
           </div>
         </div>
@@ -94,6 +99,19 @@ import Tablet from "./tablet.vue";
 
 export default {
   props: ["value"],
+
+  data: () => ({
+    settings: {},
+    colors: [
+      ["faf7ed", "black"],
+      ["e6f2e6", "#999"],
+      ["e4f1f5", "#666"],
+      ["e0e0e0", "#333"],
+      ["f5e4e4", "#111"],
+      ["191b1c", "#f1f1f1", "c_191b1c"],
+      ["52585c", "#f9f9f9", "c_52585c"]
+    ]
+  }),
 
   methods: {
     handleFontSizeChange(e) {
@@ -117,8 +135,24 @@ export default {
       this.$emit("input", newValue);
     },
 
+    handleSettingChange(key, value) {
+      this.settings = {
+        ...this.settings,
+        [key]: value
+      };
+    },
+
+    handleBackgroundSettingChange(background, color) {
+      this.settings = { ...this.settings, background, color };
+    },
+
     handleClose() {
       this.$emit("close");
+    },
+
+    handleConfirm() {
+      this.$emit("input", { ...this.value, ...this.settings });
+      this.handleClose();
     },
 
     emitChange(key, value) {
@@ -127,6 +161,10 @@ export default {
         [key]: value
       };
       this.$emit("input", newValue);
+    },
+
+    unit(key) {
+      return this.settings[key] || this.value[key];
     }
   },
 
