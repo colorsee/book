@@ -1,5 +1,5 @@
 <template>
-  <action>
+  <action class="container">
     <div class="header">
       <h3>目录</h3>
       <div class="close" @click="handleClose">X</div>
@@ -32,6 +32,10 @@ export default {
 </script>
 
 <style scoped>
+.container {
+  overflow-y: auto;
+}
+
 .header {
   display: flex;
   align-items: center;

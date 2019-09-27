@@ -8,7 +8,7 @@
       @click="handleClick"
     >
       <div class="detail">
-        <div class="title">{{item.title}}</div>
+        <div class="title" v-html="item.title"></div>
         <!-- <div class="line"></div> -->
         <!-- <div class="status">{{ percent(index) | percentFilter }}</div> -->
       </div>
@@ -57,7 +57,6 @@ export default {
 
 <style scoped>
 .list {
-  overflow-y: scroll;
   font-size: 0.9rem;
 }
 
