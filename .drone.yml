@@ -17,7 +17,6 @@ steps:
   - name: Pack
     image: node:12.10.0
     commands:
-      - rm -rf dist/
       - tar zcvf dist.tar.gz dist/*
 
   - name: scp
