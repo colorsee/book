@@ -7,9 +7,11 @@
         <input
           type="text"
           placeholder="输入要检索的内容"
+          class="input"
           v-model="keyword"
-          @keypress.enter="handleSubmit()"
+          @keypress.enter="handleSubmit"
         />
+        <icon name="search" @click.native="handleSubmit"></icon>
       </div>
       <div :class="{search_list: true, active: result.length}">
         <div class="scrollview">
@@ -34,6 +36,8 @@
 </template>
 
 <script>
+import Icon from "./icon.vue";
+
 export default {
   props: ["sections"],
 
@@ -50,19 +54,25 @@ export default {
     handleSubmit() {
       const { sections, keyword } = this;
 
+      if (!keyword) {
+        return;
+      }
+
       this.result = sections
+        .filter(s => s.content.includes(keyword))
         .map(s => {
-          const result = s.content.match(
-            new RegExp(`(?<=\\>)\\S*?${keyword}\\S*?(?=\\<)`)
+          const [result] = s.content.match(
+            new RegExp(`[^<>]{0,20}${keyword}[^<>]{0,20}`)
           );
+
+          console.log(result);
 
           return {
             id: s.id,
             title: s.title,
-            content: result && result.shift()
+            content: result
           };
-        })
-        .filter(s => s.content);
+        });
     },
 
     handleItemClick() {
@@ -70,7 +80,9 @@ export default {
       this.result = [];
       this.keyword = "";
     }
-  }
+  },
+
+  components: { Icon }
 };
 </script>
 
@@ -84,5 +96,13 @@ export default {
 .search_list_item {
   display: block;
   color: #333;
+}
+
+.search_into {
+  display: flex;
+}
+
+.search_into .input {
+  flex: 1;
 }
 </style>
