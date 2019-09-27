@@ -50,4 +50,5 @@ steps:
       script:
         - cd /tmp/ebook
         - tar zxvf dist.tar.gz
+        - rm -rf $PROJECTS/ebook
         - mv dist $PROJECTS/ebook
