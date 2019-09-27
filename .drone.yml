@@ -30,8 +30,9 @@ steps:
         from_secret: ssh_user
       password:
         from_secret: ssh_password
-      target: $PROJECTS/dist.tar.gz
+      target: /tmp/dist.tar.gz
       source: dist.tar.gz
+      rm: true
 
   - name: deloy
     image: appleboy/drone-ssh
@@ -45,6 +46,6 @@ steps:
       password:
         from_secret: ssh_password
       script:
-        - cd $PROJECTS
+        - cd /tmp
         - tar zxvf dist.tar.gz
-        - mv dist ebook
+        - mv dist $PROJECTS/ebook
