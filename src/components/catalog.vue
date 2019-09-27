@@ -34,6 +34,7 @@ export default {
 <style scoped>
 .container {
   overflow-y: auto;
+  padding-bottom: 32px;
 }
 
 .header {

@@ -23,7 +23,5 @@
   display: flex;
   flex-direction: column;
   padding: 20px;
-  height: 100%;
-  box-sizing: border-box;
 }
 </style>
