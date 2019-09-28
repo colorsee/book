@@ -13,7 +13,7 @@
         </div>
         <div class="wrapper" @click="closeToolbar">
           <div class="tool">&#xe633;</div>
-          <div class="tool">&#xe64e;</div>
+          <div class="tool" @click.capture.stop.prevent="handleBookmarkAdd">&#xe64e;</div>
         </div>
         <div class="footer">
           <div class="action" @click="handleActionClick('isCatalogShow')">
@@ -51,6 +51,10 @@ export default {
 
     handleActionClick(key) {
       this.$emit("show", key);
+    },
+
+    handleBookmarkAdd() {
+      this.$emit("add-bookmark");
     },
 
     closeToolbar() {

@@ -15,7 +15,7 @@
         v-on="$listeners"
       ></horizantol>
 
-      <div v-else @click="handleVerticalClick">
+      <div v-else @click="handleVerticalClick" ref="verticalContainer">
         <vertical
           v-for="item in sections"
           class="paragraphs"
@@ -34,6 +34,7 @@
       @pageChange="handlePageChange"
       @show="handleControlShow"
       @close="handleControlClose"
+      @add-bookmark="handleBookmarkAdd"
     ></control>
 
     <catalog
@@ -42,7 +43,7 @@
       :progress="progress"
       @close="toggle('Catalog', false)"
     ></catalog>
-    <bookmark v-if="isBookmarkShow" @close="toggle('Bookmark', false)"></bookmark>
+    <bookmark v-if="isBookmarkShow" @close="toggle('Bookmark', false)" :sections="sections"></bookmark>
     <settings
       v-if="isSettingsShow"
       :value="settings"
@@ -111,6 +112,10 @@ export default {
     handleControlClose() {
       this.closeControls();
       this.isToolbarShow = false;
+    },
+
+    handleBookmarkAdd() {
+      this.$emit("add-bookmark");
     },
 
     toggle(key, shouldShow) {
@@ -185,6 +190,44 @@ export default {
             e.offsetTop >= scrollTop && e.offsetTop <= scrollTop + innerHeight
         )
         .text();
+    },
+
+    abstract() {
+      if (this.settings.mode === "horizantol") {
+        return this.$refs.container.abstract();
+      }
+
+      const { verticalContainer, viewport } = this.$refs;
+      const headers = $(verticalContainer).find("h1, h2, h3, h4, h5");
+      const [targetHeader] = headers.filter(
+        (_, c) => c.offsetTop > viewport.scrollTop
+      );
+      console.log(targetHeader);
+      const [, partcode] = targetHeader.id.match(/^section-(\d+)$/);
+
+      const [target] = $(verticalContainer)
+        .find("p")
+        .filter((_, c) => c.offsetTop > viewport.scrollTop);
+      const value = $(target).text();
+
+      const [article] = $(verticalContainer)
+        .find("h1, h2, h3, h4, h5")
+        .filter((_, h) => {
+          const [, id] = h.id.match(/^section-(.*)$/);
+          return (
+            this.sections.findIndex(s => s.id == id) >= 0 &&
+            h.offsetTop > viewport.scrollTop
+          );
+        });
+      const [, article_id] = article.id.match(/^section-(\d+)$/);
+
+      return {
+        article_id,
+        start_part: partcode,
+        start_word: 1,
+        excerpt: value,
+        percent: this.progress
+      };
     }
   },
 

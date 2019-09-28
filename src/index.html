@@ -107,6 +107,7 @@
 					:resource-id="resource_id"
 					:progress="progress"
 					@read="handleRead"
+					@add-bookmark="amark"
 				></reader>
 				<!-- <div class="bok_item scrol_none" id="content">
 					<div class="scrollview">
@@ -120,7 +121,7 @@
 						
 					</div>
 				</div> -->
-				<div class="bok_mark">&#xe62e;</div>
+				<div class="bok_mark" @click="amark">&#xe62e;</div>
 				<thr ref='thr' :progress="progress"></thr>
 				<div class="book_topl">
 					<div class="book_topl_but">

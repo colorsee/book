@@ -50,7 +50,14 @@ var vm = new Vue({
       utilsAPI.collectArt(this.resource_id)
       // var status = utilsAPI.collectStatus(this.resource_id)
     },
+    amark() {
+      markAPI.amark({
+        resource_id,
+        ...this.$refs.reader.abstract(),
+      })
+    },
     lmark() {
+      this.$refs.reader.handleControlShow('isBookmarkShow')
       markAPI.lmark(1, 1, res => {
         this.lmarkList = res.posts
       })

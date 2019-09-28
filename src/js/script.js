@@ -25,7 +25,6 @@ $(document).ready(function() {
     ).removeClass('act')
   })
   $('.book_topr_but .bt_6').click(function() {
-    $('.mypsg_1').toggleClass('act')
     $(
       '.set_style,.bok_Catalog,.search_box,change_form,.mypsg_2,.mypsg_3'
     ).removeClass('act')
@@ -94,12 +93,7 @@ $(document).ready(function() {
   })
 
   $('.bok_mark').click(function() {
-    $(this).toggleClass('bg_yelow')
-    if ($(this).hasClass('bg_yelow')) {
-      alt_page('已加入标签')
-    } else {
-      alt_page('已取消标签')
-    }
+    alt_page('已加入标签')
   })
 
   $('.phone_list .close').click(function() {

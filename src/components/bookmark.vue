@@ -6,13 +6,13 @@
     </div>
     <div class="list">
       <div :key="item.id" class="item" v-for="item in bookmarks">
-        <!-- <h4 class="title">我是书签的章节名称</h4> -->
+        <h4 class="title">{{item.title}}</h4>
         <div>
           <p class="excerpt">{{item.excerpt}}</p>
           <div class="extra">
             <span>进度：{{item.percent | percent}}</span>
             <div class="actions">
-              <div class="action">打开</div>
+              <a class="action" :href="`#section-${item.start_part}`" @click="handleClose">打开</a>
               <div class="action dangerous" @click="remove(item.id)">删除</div>
             </div>
             <div>{{item.create_time | datetime}}</div>
@@ -30,6 +30,8 @@ import percent from "../utils/percent";
 import datetime from "../utils/datetime";
 
 export default {
+  props: ["sections"],
+
   data: () => ({
     bookmarks: []
   }),
@@ -40,7 +42,13 @@ export default {
 
   methods: {
     load() {
-      markAPI.lmark(1, 1, ({ posts }) => (this.bookmarks = posts));
+      markAPI.lmark(resource_id, 1).then(({ posts }) => {
+        posts.forEach(b => {
+          const target = this.sections.find(s => s.id == b.article_id);
+          b.title = (target && target.title) || "";
+        });
+        this.bookmarks = posts;
+      });
     },
 
     remove(id) {
@@ -73,7 +81,7 @@ export default {
   padding-bottom: 10px;
   margin: 0;
   margin-top: 10px;
-  color: #999999;
+  color: #333;
 }
 
 .item .excerpt {
@@ -103,6 +111,7 @@ export default {
   background-color: #ebebeb;
   padding: 3px 4px;
   margin: 0 5px;
+  display: block;
 }
 
 .actions .action.dangerous {

@@ -160,17 +160,42 @@ export default {
 
     handleHashChange() {
       const { hash } = window.location;
-      const [_, id] = hash.match(/#section-(\d+)/);
+      const [_, id] = hash.match(/#section-(\d+)$/);
+
       this.section = this.sections.findIndex(
         s => s.id == id || s.content.includes(`section-${id}`)
       );
-      this.page = 10000;
 
+      this.page = 10000;
       Promise.resolve().then(() => {
         const target = document.getElementById(`section-${id}`);
         this.page = target.offsetLeft / this.readerWidth;
         this.emitProgress();
       });
+    },
+
+    abstract() {
+      const { current, page, readerWidth, progress } = this;
+      const { container } = this.$refs;
+      const offsetLeft = page * readerWidth;
+
+      const headers = $(container).find("h1, h2, h3, h4, h5");
+      const result = headers.filter((_, c) => c.offsetLeft === offsetLeft);
+      const targetHeader = result.length ? result[0] : headers[0];
+      const [, partcode] = targetHeader.id.match(/^section-(\d+)$/);
+
+      const [target] = $(container)
+        .find("p")
+        .filter((_, c) => c.offsetLeft === offsetLeft);
+      const value = $(target).text();
+
+      return {
+        article_id: current.id,
+        start_part: partcode,
+        start_word: "" + page,
+        excerpt: value,
+        percent: this.progress
+      };
     }
   }
 };
