@@ -30,7 +30,7 @@
               <div class="title">{{item.title}}</div>
               <div class="progress">{{item.progress | percent}}</div>
             </div>
-            <div class="b">{{item.content}}</div>
+            <div class="b" v-html="item.content"></div>
           </a>
         </div>
         <div class="empty" v-else>
@@ -80,7 +80,10 @@ export default {
           return {
             id: s.id,
             title: s.title,
-            content: result,
+            content: result.replace(
+              keyword,
+              `<span style="background: #ac8200; color: white; padding: 2px">${keyword}</span>`
+            ),
             progress: i * step
           };
         });
