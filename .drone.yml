@@ -7,35 +7,35 @@ trigger:
   event: push
 
 steps:
-- name: install
-  image: node:12.10.0
-  commands:
-  - npm install --registry=https://registry.npm.taobao.org
-  
-- name: build
-  image: node:12.10.0
-  commands:
-  - npm run build
+  - name: install
+    image: node:12.10.0
+    commands:
+      - npm install --registry=https://registry.npm.taobao.org
 
-- name: pack
-  image: alpine
-  commands:
-  - tar zcvf dist.tar.gz dist/*
+  - name: build
+    image: node:12.10.0
+    commands:
+      - npm run build
 
-- name: dispatch
-  image: appleboy/drone-scp
-  settings:
-    host:
-      from_secret: ssh_host
-    port:
-      from_secret: ssh_port
-    user:
-      from_secret: ssh_user
-    password:
-      from_secret: ssh_password
-    target: /tmp/ebook
-    source: ./dist.tar.gz
-    rm: true
+  - name: pack
+    image: alpine
+    commands:
+      - tar zcvf dist.tar.gz dist/*
+
+  - name: dispatch
+    image: appleboy/drone-scp
+    settings:
+      host:
+        from_secret: ssh_host
+      port:
+        from_secret: ssh_port
+      user:
+        from_secret: ssh_user
+      password:
+        from_secret: ssh_password
+      target: /tmp/ebook
+      source: ./dist.tar.gz
+      rm: true
 
 ---
 kind: pipeline
@@ -45,22 +45,22 @@ clone:
   disable: true
 
 steps:
-- name: deploy
-  image: appleboy/drone-ssh
-  settings:
-    host:
-      from_secret: ssh_host
-    port:
-      from_secret: ssh_port
-    user:
-      from_secret: ssh_user
-    password:
-      from_secret: ssh_password
-    script:
-    - cd /tmp/ebook
-    - tar zxvf dist.tar.gz
-    - rm -rf $PROJECTS/ebook
-    - mv dist $PROJECTS/ebook
+  - name: deploy
+    image: appleboy/drone-ssh
+    settings:
+      host:
+        from_secret: ssh_host
+      port:
+        from_secret: ssh_port
+      user:
+        from_secret: ssh_user
+      password:
+        from_secret: ssh_password
+      script:
+        - cd /tmp/ebook
+        - tar zxvf dist.tar.gz
+        - rm -rf $PROJECTS/ebook
+        - mv dist $PROJECTS/ebook
 
 depends_on:
-  - Build
+  - build
