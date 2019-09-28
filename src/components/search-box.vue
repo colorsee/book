@@ -1,5 +1,5 @@
 <template>
-  <div class="search_box scroll_book">
+  <div :class="{search_box: true, scroll_book: true, act: active}">
     <div class="search_box_h">
       <h3>全文搜索</h3>
       <div class="close" @click="close">&Chi;</div>
@@ -13,8 +13,8 @@
         />
         <icon name="search" @click.native="handleSubmit"></icon>
       </div>
-      <div :class="{search_list: true, active: result.length}">
-        <div class="scrollview">
+      <div class="search_list active" v-if="result">
+        <div class="scrollview" v-if="result.length">
           <h4>
             搜索结果
             <span>{{this.result.length}}</span>个
@@ -30,6 +30,9 @@
             <div class="b">{{item.content}}</div>
           </a>
         </div>
+        <div class="empty" v-else>
+          <h4>没有找到相关内容</h4>
+        </div>
       </div>
     </div>
   </div>
@@ -39,16 +42,18 @@
 import Icon from "./icon.vue";
 
 export default {
-  props: ["sections"],
+  props: ["sections", "active"],
 
   data: () => ({
-    result: [],
+    result: null,
     keyword: ""
   }),
 
   methods: {
     close() {
-      $(".search_box").removeClass("act");
+      this.result = null;
+      this.keyword = "";
+      this.$emit("close");
     },
 
     handleSubmit() {
@@ -58,14 +63,13 @@ export default {
         return;
       }
 
+      this.isActive = true;
       this.result = sections
         .filter(s => s.content.includes(keyword))
         .map(s => {
           const [result] = s.content.match(
             new RegExp(`[^<>]{0,20}${keyword}[^<>]{0,20}`)
           );
-
-          console.log(result);
 
           return {
             id: s.id,
@@ -76,9 +80,7 @@ export default {
     },
 
     handleItemClick() {
-      this.close();
-      this.result = [];
-      this.keyword = "";
+      this.$emit("close");
     }
   },
 
@@ -90,7 +92,7 @@ export default {
 .search_list.active {
   display: block;
   height: 720px;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 .search_list_item {
@@ -104,5 +106,12 @@ export default {
 
 .search_into .input {
   flex: 1;
+}
+
+.empty {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>

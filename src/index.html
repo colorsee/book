@@ -126,7 +126,7 @@
 					<div class="book_topl_but">
 						<span class="bt_1" title="显示设置" @click="handleControlShow('isSettingsShow')">&#xe635;</span>
 						<span class="bt_2" title="目录" @click="handleControlShow('isCatalogShow')">&#xe64e;</span>
-						<span class="bt_3" title="内容检索">&#xe62e;</span>
+						<span class="bt_3" title="内容检索" @click="toggleSearchBar(!isSearchBoxShow)">&#xe62e;</span>
 						<span class="bt_4" title="整页复制" @click="handleWholePageCopy">&#xe64e;</span>
 						<span class="bt_5" title="其他格式">&#xe635;</span>
 					</div>
@@ -145,7 +145,7 @@
 					<input class="but" type="button" id="" value="跳转" @click="jumpTo" />
 				</div>
 			
-				<search-box :sections="content_list"></search-box>
+				<search-box :sections="content_list" :active="isSearchBoxShow" @close="toggleSearchBar(false)"></search-box>
 				<div class="change_form scroll_book">
 					<h3>其他格式阅读</h3>
 					<div class="PDF_read" v-show="baseinfo.read_pdf == '0' ? false:true">PDF格式</div>

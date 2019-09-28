@@ -32,7 +32,7 @@ window.resource_type = resource_type
 var articleID = null
 var vm = new Vue({
   el: '#app',
-  data: {
+  data: () => ({
     baseinfo: '',
     resource_id,
     resource_type,
@@ -41,7 +41,8 @@ var vm = new Vue({
     lscribingList: [],
     progress: 0,
     jump: '',
-  },
+    isSearchBoxShow: false,
+  }),
   methods: {
     collection() {
       //收藏
@@ -137,6 +138,10 @@ var vm = new Vue({
 
     jumpTo() {
       this.$refs.reader.jumpTo(parseInt(this.jump))
+    },
+
+    toggleSearchBar(isShow) {
+      this.isSearchBoxShow = isShow
     },
   },
   created: function() {

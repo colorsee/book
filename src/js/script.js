@@ -13,7 +13,6 @@ $(document).ready(function() {
   })
 
   $('.book_topl_but .bt_3').click(function() {
-    $('.search_box').toggleClass('act')
     $(
       '.bok_Catalog,.set_style,.change_form,.mypsg_1,.mypsg_2,.mypsg_3'
     ).removeClass('act')
