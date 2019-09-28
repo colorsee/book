@@ -17,7 +17,7 @@
         <div class="scrollview" v-if="result.length">
           <h4>
             搜索结果
-            <span>{{this.result.length}}</span>个
+            <span>{{this.result.length}}</span> 个
           </h4>
           <a
             class="search_list_item"
@@ -26,7 +26,10 @@
             :href="`#section-${item.id}`"
             @click="handleItemClick"
           >
-            <div class="t">{{item.title}}</div>
+            <div class="t">
+              <div class="title">{{item.title}}</div>
+              <div class="progress">{{item.progress | percent}}</div>
+            </div>
             <div class="b">{{item.content}}</div>
           </a>
         </div>
@@ -40,6 +43,7 @@
 
 <script>
 import Icon from "./icon.vue";
+import percent from "../utils/percent";
 
 export default {
   props: ["sections", "active"],
@@ -58,6 +62,7 @@ export default {
 
     handleSubmit() {
       const { sections, keyword } = this;
+      const step = 1 / sections.length;
 
       if (!keyword) {
         return;
@@ -65,16 +70,18 @@ export default {
 
       this.isActive = true;
       this.result = sections
-        .filter(s => s.content.includes(keyword))
-        .map(s => {
+        .map((v, i) => [i + 1, v])
+        .filter(([, s]) => s.content.includes(keyword))
+        .map(([i, s]) => {
           const [result] = s.content.match(
-            new RegExp(`[^<>]{0,20}${keyword}[^<>]{0,20}`)
+            new RegExp(`[^<>]{0,20}${keyword}[^<>]{0,30}`)
           );
 
           return {
             id: s.id,
             title: s.title,
-            content: result
+            content: result,
+            progress: i * step
           };
         });
     },
@@ -84,7 +91,8 @@ export default {
     }
   },
 
-  components: { Icon }
+  components: { Icon },
+  filters: { percent }
 };
 </script>
 
@@ -113,5 +121,18 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.t {
+  display: flex;
+}
+
+.t > .title {
+  flex: 1;
+}
+
+.t > .progress {
+  font-size: 0.9em;
+  color: #ac8200;
 }
 </style>
