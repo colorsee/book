@@ -5,6 +5,16 @@
     ref="viewport"
     @scroll="handleViewportScroll"
   >
+    <tablet>
+      <header v-if="settings.mode === 'horizantol'">
+        <div class="title">{{info.title}}</div>
+        <button class="buy">
+          购买本书
+          <span>{{info.price}} 元</span>
+        </button>
+      </header>
+    </tablet>
+
     <div id="content" :style="{height: settings.mode === 'horizantol' ? '100%' : 'unset'}">
       <horizantol
         v-if="settings.mode === 'horizantol'"
@@ -63,6 +73,7 @@ import Catalog from "./catalog.vue";
 import Bookmark from "./bookmark.vue";
 import Settings from "./settings.vue";
 import ProgressBar from "./progress-bar.vue";
+import Tablet from "./tablet.vue";
 
 const defaultSettings = {
   fontSize: 16,
@@ -202,7 +213,6 @@ export default {
       const [targetHeader] = headers.filter(
         (_, c) => c.offsetTop > viewport.scrollTop
       );
-      console.log(targetHeader);
       const [, partcode] = targetHeader.id.match(/^section-(\d+)$/);
 
       const [target] = $(verticalContainer)
@@ -238,7 +248,8 @@ export default {
     Catalog,
     Bookmark,
     Settings,
-    ProgressBar
+    ProgressBar,
+    Tablet
   }
 };
 </script>
@@ -255,6 +266,31 @@ export default {
 .viewport.vertical {
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
+}
+
+.viewport header {
+  display: flex;
+  border-bottom: 1px solid #ccc;
+  justify-content: space-between;
+  margin-top: -1.6rem;
+  margin-bottom: 1rem;
+}
+
+.viewport header .title {
+  margin: 6px 0;
+  font-size: 0.8em;
+  color: #999;
+}
+
+.viewport header .title::before {
+  content: "- ";
+}
+
+.viewport header .buy {
+  background: #efefef;
+  color: #666;
+  padding: 0 4px;
+  margin: 4px 0;
 }
 
 .content {

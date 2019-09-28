@@ -3,9 +3,11 @@ export default function getSelection() {
   const sel = document.getSelection()
   const value = sel.toString()
 
-  const { anchorNode, anchorOffset, extentNode, extentOffset } = sel
+  console.log(sel)
+
+  const { anchorNode, anchorOffset, focusNode, extentOffset } = sel
   const anchorPart = $(anchorNode).parent()
-  const extentPart = $(extentNode).parent()
+  const extentPart = $(focusNode).parent()
   const article = anchorPart.parents('div.paragraphs')
 
   const article_id = article.data('id')
@@ -18,6 +20,8 @@ export default function getSelection() {
     ;[start_part, end_part] = [end_part, start_part]
     ;[start_word, end_word] = [end_word, start_word]
   }
+
+  console.log(start_part, end_part)
 
   return {
     article_id,
