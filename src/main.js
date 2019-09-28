@@ -42,6 +42,7 @@ var vm = new Vue({
     progress: 0,
     jump: '',
     isSearchBoxShow: false,
+    settings: {},
   }),
   methods: {
     collection() {
@@ -149,6 +150,10 @@ var vm = new Vue({
 
     toggleSearchBar(isShow) {
       this.isSearchBoxShow = isShow
+    },
+
+    changeSettings(value) {
+      this.settings = value
     },
   },
   created: function() {

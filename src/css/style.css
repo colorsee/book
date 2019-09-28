@@ -1770,3 +1770,9 @@ button {
     margin-left: -2em;
   }
 }
+
+.page-control {
+  width: 100px;
+  height: 134px;
+  margin-bottom: 20px;
+}

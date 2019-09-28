@@ -89,7 +89,6 @@ export default {
     },
 
     next() {
-      console.log(this.page, this.pageCount);
       if (this.page + 1 >= this.pageCount) {
         this.nextSection();
       } else {

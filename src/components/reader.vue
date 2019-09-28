@@ -83,15 +83,21 @@ const defaultSettings = {
 };
 
 export default {
-  props: ["sections", "info", "bookmarks", "resourceId", "progress"],
+  props: [
+    "sections",
+    "info",
+    "bookmarks",
+    "resourceId",
+    "progress",
+    "settings"
+  ],
 
   data: () => ({
     isToolbarShow: false,
     isCatalogShow: false,
     isBookmarkShow: false,
     isSettingsShow: false,
-    isProgressShow: false,
-    settings: {}
+    isProgressShow: false
   }),
 
   mounted() {
@@ -156,11 +162,11 @@ export default {
 
     loadSettings() {
       const str = localStorage.getItem("settings");
-      this.settings = JSON.parse(str) || defaultSettings;
+      this.$emit("settings-change", JSON.parse(str) || defaultSettings);
     },
 
     handleSettingsChange(value) {
-      this.settings = value;
+      this.$emit("settings-change", value);
       this.restoreSettings(value);
     },
 

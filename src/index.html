@@ -106,8 +106,10 @@
 					:bookmarks="lmarkList"
 					:resource-id="resource_id"
 					:progress="progress"
+					:settings="settings"
 					@read="handleRead"
 					@add-bookmark="amark"
+					@settings-change="changeSettings"
 				></reader>
 				<!-- <div class="bok_item scrol_none" id="content">
 					<div class="scrollview">
@@ -140,8 +142,10 @@
 					</div>
 				</div>
 				<div class="book_botomr">
-					<span class="prve" @click="prev()">上一页</span>
-					<span class="next" @click="next()">下一页</span>
+					<div class="page-control">
+						<span class="prve" @click="prev()" v-if="settings.mode === 'horizantol'">上一页</span>
+						<span class="next" @click="next()" v-if="settings.mode === 'horizantol'">下一页</span>
+					</div>
 					<input class="num" type="number" min="1" max="100" placeholder="%" v-model="jump" />
 					<input class="but" type="button" id="" value="跳转" @click="jumpTo" />
 				</div>
