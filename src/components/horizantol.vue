@@ -95,6 +95,7 @@ export default {
         this.page += 1;
       }
       this.emitProgress();
+      this.$emit("page-change", "next");
     },
 
     prev() {
@@ -105,6 +106,7 @@ export default {
 
       this.page -= 1;
       this.emitProgress();
+      this.$emit("page-change", "prev");
     },
 
     jumpTo(percent) {

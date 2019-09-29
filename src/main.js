@@ -43,6 +43,7 @@ var vm = new Vue({
     jump: '',
     isSearchBoxShow: false,
     settings: {},
+    lastPagination: '',
   }),
   methods: {
     collection() {
@@ -144,6 +145,10 @@ var vm = new Vue({
       this.$refs.copier.copy(this.$refs.reader.content())
     },
 
+    handlePageChange(type) {
+      this.lastPagination = type
+    },
+
     jumpTo() {
       this.$refs.reader.jumpTo(parseInt(this.jump))
     },
@@ -159,34 +164,6 @@ var vm = new Vue({
   created: function() {
     //判断类型
     userAPI.login('caoxiaomo', '123456')
-
-    // if (resource_type == 1) {
-    //   //图书
-    //   //图书基本信息
-    //   bookAPI.info(resource_id).then(article => {
-    //     var category = utilsAPI.calculatePercent(
-    //       article.posts.catalog_list,
-    //       article.posts.words_number
-    //     )
-    //     category = utilsAPI.calculatePercentAdd(category)
-    //     this.baseinfo = article.posts
-    //   })
-
-    //   //加载试读数据
-    //   bookAPI.probation(resource_id, resource_type, list => {
-    //     this.content_list = list.posts
-    //     // console.log(this.content_list)
-    //   })
-    // } else {
-    //   //章节
-    //   bookAPI.article(resource_id, article => {
-    //     this.baseinfo = article.posts
-    //   })
-    //   bookAPI.probation(resource_id, resource_type, list => {
-    //     this.content_list = list.posts
-    //     // console.log(this.content_list)
-    //   })
-    // }
   },
 
   mounted() {

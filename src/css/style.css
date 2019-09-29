@@ -417,6 +417,7 @@ button {
   user-select: none;
 }
 
+.book_botomr span.active,
 .book_botomr span:hover {
   background-color: #cccccc;
 }

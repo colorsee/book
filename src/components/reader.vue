@@ -7,7 +7,7 @@
   >
     <tablet>
       <header v-if="settings.mode === 'horizantol'">
-        <div class="title">{{$refs.container.current.title}}</div>
+        <div class="title">{{$refs.container && $refs.container.current.title}}</div>
         <button class="buy" v-if="!info.read_auth">
           购买本书
           <span>{{info.price}} 元</span>
