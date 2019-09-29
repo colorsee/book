@@ -2,7 +2,7 @@
   <action>
     <div class="header">
       <h3>书签</h3>
-      <div class="close" @click="handleClose">X</div>
+      <div class="close" @click="close">X</div>
     </div>
     <div class="list">
       <div :key="item.id" class="item" v-for="item in bookmarks">
@@ -12,7 +12,7 @@
           <div class="extra">
             <span>进度：{{item.percent | percent}}</span>
             <div class="actions">
-              <a class="action" :href="`#section-${item.start_part}`" @click="handleClose">打开</a>
+              <a class="action" :href="`#section-${item.start_part}`" @click="handleOpen(item)">打开</a>
               <div class="action dangerous" @click="remove(item.id)">删除</div>
             </div>
             <div>{{item.create_time | datetime}}</div>
@@ -51,12 +51,21 @@ export default {
       });
     },
 
+    close() {
+      this.$emit("close");
+    },
+
     remove(id) {
       markAPI.rmark(id, () => this.load());
     },
 
-    handleClose() {
-      this.$emit("close");
+    handleOpen(item) {
+      window.history.replaceState(
+        { partcode: item.start_word },
+        null,
+        location.href
+      );
+      this.close();
     }
   },
 
@@ -88,6 +97,9 @@ export default {
   color: #999999;
   padding: 10px 0px;
   font-size: 0.9em;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .item .extra {

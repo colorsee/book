@@ -142,11 +142,11 @@ export default {
     },
 
     initHashChange() {
-      window.addEventListener("hashchange", this.handleHashChange);
+      window.addEventListener("replaceState", this.handleHashChange);
     },
 
     removeHashChange() {
-      window.removeEventListener("hashchange", this.handleHashChange);
+      window.removeEventListener("replaceState", this.handleHashChange);
     },
 
     initMouseScroll() {
@@ -160,7 +160,8 @@ export default {
       this._scrollListener = null;
     },
 
-    handleHashChange() {
+    handleHashChange(e) {
+      const [{ partcode }] = e.arguments;
       const { hash } = window.location;
       const [_, id] = hash.match(/#section-(\d+)$/);
 
@@ -184,17 +185,18 @@ export default {
       const headers = $(container).find("h1, h2, h3, h4, h5");
       const result = headers.filter((_, c) => c.offsetLeft === offsetLeft);
       const targetHeader = result.length ? result[0] : headers[0];
-      const [, partcode] = targetHeader.id.match(/^section-(\d+)$/);
+      const [, header_id] = targetHeader.id.match(/^section-(\d+)$/);
 
       const [target] = $(container)
         .find("p")
         .filter((_, c) => c.offsetLeft === offsetLeft);
       const value = $(target).text();
+      const partcode = $(target).data("partcode");
 
       return {
         article_id: current.id,
-        start_part: partcode,
-        start_word: "" + page,
+        start_part: header_id,
+        start_word: partcode,
         excerpt: value,
         percent: this.progress
       };
