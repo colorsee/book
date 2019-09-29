@@ -29,7 +29,6 @@ export default {
     },
 
     progress() {
-      this.step = 1 / this.sections.length;
       const { page, pageCount, section } = this;
 
       return ((page + 1) / pageCount + section) * this.step;
@@ -37,6 +36,12 @@ export default {
 
     readerWidth() {
       return window.innerWidth < 768 ? window.innerWidth : 800;
+    }
+  },
+
+  watch: {
+    sections(val) {
+      this.step = 1 / val.length;
     }
   },
 
