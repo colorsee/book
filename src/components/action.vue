@@ -9,6 +9,7 @@
 <style scoped>
 .wrapper {
   background: rgba(0, 0, 0, 0.8);
+  overflow-y: auto;
 }
 
 @media screen and (max-width: 768px) {
@@ -23,6 +24,6 @@
   display: flex;
   flex-direction: column;
   padding: 20px;
-  height: 100%;
+  min-height: 100%;
 }
 </style>
