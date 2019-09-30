@@ -1,8 +1,8 @@
 <template>
-  <div class="list">
+  <div class="list catalog-list">
     <a
       :key="item.id"
-      class="item"
+      :class="{item: true, active: currentArticle == item.id}"
       v-for="item in source"
       :href="`#section-${item.id}`"
       @click="handleClick"
@@ -17,6 +17,7 @@
         :key="it.id"
         :progress="progress"
         :sum="sum + step * index"
+        :currentArticle="currentArticle"
         :source="Array.isArray(it) ? it : [it]"
         :level="step"
         :index="index"
@@ -30,7 +31,7 @@ import percent from "../utils/percent";
 
 export default {
   name: "catalog-list",
-  props: ["source", "progress", "level", "sum", "index"],
+  props: ["source", "progress", "level", "sum", "index", "currentArticle"],
   computed: {
     step() {
       return (1 / this.source.length) * this.level;
@@ -61,8 +62,13 @@ export default {
 }
 
 .item {
+  color: #666;
   display: block;
   margin-left: 2em;
+}
+
+.item.active {
+  color: #549bbc;
 }
 
 *::-webkit-scrollbar {
@@ -72,7 +78,6 @@ export default {
 .detail {
   display: flex;
   align-items: center;
-  color: #666;
   margin-top: 1rem;
 }
 

@@ -10,6 +10,7 @@
       :level="1"
       :sum="0"
       :index="1"
+      :currentArticle="currentArticle"
       class="list"
       @close="handleClose"
     ></catalog-list>
@@ -21,7 +22,7 @@ import CatalogList from "./catalog-list.vue";
 import Action from "./action.vue";
 
 export default {
-  props: ["catalog", "progress"],
+  props: ["catalog", "progress", "currentArticle"],
   methods: {
     handleClose() {
       this.$emit("close");

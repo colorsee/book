@@ -53,9 +53,12 @@
       v-if="isCatalogShow"
       :catalog="info.catalog_list"
       :progress="progress"
+      :current-article="currentArticle"
       @close="toggle('Catalog', false)"
     ></catalog>
-    <bookmark v-if="isBookmarkShow" @close="toggle('Bookmark', false)" :sections="sections"></bookmark>
+
+    <bookmark v-if="isBookmarkShow" :sections="sections" @close="toggle('Bookmark', false)"></bookmark>
+
     <settings
       v-if="isSettingsShow"
       :value="settings"
@@ -92,7 +95,8 @@ export default {
     "resourceId",
     "progress",
     "settings",
-    "annotations"
+    "annotations",
+    "currentArticle"
   ],
 
   data: () => ({

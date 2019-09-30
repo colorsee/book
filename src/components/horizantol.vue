@@ -36,6 +36,12 @@ export default {
 
     readerWidth() {
       return window.innerWidth < 768 ? window.innerWidth : 800;
+    },
+
+    currentNodes() {
+      return $(this.$refs.container)
+        .find("h1, h2, h3, h4, h5, p")
+        .filter((_, e) => e.offsetLeft === this.readerWidth * this.page);
     }
   },
 
@@ -67,11 +73,25 @@ export default {
     const { width } = getComputedStyle(last);
     const widthNumber = parseInt(width) + 80;
     this.pageCount = Math.floor(last.offsetLeft / widthNumber) + 1;
+
+    this.emitArticles();
   },
 
   methods: {
     emitProgress() {
       Promise.resolve().then(() => this.$emit("read", this.progress));
+    },
+
+    emitArticles() {
+      const headers = this.currentNodes.filter("[id]");
+      if (!headers.length) {
+        return;
+      }
+
+      const [latest] = headers.last();
+      const [, current] = latest.id.match(/^section-(.*)$/);
+      this.$emit("article-change", current);
+      console.log(current);
     },
 
     nextSection() {
@@ -140,17 +160,16 @@ export default {
     },
 
     content() {
-      return $(this.$refs.container)
-        .find("h1, .paragraphs > *")
-        .filter((_, e) => e.offsetLeft === this.readerWidth * this.page)
-        .text();
+      return this.currentNodes.text();
     },
 
     initHashChange() {
+      window.addEventListener("hashchange", this.handleHashChange);
       window.addEventListener("replaceState", this.handleHashChange);
     },
 
     removeHashChange() {
+      window.addEventListener("hashchange", this.handleHashChange);
       window.removeEventListener("replaceState", this.handleHashChange);
     },
 
@@ -166,7 +185,7 @@ export default {
     },
 
     handleHashChange(e) {
-      const [{ partcode }] = e.arguments;
+      // const [{ partcode }] = e.arguments;
       const { hash } = window.location;
       const [_, id] = hash.match(/#section-(\d+)$/);
 

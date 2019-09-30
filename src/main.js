@@ -46,6 +46,7 @@ var vm = new Vue({
     isSearchBoxShow: false,
     settings: {},
     lastPagination: '',
+    currentArticle: '',
   }),
   methods: {
     collection() {
@@ -160,6 +161,10 @@ var vm = new Vue({
 
     changeSettings(value) {
       this.settings = value
+    },
+
+    handleArticleChange(value) {
+      this.currentArticle = value
     },
   },
   created: function() {

@@ -108,10 +108,12 @@
 					:resource-id="resource_id"
 					:progress="progress"
 					:settings="settings"
+					:current-article="currentArticle"
 					@read="handleRead"
 					@add-bookmark="amark"
 					@settings-change="changeSettings"
 					@page-change="handlePageChange"
+					@article-change="handleArticleChange"
 				></reader>
 				<!-- <div class="bok_item scrol_none" id="content">
 					<div class="scrollview">
