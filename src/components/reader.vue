@@ -206,6 +206,27 @@ export default {
 
       const { scrollTop, scrollHeight, clientHeight } = this.$refs.viewport;
       this.emitProgress((scrollTop + clientHeight) / scrollHeight);
+      this.emitArticles();
+    },
+
+    emitArticles() {
+      const { verticalContainer, viewport } = this.$refs;
+      const headers = $(this.$refs.verticalContainer)
+        .find("h1, h2, h3, h4, h5, p")
+        .filter((_, c) => {
+          if (!c.id) {
+            return false;
+          }
+          return c.offsetTop < viewport.scrollTop;
+        });
+
+      if (!headers.length) {
+        return;
+      }
+
+      const [latest] = headers.last();
+      const [, current] = latest.id.match(/^section-(.*)$/);
+      this.$emit("article-change", current);
     },
 
     content() {

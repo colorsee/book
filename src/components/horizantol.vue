@@ -91,7 +91,6 @@ export default {
       const [latest] = headers.last();
       const [, current] = latest.id.match(/^section-(.*)$/);
       this.$emit("article-change", current);
-      console.log(current);
     },
 
     nextSection() {
