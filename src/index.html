@@ -139,7 +139,7 @@
 					<div class="book_topr_but">
 						<span class="bt_6" title="书签" @click='lmark'>&#xe696;</span>
 						<span class="bt_7" title="我的划线/批注" @click='lscribling(0)'>&#xe633;</span>
-						<span class="bt_8" title="全部批注">&#xe633;</span>
+						<span class="bt_8" title="全部批注" @click='lscribling(0)'>&#xe633;</span>
 					</div>
 				</div>
 				<div class="book_botomr">
@@ -171,57 +171,10 @@
 					<div class="scrollview">
 						<h3>全部批注</h3>
 						<div class="mypsg_rice mypsg_3_spet">
-							<span class="bg_gary">按批注时间</span>
-							<span>按内容顺序</span>
+							<span class="bg_gary" @click='lscribling(0)'>按批注时间</span>
+							<span @click='lscribling(1)'>按内容顺序</span>
 						</div>
-						<div class="mypsg_3_list">
-							<div class="t">
-								<span>明哥的批注</span>
-								<span>2019-09-03 14：40：50</span>
-							</div>
-							<div class="c">
-								<p>这里是划线的内容这里是划线的内容这里是划线的内容这里是划线的内容，这里是划线的内容这里是划线的内容这里是划线的内容</p>
-								<p><span>这里是我之前批注的内容这里是我之前批注的内容....这里是我之前批注的内容....这里是我之前批注的内容...这里是我之前批注的内容...这里是我之前批注的内容...这里是我之前批注的内容...这里是我之前批注的内容</span><i></i></p>
-							</div>
-							<div class="b">
-								<span>赞10</span>
-								<span>转发10</span>
-								<span>进度：13%</span>
-								<span class="open">打开此页</span>
-							</div>
-						</div>
-						<div class="mypsg_3_list">
-							<div class="t">
-								<span>明哥的批注</span>
-								<span>2019-09-03 14：40：50</span>
-							</div>
-							<div class="c">
-								<p>这里是划线的内容这里是划线的内容这里是划线的内容这里是划线的内容，这里是划线的内容这里是划线的内容这里是划线的内容</p>
-								<p><span>这里是我之前批注的内容这里是我之前批注的内容....这里是我之前批注的内容....这里是我之前批注的内容...这里是我之前批注的内容...这里是我之前批注的内容...这里是我之前批注的内容...这里是我之前批注的内容</span><i></i></p>
-							</div>
-							<div class="b">
-								<span>赞10</span>
-								<span>转发10</span>
-								<span>进度：13%</span>
-								<span class="open">打开此页</span>
-							</div>
-						</div>
-						<div class="mypsg_3_list">
-							<div class="t">
-								<span>明哥的批注</span>
-								<span>2019-09-03 14：40：50</span>
-							</div>
-							<div class="c">
-								<p>这里是划线的内容这里是划线的内容这里是划线的内容这里是划线的内容，这里是划线的内容这里是划线的内容这里是划线的内容</p>
-								<p><span>这里是我之前批注的内容这里是我之前批注的内容....这里是我之前批注的内容....这里是我之前批注的内容...这里是我之前批注的内容...这里是我之前批注的内容...这里是我之前批注的内容...这里是我之前批注的内容</span><i></i></p>
-							</div>
-							<div class="b">
-								<span>赞10</span>
-								<span>转发10</span>
-								<span>进度：13%</span>
-								<span class="open">打开此页</span>
-							</div>
-						</div>
+						<other-annotations :list="lscribingList.filter(i => i.type === '1')"></other-annotations>
 					</div>
 				</div>
 				<div class="phone_list phone phone_list_1">

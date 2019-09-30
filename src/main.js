@@ -7,6 +7,7 @@ import Thr from './components/thr.vue'
 import SearchBox from './components/search-box.vue'
 import Copier from './components/copier.vue'
 import Annotations from './components/annotations.vue'
+import OtherAnnotations from './components/other-annotations.vue'
 
 import percent from './utils/percent'
 import query from './utils/query'
@@ -173,6 +174,13 @@ var vm = new Vue({
     this.lscribling()
   },
 
-  components: { Reader, Thr, SearchBox, Copier, Annotations },
+  components: {
+    Reader,
+    Thr,
+    SearchBox,
+    Copier,
+    Annotations,
+    OtherAnnotations,
+  },
   filters: { percent },
 })

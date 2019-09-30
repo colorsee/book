@@ -1248,20 +1248,6 @@ button {
   padding: 20px 0px;
 }
 
-.mypsg_3_list .t {
-  color: #666666;
-  font-size: 14px;
-  overflow: hidden;
-  padding-bottom: 6px;
-  border-bottom: 1px dashed #a6a6a6;
-}
-
-.mypsg_3_list .t span:last-child {
-  display: inline-block;
-  text-align: right;
-  float: right;
-}
-
 .mypsg_3_list .c {
   margin-top: 10px;
 }
@@ -1299,12 +1285,13 @@ button {
   text-align: right;
 }
 
-.mypsg_3_list .b span {
+.mypsg_3_list .b span,
+.mypsg_3_list .b a {
   display: inline-block;
   padding: 3px 6px;
 }
 
-.mypsg_3_list .b span:last-child {
+.mypsg_3_list .b a:last-child {
   color: #666666;
   padding: 2px 8px;
   border-radius: 3px;
