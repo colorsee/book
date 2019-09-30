@@ -86,12 +86,13 @@ const defaultSettings = {
 
 export default {
   props: [
-    "sections",
+    "articles",
     "info",
     "bookmarks",
     "resourceId",
     "progress",
-    "settings"
+    "settings",
+    "annotations"
   ],
 
   data: () => ({
@@ -104,6 +105,16 @@ export default {
 
   mounted() {
     this.loadSettings();
+  },
+
+  computed: {
+    sections() {
+      // if (!this.annotations) {
+      //   return this.articles;
+      // }
+
+      return this.articles;
+    }
   },
 
   methods: {
