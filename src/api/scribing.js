@@ -16,7 +16,8 @@ export default {
     percent,
     _public,
     type,
-    note
+    note,
+    scribing_id
   ) {
     const data = {
       resource_id,
@@ -32,14 +33,14 @@ export default {
       public: _public,
       type,
       note,
-      member_token: token,
+      scribing_id,
     }
 
     return post('/index/read/ascribing', data)
   },
   lscribing(order = 0) {
     return post('/index/read/lscribing', {
-      resource_id,
+      resource_id: window.resource_id,
       order,
       resource_type: 1,
     })

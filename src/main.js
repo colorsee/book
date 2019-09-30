@@ -65,8 +65,8 @@ var vm = new Vue({
         this.lmarkList = res.posts
       })
     },
-    lscribling() {
-      sliblingAPI.lscribing().then(res => {
+    lscribling(order = 0) {
+      sliblingAPI.lscribing(order).then(res => {
         this.lscribingList = res.posts || []
       })
     },

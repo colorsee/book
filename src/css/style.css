@@ -1205,7 +1205,8 @@ button {
   margin-top: 10px;
 }
 
-.mypsg_2_list .b span {
+.mypsg_2_list .b span,
+.mypsg_2_list .b a {
   display: inline-block;
   padding: 3px 6px;
 }

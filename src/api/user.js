@@ -1,18 +1,18 @@
 import { jsonp } from 'vue'
 
-let token = ''
+let user = null
 
 export default {
   login(username, password) {
-    if (token instanceof Promise) {
-      return token
+    if (user instanceof Promise) {
+      return user
     }
 
-    if (token) {
-      return Promise.resolve(token)
+    if (user) {
+      return Promise.resolve(user)
     }
 
-    token = jsonp('http://xxsy.1i2.cn/index/member/login', {
+    user = jsonp('http://xxsy.1i2.cn/index/member/login', {
       account: username,
       password: password,
       callbacktype: 'jsonp',
@@ -21,9 +21,12 @@ export default {
         throw new Error(data.msg)
       }
 
-      return (token = data.posts)
+      return (user = {
+        token: data.posts,
+        member_id: 1,
+      })
     })
 
-    return token
+    return user
   },
 }

@@ -6,9 +6,9 @@ export default function getSelection() {
   const { anchorNode, anchorOffset, focusNode, extentOffset } = sel
   const anchorPart = $(anchorNode).parent()
   const extentPart = $(focusNode).parent()
-  const article = anchorPart.parents('div.paragraphs')
+  const [article] = $(anchorPart).prevAll('[id]')
 
-  const article_id = article.data('id')
+  const [, article_id] = article.id.match(/^section-(\d+)$/)
   let start_part = anchorPart.data('partcode')
   let end_part = extentPart.data('partcode')
   let start_word = anchorOffset
@@ -19,10 +19,8 @@ export default function getSelection() {
     ;[start_word, end_word] = [end_word, start_word]
   }
 
-  console.log(start_part, end_part)
-
   return {
-    article_id,
+    article_id: parseInt(article_id),
     start_part,
     start_word,
     end_part,

@@ -122,6 +122,7 @@ export default {
 
     submit(isPublic, type, note) {
       const {
+        article_id,
         start_word,
         end_word,
         start_part,
@@ -131,7 +132,7 @@ export default {
 
       return scribing.ascribing(
         window.resource_id,
-        window.article_id,
+        article_id,
         start_part,
         start_word,
         end_part,
