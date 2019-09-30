@@ -6,6 +6,7 @@ import Reader from './components/reader.vue'
 import Thr from './components/thr.vue'
 import SearchBox from './components/search-box.vue'
 import Copier from './components/copier.vue'
+import Annotations from './components/annotations.vue'
 
 import percent from './utils/percent'
 import query from './utils/query'
@@ -64,10 +65,9 @@ var vm = new Vue({
         this.lmarkList = res.posts
       })
     },
-    lscribling(order) {
-      //我的划线/批注
-      sliblingAPI.lscribing(1, order, res => {
-        this.lscribingList = res.posts
+    lscribling() {
+      sliblingAPI.lscribing().then(res => {
+        this.lscribingList = res.posts || []
       })
     },
     delete_scribing(item) {
@@ -170,8 +170,9 @@ var vm = new Vue({
     this.$refs.thr.init()
     this.loadArticle(resource_id)
     this.loadInfo(resource_id)
+    this.lscribling()
   },
 
-  components: { Reader, Thr, SearchBox, Copier },
+  components: { Reader, Thr, SearchBox, Copier, Annotations },
   filters: { percent },
 })

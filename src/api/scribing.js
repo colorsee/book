@@ -37,30 +37,16 @@ export default {
 
     return post('/index/read/ascribing', data)
   },
-  lscribing(resource_id, order, callback) {
-    //列出我的批注
-    API.POST(
-      'http://xxsy.1i2.cn/index/read/lscribing',
-      {
-        resource_id: resource_id,
-        resource_type: 1,
-        order: order,
-        callbacktype: 'jsonp',
-        Authorization: token,
-      },
-      callback
-    )
+  lscribing(order = 0) {
+    return post('/index/read/lscribing', {
+      resource_id,
+      order,
+      resource_type: 1,
+    })
   },
-  dscribing(scribing_id, callback) {
-    //删除我的批注
-    API.POST(
-      'http://xxsy.1i2.cn/index/read/rscribing',
-      {
-        Authorization: token,
-        scribing_id: scribing_id,
-        callbacktype: 'jsonp',
-      },
-      callback
-    )
+  dscribing(scribing_id) {
+    return post('/index/read/rscribing', {
+      scribing_id,
+    })
   },
 }

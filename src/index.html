@@ -164,20 +164,7 @@
 							<span class="bg_gary" @click='lscribling(0)'>按批注时间</span>
 							<span @click='lscribling(1)'>按内容顺序</span>
 						</div>
-						<div class="mypsg_2_list" v-for="(item,index) in lscribingList" :key="item.id">
-							<div class="t">{{item.excerpt}}</div>
-							<div class="c"><span>{{item.note}}</span><i></i></div>
-							<div class="b">
-								<span>赞 10</span>
-								<span>转发 10</span>
-								<span>进度：{{item.percent}}%</span>
-								<span class="open">打开此页</span>
-								<span class="set">修改</span>
-								<span class="del" @click='delete_scribing(item)'>删除</span>
-								<span class="tmr">{{item.create_time}}</span>
-							</div>
-						</div>
-						
+						<annotations :list="lscribingList" @reload='lscribling'></annotations>
 					</div>
 				</div>
 				<div class="mypsg mypsg_3 scroll_book">
