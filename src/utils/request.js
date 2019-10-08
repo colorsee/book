@@ -13,8 +13,10 @@ export function get(url: string) {
 export function post(url: string, data: any) {
   return user
     .login()
-    .then(({ token }) =>
-      axios.post(url, data, { headers: { Authorization: token } })
+    .then(
+      ({ token }) =>
+        console.log(token) ||
+        axios.post(url, data, { headers: { Authorization: token } })
     )
     .then(handle)
 }
