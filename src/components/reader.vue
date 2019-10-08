@@ -303,7 +303,7 @@ export default {
   width: 800px;
   box-sizing: border-box;
   padding: 40px;
-  height: 100vh !important;
+  height: 100% !important;
   overflow: hidden;
 }
 
