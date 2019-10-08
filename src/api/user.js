@@ -1,4 +1,5 @@
-import { jsonp } from 'vue'
+import axios from 'axios'
+import handle from '../utils/handle'
 
 let user = null
 
@@ -12,20 +13,19 @@ export default {
       return Promise.resolve(user)
     }
 
-    user = jsonp('http://xxsy.1i2.cn/index/member/login', {
-      account: username,
-      password: password,
-      callbacktype: 'jsonp',
-    }).then(data => {
-      if (data.code != 1) {
-        throw new Error(data.msg)
-      }
-
-      return (user = {
-        token: data.posts,
-        member_id: 1,
+    user = axios
+      .post('/index/member/login', {
+        account: username,
+        password: password,
+        callbacktype: 'json',
       })
-    })
+      .then(handle)
+      .then(data => {
+        return (user = {
+          token: data.posts,
+          member_id: 1,
+        })
+      })
 
     return user
   },
