@@ -21,10 +21,7 @@ export default {
       })
       .then(handle)
       .then(data => {
-        return (user = {
-          token: data.posts,
-          member_id: 1,
-        })
+        return (user = data.posts)
       })
 
     return user
