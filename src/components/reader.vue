@@ -145,10 +145,11 @@ export default {
       }
 
       const { verticalContainer, viewport } = this.$refs;
-      const [{ partcode }] = e.arguments;
-      const [target] = $(verticalContainer).find(
-        `p[data-partcode="${partcode}"]`
-      );
+      const [{ section, partcode }] = e.arguments;
+
+      const [target] = partcode
+        ? $(verticalContainer).find(`p[data-partcode="${partcode}"]`)
+        : $(verticalContainer).find(`#section-${section}`);
 
       this.$refs.viewport.scrollTo(0, target.offsetTop);
     },

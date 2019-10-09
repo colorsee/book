@@ -188,12 +188,13 @@ export default {
       this.section = this.sections.findIndex(
         s => s.id == section || s.content.includes(`section-${section}`)
       );
-      this.page = 10000;
 
+      this.page = 10000;
       Promise.resolve().then(() => {
-        const [target] = $(container).find(`p[data-partcode="${partcode}"]`);
-        console.log(target);
-        console.log(target.offsetLeft, this.readerWidth);
+        const [target] = partcode
+          ? $(container).find(`p[data-partcode="${partcode}"]`)
+          : $(container).find(`#section-${section}`);
+
         this.page = target.offsetLeft / this.readerWidth;
         this.emitProgress();
       });

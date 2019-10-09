@@ -1,7 +1,7 @@
 <template>
-  <button @click="handleClick" class="anchor">
+  <a @click="handleClick" class="anchor">
     <slot></slot>
-  </button>
+  </a>
 </template>
 
 <script>
@@ -18,7 +18,6 @@ export default {
 
 <style scoped>
 .anchor {
-  color: blue;
   cursor: pointer;
 }
 </style>

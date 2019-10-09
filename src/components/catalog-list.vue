@@ -1,14 +1,13 @@
 <template>
   <div class="list catalog-list">
-    <a
+    <div
       :key="item.id"
       :class="{item: true, active: currentArticle == item.id}"
       v-for="item in source"
-      :href="`#section-${item.id}`"
       @click="handleClick"
     >
       <div class="detail">
-        <div class="title" v-html="item.title"></div>
+        <anchor class="title" v-html="item.title" :data="{section: item.id}"></anchor>
         <!-- <div class="line"></div> -->
         <!-- <div class="status">{{ percent(index) | percentFilter }}</div> -->
       </div>
@@ -22,11 +21,12 @@
         :level="step"
         :index="index"
       ></catalog-list>
-    </a>
+    </div>
   </div>
 </template>
 
 <script>
+import Anchor from "./anchor.vue";
 import percent from "../utils/percent";
 
 export default {
@@ -52,7 +52,8 @@ export default {
       return 0;
     }
   },
-  filters: { percentFilter: percent }
+  filters: { percentFilter: percent },
+  components: { Anchor }
 };
 </script>
 
