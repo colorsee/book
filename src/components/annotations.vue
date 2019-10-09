@@ -16,18 +16,23 @@
         <span>赞 10</span>
         <span>留言 10</span>
         <span>进度：{{item.percent | percent}}</span>
-        <a class="open">打开此页</a>
+        <anchor
+          class="open"
+          :data="{section: item.start_article_id, partcode: item.start_part}"
+        >打开此页</anchor>
         <span class="set" v-if="item.type === '1'" @click="handleModify(item)">修改</span>
         <span class="del" @click="remove(item.id)">删除</span>
-        <span class="tmr">{{item.create_time}}</span>
+        <span class="tmr">{{item.create_time | datetime}}</span>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import Anchor from "./anchor.vue";
 import scribing from "../api/scribing";
 import percent from "../utils/percent";
+import datetime from "../utils/datetime.js";
 
 export default {
   props: ["list"],
@@ -66,7 +71,8 @@ export default {
         });
     }
   },
-  filters: { percent }
+  filters: { percent, datetime },
+  components: { Anchor }
 };
 </script>
 

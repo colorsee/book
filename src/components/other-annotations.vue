@@ -9,7 +9,7 @@
           ></div>
           <span class="name">{{item.member_id.nickname}}的批注</span>
         </div>
-        <span>{{item.update_time}}</span>
+        <span>{{item.update_time | datetime}}</span>
       </div>
       <div class="c">
         <p>{{item.excerpt}}</p>
@@ -22,20 +22,27 @@
         <span>赞10</span>
         <span>转发10</span>
         <span>进度：{{item.percent | percent}}</span>
-        <a class="open">打开此页</a>
+        <anchor
+          class="open"
+          :data="{section: item.start_article_id, partcode: item.start_part}"
+        >打开此页</anchor>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import Anchor from "./anchor.vue";
 import percent from "../utils/percent";
+import datetime from "../utils/datetime.js";
 
 export default {
   props: ["list"],
   filters: {
-    percent
-  }
+    percent,
+    datetime
+  },
+  components: { Anchor }
 };
 </script>
 
