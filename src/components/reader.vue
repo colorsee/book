@@ -109,6 +109,11 @@ export default {
 
   mounted() {
     this.loadSettings();
+    this.initHashChange();
+  },
+
+  destroyed() {
+    this.removeHashChange();
   },
 
   computed: {
@@ -124,6 +129,28 @@ export default {
   methods: {
     emitProgress(progress) {
       Promise.resolve().then(() => this.$emit("read", progress));
+    },
+
+    initHashChange() {
+      window.addEventListener("replaceState", this.handleHistoryStateChange);
+    },
+
+    removeHashChange() {
+      window.removeEventListener("replaceState", this.handleHistoryStateChange);
+    },
+
+    handleHistoryStateChange(e) {
+      if (this.settings.mode === "horizantol") {
+        return;
+      }
+
+      const { verticalContainer, viewport } = this.$refs;
+      const [{ partcode }] = e.arguments;
+      const [target] = $(verticalContainer).find(
+        `p[data-partcode="${partcode}"]`
+      );
+
+      this.$refs.viewport.scrollTo(0, target.offsetTop);
     },
 
     handleVerticalClick() {
@@ -278,7 +305,6 @@ export default {
       return {
         article_id,
         start_part: partcode,
-        start_word: 1,
         excerpt: value,
         percent: this.progress
       };

@@ -12,8 +12,8 @@ export default {
   amark({ resource_id, article_id, start_part, start_word, excerpt, percent }) {
     return post('/index/read/amark', {
       resource_type: 1,
+      start_word: 0,
       resource_id,
-      start_word,
       article_id,
       start_part,
       excerpt,
@@ -30,10 +30,8 @@ export default {
   },
 
   rmark(mark_id, callback) {
-    API.POST(
-      'http://xxsy.1i2.cn/index/read/rmark',
-      { mark_id, Authorization: token, callbacktype: 'jsonp' },
-      callback
-    )
+    return post('/index/read/rmark', {
+      mark_id,
+    })
   },
 }

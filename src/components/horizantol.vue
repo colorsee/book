@@ -163,13 +163,11 @@ export default {
     },
 
     initHashChange() {
-      window.addEventListener("hashchange", this.handleHashChange);
-      window.addEventListener("replaceState", this.handleHashChange);
+      window.addEventListener("replaceState", this.handleHistoryStateChange);
     },
 
     removeHashChange() {
-      window.addEventListener("hashchange", this.handleHashChange);
-      window.removeEventListener("replaceState", this.handleHashChange);
+      window.removeEventListener("replaceState", this.handleHistoryStateChange);
     },
 
     initMouseScroll() {
@@ -183,18 +181,19 @@ export default {
       this._scrollListener = null;
     },
 
-    handleHashChange(e) {
-      // const [{ partcode }] = e.arguments;
-      const { hash } = window.location;
-      const [_, id] = hash.match(/#section-(\d+)$/);
+    handleHistoryStateChange(e) {
+      const { container } = this.$refs;
+      const [{ section, partcode }] = e.arguments;
 
       this.section = this.sections.findIndex(
-        s => s.id == id || s.content.includes(`section-${id}`)
+        s => s.id == section || s.content.includes(`section-${section}`)
       );
-
       this.page = 10000;
+
       Promise.resolve().then(() => {
-        const target = document.getElementById(`section-${id}`);
+        const [target] = $(container).find(`p[data-partcode="${partcode}"]`);
+        console.log(target);
+        console.log(target.offsetLeft, this.readerWidth);
         this.page = target.offsetLeft / this.readerWidth;
         this.emitProgress();
       });
@@ -205,11 +204,6 @@ export default {
       const { container } = this.$refs;
       const offsetLeft = page * readerWidth;
 
-      const headers = $(container).find("h1, h2, h3, h4, h5");
-      const result = headers.filter((_, c) => c.offsetLeft === offsetLeft);
-      const targetHeader = result.length ? result[0] : headers[0];
-      const [, header_id] = targetHeader.id.match(/^section-(\d+)$/);
-
       const [target] = $(container)
         .find("p")
         .filter((_, c) => c.offsetLeft === offsetLeft);
@@ -218,8 +212,7 @@ export default {
 
       return {
         article_id: current.id,
-        start_part: header_id,
-        start_word: partcode,
+        start_part: partcode,
         excerpt: value,
         percent: this.progress
       };

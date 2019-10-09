@@ -12,8 +12,12 @@
           <div class="extra">
             <span>进度：{{item.percent | percent}}</span>
             <div class="actions">
-              <a class="action" :href="`#section-${item.start_part}`" @click="handleOpen(item)">打开</a>
-              <div class="action dangerous" @click="remove(item.id)">删除</div>
+              <anchor
+                class="action"
+                :data="{section: item.article_id, partcode: item.start_part}"
+                @click="close"
+              >打开</anchor>
+              <button class="action dangerous" @click="remove(item.id)">删除</button>
             </div>
             <div>{{item.create_time | datetime}}</div>
           </div>
@@ -26,6 +30,7 @@
 <script>
 import markAPI from "../api/mark";
 import Action from "./action.vue";
+import Anchor from "./anchor.vue";
 import percent from "../utils/percent";
 import datetime from "../utils/datetime";
 
@@ -56,21 +61,12 @@ export default {
     },
 
     remove(id) {
-      markAPI.rmark(id, () => this.load());
-    },
-
-    handleOpen(item) {
-      window.history.replaceState(
-        { partcode: item.start_word },
-        null,
-        location.href
-      );
-      this.close();
+      markAPI.rmark(id).then(this.load);
     }
   },
 
   filters: { percent, datetime },
-  components: { Action }
+  components: { Action, Anchor }
 };
 </script>
 
