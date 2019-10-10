@@ -19,11 +19,11 @@
             搜索结果
             <span>{{this.result.length}}</span> 个
           </h4>
-          <a
+          <anchor
             class="search_list_item"
             v-for="item in result"
             :key="item.id"
-            :href="`#section-${item.id}`"
+            :data="{section: item.id, partcode: item.partcode}"
             @click="handleItemClick"
           >
             <div class="t">
@@ -31,7 +31,7 @@
               <div class="progress">{{item.progress | percent}}</div>
             </div>
             <div class="b" v-html="item.content"></div>
-          </a>
+          </anchor>
         </div>
         <div class="empty" v-else>
           <h4>没有找到相关内容</h4>
@@ -43,6 +43,7 @@
 
 <script>
 import Icon from "./icon.vue";
+import Anchor from "./anchor.vue";
 import percent from "../utils/percent";
 
 export default {
@@ -73,14 +74,18 @@ export default {
         .map((v, i) => [i + 1, v])
         .filter(([, s]) => s.content.includes(keyword))
         .map(([i, s]) => {
-          const [result] = s.content.match(
+          const [result, partcode] = s.content.match(
+            new RegExp(`<p data-partcode="(.*?)" .*?>.*?${keyword}.*?</p>`)
+          );
+          const [content] = result.match(
             new RegExp(`[^<>]{0,20}${keyword}[^<>]{0,30}`)
           );
 
           return {
+            partcode,
             id: s.id,
             title: s.title,
-            content: result.replace(
+            content: content.replace(
               keyword,
               `<span style="background: #ac8200; color: white; padding: 2px">${keyword}</span>`
             ),
@@ -94,7 +99,7 @@ export default {
     }
   },
 
-  components: { Icon },
+  components: { Icon, Anchor },
   filters: { percent }
 };
 </script>
