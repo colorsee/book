@@ -17,7 +17,9 @@
       </header>
     </tablet>
 
-    <div id="content" :style="{height: settings.mode === 'horizantol' ? '100%' : 'unset'}">
+    <div id="content" class="loading" v-if="isLoading">加载中...</div>
+
+    <div id="content" :style="{height: settings.mode === 'horizantol' ? '100%' : 'unset'}" v-else>
       <horizantol
         v-if="settings.mode === 'horizantol'"
         :sections="sections"
@@ -123,6 +125,10 @@ export default {
       // }
 
       return this.articles;
+    },
+
+    isLoading() {
+      return !this.articles || this.articles.length === 0;
     }
   },
 
@@ -326,6 +332,13 @@ export default {
 </script>
 
 <style scoped>
+.loading {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .viewport {
   width: 800px;
   box-sizing: border-box;
