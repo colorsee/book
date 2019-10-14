@@ -1,11 +1,11 @@
 import * as API from '../main'
-import * as request from '../utils/request'
+import { post } from '../utils/request'
 import Section from '../models/Section'
 import flat from '../utils/flat'
 
 export default {
   showart(resource_id) {
-    return request.post('/index/read/showart', { resource_id })
+    return post('/index/read/showart', { resource_id })
   },
   rstep(resource_id) {
     //查询会员阅读进度
@@ -18,28 +18,22 @@ export default {
     ).then(res => data.res)
   },
   saveRstep(resource_id, rstep) {
-    //保存会员阅读进度
-    Axios.post(
-      'https://result.eolinker.com/GzWguRJbc6216d987a858b371cd2e4973b84ea5ed45cb4e?uri=xxsy.1i2.cn/index/read/saveRstep',
-      {
-        resource_id: resource_id,
-        resource_type: 1,
-        rstep: rstep,
-      }
-    ).then(res => res.data)
+    return post('/index/read/saveRstep', {
+      resource_id: resource_id,
+      resource_type: 1,
+      rstep: rstep,
+    }).then(res => res.data)
   },
   show(resource_id) {
-    return request
-      .post('/index/read/show', {
-        resource_id,
-        resource_type: 1,
-        page: 1,
-      })
-      .then(({ posts }) => flat(posts.map(i => Section.list(i))))
+    return post('/index/read/show', {
+      resource_id,
+      resource_type: 1,
+      page: 1,
+    }).then(({ posts }) => flat(posts.map(i => Section.list(i))))
   },
   info(resource_id) {
     //图书阅读--加载基础信息
-    return request.post('/index/read/info', {
+    return post('/index/read/info', {
       resource_id,
     })
   },
