@@ -10,6 +10,7 @@
 .wrapper {
   background: rgba(0, 0, 0, 0.8);
   overflow-y: auto;
+  box-sizing: border-box;
 }
 
 @media screen and (max-width: 768px) {
@@ -23,7 +24,7 @@
   background: #f7f7f7;
   display: flex;
   flex-direction: column;
-  padding: 20px;
   min-height: 100%;
+  padding: 20px;
 }
 </style>

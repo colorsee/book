@@ -3,23 +3,20 @@
     <div
       :key="item.id"
       :class="{item: true, active: currentArticle == item.id}"
-      v-for="item in source"
+      v-for="(item, i) in source"
       @click="handleClick"
     >
       <div class="detail">
         <anchor class="title" v-html="item.title" :data="{section: item.id}"></anchor>
-        <!-- <div class="line"></div> -->
-        <!-- <div class="status">{{ percent(index) | percentFilter }}</div> -->
+        <div class="line"></div>
+        <div class="status">{{ percent(i) | percentFilter }}</div>
       </div>
       <catalog-list
-        v-for="(it, index) in item.child"
-        :key="it.id"
-        :progress="progress"
-        :sum="sum + step * index"
-        :currentArticle="currentArticle"
-        :source="Array.isArray(it) ? it : [it]"
+        v-if="item.child && item.child.length"
+        :sum="percent(i)"
+        :source="item.child"
         :level="step"
-        :index="index"
+        :currentArticle="currentArticle"
       ></catalog-list>
     </div>
   </div>
@@ -31,7 +28,7 @@ import percent from "../utils/percent";
 
 export default {
   name: "catalog-list",
-  props: ["source", "progress", "level", "sum", "index", "currentArticle"],
+  props: ["source", "level", "index", "sum", "currentArticle"],
   computed: {
     step() {
       return (1 / this.source.length) * this.level;
@@ -43,13 +40,8 @@ export default {
     },
 
     percent(index) {
-      const { step, progress, sum } = this;
-
-      if (progress < sum + step * index) {
-        return 1;
-      }
-
-      return 0;
+      const { step, sum } = this;
+      return sum + step * index;
     }
   },
   filters: { percentFilter: percent },

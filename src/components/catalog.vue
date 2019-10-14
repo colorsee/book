@@ -6,10 +6,9 @@
     </div>
     <catalog-list
       :source="catalog"
-      :progress="progress"
       :level="1"
       :sum="0"
-      :index="1"
+      :index="0"
       :currentArticle="currentArticle"
       class="list"
       @close="handleClose"
@@ -33,11 +32,6 @@ export default {
 </script>
 
 <style scoped>
-.container {
-  overflow-y: auto;
-  padding-bottom: 32px;
-}
-
 .header {
   display: flex;
   align-items: center;
