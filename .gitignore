@@ -80,3 +80,4 @@ typings/
 *.log
 dist/
 node_modules/
+.vscode/
