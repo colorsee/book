@@ -950,7 +950,7 @@ button {
 
 .search_list {
   position: relative;
-  height: 1000px;
+  height: 680px !important;
   display: none;
   overflow: hidden;
 }
