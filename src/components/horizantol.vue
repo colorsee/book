@@ -28,10 +28,13 @@ export default {
       return this.sections[this.section] || {};
     },
 
-    progress() {
-      const { page, pageCount, section } = this;
+    step() {
+      return 1 / this.sections.length;
+    },
 
-      return ((page + 1) / pageCount + section) * this.step;
+    progress() {
+      const { page, pageCount, section, step } = this;
+      return ((page + 1) / pageCount + section) * step;
     },
 
     readerWidth() {
@@ -42,12 +45,6 @@ export default {
       return $(this.$refs.container)
         .find("h1, h2, h3, h4, h5, p")
         .filter((_, e) => e.offsetLeft === this.readerWidth * this.page);
-    }
-  },
-
-  watch: {
-    sections(val) {
-      this.step = 1 / val.length;
     }
   },
 
