@@ -2,7 +2,7 @@
   <action>
     <div class="header">
       <h3>书签</h3>
-      <div class="close" @click="close">X</div>
+      <div class="close" @click="close"><i class="fa fa-times" aria-hidden="true"></i></div>
     </div>
     <div class="list">
       <div :key="item.id" class="item" v-for="item in bookmarks">

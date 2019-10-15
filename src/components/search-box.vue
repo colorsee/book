@@ -2,7 +2,7 @@
   <div :class="{search_box: true, scroll_book: true, act: active}">
     <div class="search_box_h">
       <h3>全文搜索</h3>
-      <div class="close" @click="close">&Chi;</div>
+      <div class="close" @click="close"><i class="fa fa-times" aria-hidden="true"></i></div>
       <div class="search_into">
         <input
           type="text"
