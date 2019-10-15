@@ -2,7 +2,7 @@
   <action class="container">
     <div class="header">
       <h3>目录</h3>
-      <div class="close" @click="handleClose">X</div>
+      <div class="close" @click="handleClose"><i class="fa fa-times" aria-hidden="true"></i></div>
     </div>
     <catalog-list
       :source="catalog"

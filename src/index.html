@@ -10,6 +10,7 @@
 		<link rel="stylesheet" href="css/swiper.min.css" />
 		<link rel="stylesheet" href="css/style.css" />
 		<link rel="stylesheet" href="css/iconfont.css" />
+		<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
 		<link rel="stylesheet" href="//at.alicdn.com/t/font_1439379_njlj9lkxbu.css">
 		<title>图书</title>
 	</head>
@@ -59,7 +60,7 @@
 							<div class="ment_list">
 								<a href="">
 									<div class="pic" style="background-image: url(img/bok.jpg);"><span>免费</span></div>
-									<div class="txt">这里时第一本推荐</div>
+									<div class="txt">这里时第二本推荐</div>
 								</a>
 							</div>
 							<div class="ment_list">
@@ -73,13 +74,13 @@
 							<div class="ment_list">
 								<a href="">
 									<div class="pic" style="background-image: url(img/bok.jpg);"><span>免费</span></div>
-									<div class="txt">这里时第一本推荐</div>
+									<div class="txt">这里时第三本推荐</div>
 								</a>
 							</div>
 							<div class="ment_list">
 								<a href="">
 									<div class="pic" style="background-image: url(img/bok.jpg);"><span>免费</span></div>
-									<div class="txt">这里时第一本推荐</div>
+									<div class="txt">这里时第四本推荐</div>
 								</a>
 							</div>
 							<div class="ment_list">
@@ -98,6 +99,7 @@
 			</div>
 			<div class="book">
 				<div class="bok_page_num">{{progress | percent}}</div>
+				<div class="bok_mark" @click="amark"><i class="fa fa-bookmark-o"></i></div>
 				<reader
 					ref="reader"
 					class="bok_item scrol_none"
@@ -127,22 +129,21 @@
 						
 					</div>
 				</div> -->
-				<div class="bok_mark" @click="amark">&#xe62e;</div>
 				<thr ref='thr' :progress="progress"></thr>
 				<div class="book_topl">
 					<div class="book_topl_but">
-						<span class="bt_1 fa fa-cog" title="显示设置" @click="handleControlShow('isSettingsShow')"></span>
-						<span class="bt_2" title="目录" @click="handleControlShow('isCatalogShow')">&#xe64e;</span>
-						<span class="bt_3" title="内容检索" @click="toggleSearchBar(!isSearchBoxShow)">&#xe62e;</span>
-						<span class="bt_4" title="整页复制" @click="handleWholePageCopy">&#xe64e;</span>
-						<span class="bt_5" title="其他格式">&#xe635;</span>
+						<div class="bt_1 bt_itm" @click="handleControlShow('isSettingsShow')"><span>显示设置</span><i class="fa fa-cog"></i></div>
+						<div class="bt_2 bt_itm" @click="handleControlShow('isCatalogShow')"><span>目录</span><i class="fa fa-book"></i></div>
+						<div class="bt_3 bt_itm" @click="toggleSearchBar(!isSearchBoxShow)"><span>内容检索</span><i class="fa fa-search"></i></div>
+						<div class="bt_4 bt_itm" @click="handleWholePageCopy"><span>整页复制</span><i class="fa fa-files-o"></i></div>
+						<div class="bt_5 bt_itm"><span>其他格式</span><i class="fa fa-folder-open"></i></div>
 					</div>
 				</div>
 				<div class="book_topr">
 					<div class="book_topr_but">
-						<span class="bt_6" title="书签" @click='lmark'>&#xe696;</span>
-						<span class="bt_7" title="我的划线/批注" @click='lscribling(0)'>&#xe633;</span>
-						<span class="bt_8" title="全部批注" @click='lscribling(0)'>&#xe633;</span>
+						<div class="bt_6 bt_itm" @click='lmark'><i class="fa fa-bookmark"></i><span>书签</span></div>
+						<div class="bt_7 bt_itm" @click='lscribling(0)'><i class="fa fa-map-signs"></i><span>我的划线/批注</span></div>
+						<div class="bt_8 bt_itm" @click='lscribling(0)'><i class="fa fa-thumb-tack"></i><span>全部批注</span></div>
 					</div>
 				</div>
 				<div class="book_botomr">
@@ -184,7 +185,7 @@
 					<div class="phone_list_box">
 						<div class="tit">
 							<h3>目录</h3>
-							<div class="close">X</div>
+							<div class="close"><i class="fa fa-times" aria-hidden="true"></i></div>
 						</div>
 						<div class="phone_list_scroll">
 							<div class="scrollview">
@@ -268,7 +269,7 @@
 					<div class="phone_list_box">
 						<div class="tit">
 							<h3>书签</h3>
-							<div class="close">X</div>
+							<div class="close"><i class="fa fa-times"></i></div>
 						</div>
 						<div class="phone_list_scroll">
 							<div class="scrollview">
@@ -380,39 +381,30 @@
 			</div>
 			<copier ref="copier"></copier>
 		</div>
-		<script type="text/javascript" src="js/swiper.min.js"></script>
 		<script type="text/javascript" src="js/jquery-2.1.0.js"></script>
+		<script type="text/javascript" src="js/swiper.min.js"></script>
 		<script type="text/javascript" src="js/sweetalert2@8.js"></script>
 		<script type="text/javascript" src="js/set.js"></script>
 		<script type="text/javascript" src="js/script.js"></script>
 		<script type="text/javascript" src="js/iconfont.js"></script>
+		<script type="text/javascript" src="/bundle.nocache.js"></script>
 		<script>
-			function test() {
-
-
 			var mySwiper = new Swiper('.swiper-container', {
 				loop: true,
 				pagination: {
 					el: '.swiper-pagination',
 					clickable: true,
 				},
-			})
-
-			// $(".search_into input").on("keypress", function(e) {
-			// 	console.log(e)
-			// 	if(event.keyCode == 13) {
-			// 		var search_h = $(".search_list_item").length * 120 > 690 ? 690 : $(".search_list_item").length * 120;
-			// 		if(search_h == 0) {
-			// 			$(".search_list").show().text("没有搜索到内容");
-			// 		}
-			// 		$(".search_list").show().css({
-			// 			"height": search_h + "px"
-			// 		});
-			// 	}
-			// });
-			}
+			});
+			$(window).on("load",function(){
+				var wind_w = $(window).width();
+				if (wind_w>768) {
+					console.log("pc");
+				} else{
+					console.log("ip");
+				}
+			});
 		</script>
-		<script type="text/javascript" src="/bundle.nocache.js"></script>
 	</body>
 
 </html>

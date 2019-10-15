@@ -9,23 +9,23 @@
 
       <div class="toolbar fullscreen" v-if="isShow">
         <div class="title">
-          <span>&#xe64e; {{info.title}}</span>
+          <span><i class="fa fa-book"></i> {{info.title}}</span>
         </div>
         <div class="wrapper" @click="closeToolbar">
-          <div class="tool">&#xe633;</div>
-          <div class="tool" @click.capture.stop.prevent="handleBookmarkAdd">&#xe64e;</div>
+          <div class="tool"><i class="fa fa-bookmark"></i></div>
+          <div class="tool" @click.capture.stop.prevent="handleBookmarkAdd"><i class="fa fa-map-signs"></i></div>
         </div>
         <div class="footer">
           <div class="action" @click="handleActionClick('isCatalogShow')">
-            <span>&#xe64e;</span>
+            <span><i class="fa fa-book"></i></span>
             <span>目录</span>
           </div>
           <div class="action" @click="handleActionClick('isBookmarkShow')">
-            <span>&#xe64e;</span>
+            <span><i class="fa fa-bookmark"></i></span>
             <span>书签</span>
           </div>
           <div class="action" @click="handleActionClick('isSettingsShow')">
-            <span>&#xe64e;</span>
+            <span><i class="fa fa-cog"></i></span>
             <span>设置</span>
           </div>
           <div class="action" @click="handleActionClick('isProgressShow')">
@@ -97,7 +97,7 @@ export default {
   width: 50px;
   margin-top: 10px;
   color: #ffffff;
-  font-size: 30px;
+  font-size: 24px;
   line-height: 40px;
   text-align: center;
   border-radius: 10px 0px 0px 10px;
