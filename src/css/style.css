@@ -973,7 +973,7 @@ button {
 
 .search_list {
 	position: relative;
-	height: 680px !important;
+	height: 680px;
 	display: none;
 	overflow: hidden;
 }
@@ -1367,6 +1367,454 @@ button {
 	display: none;
 }
 
+.pc_guide,
+.ph_guide {
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 10;
+	width: 100%;
+	height: 100%;
+	display: none;
+	background-color: rgba(0, 0, 0, 0.6);
+}
+
+.ph_guide_item {
+	float: left;
+	color: #FFFFFF;
+	width: 33.3333%;
+	font-size: 20px;
+	text-align: center;
+}
+
+.ph_guide_item span {
+	display: block;
+	margin-top: 300px;
+}
+
+.ph_guide_line1,
+.ph_guide_line2 {
+	position: absolute;
+	top: 0;
+	width: 1px;
+	height: 100%;
+	background-color: rgba(255, 255, 255, 0.8);
+}
+
+.ph_guide .ph_guide_line1 {
+	left: 33%;
+}
+
+.ph_guide .ph_guide_line2 {
+	right: 33%;
+}
+
+.pc_guide_item {
+	position: absolute;
+	left: 50%;
+	width: 316px;
+	height: auto;
+	display: none;
+	padding: 4px 10px;
+	border-radius: 5px;
+	background: inherit;
+	box-sizing: border-box;
+	background-color: rgba(237, 232, 213, 1);
+}
+
+.pc_guide .pc_guide_item:nth-child(1) {
+	top: 15px;
+	display: block;
+	margin-left: -390px;
+}
+
+.pc_guide .pc_guide_item:nth-child(2) {
+	width: 260px;
+	top: 15px;
+	margin-left: 132px;
+}
+
+.pc_guide .pc_guide_item:nth-child(3) {
+	width: 260px;
+	top: 55px;
+	margin-left: 132px;
+}
+
+.pc_guide .pc_guide_item:nth-child(4) {
+	width: 260px;
+	bottom: 120px;
+	margin-left: 132px;
+}
+
+.pc_guide .pc_guide_item .list span {
+	display: block;
+	line-height: 45px;
+}
+
+.pc_guide .pc_guide_item .list.r {
+	text-align: right;
+}
+
+.pc_guide_item .order_num {
+	position: absolute;
+	top: -12px;
+	left: -20px;
+	width: 36px;
+	height: 36px;
+	color: #FFFFFF;
+	font-size: 16px;
+	line-height: 35px;
+	text-align: center;
+	border-radius: 50%;
+	background-color: #FF3300;
+}
+
+.pc_guide_item .order_1 {
+	right: -20px;
+	left: auto;
+}
+
+.pc_guide_but {
+	position: absolute;
+	bottom: -40px;
+	left: 0;
+}
+
+.pc_guide_but span {
+	display: inline-block;
+	width: 81px;
+	height: 33px;
+	color: #AC8200;
+	cursor: pointer;
+	line-height: 32px;
+	text-align: center;
+	border-radius: 5px;
+	background-color: rgba(237, 232, 213, 1);
+}
+
+.pc_guide_but .gary {
+	color: gray;
+}
+
+.pc_guide_item .Explain_icon {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+}
+
+.pc_guide_item .Explain_icon1 {
+	top: 45%;
+	left: -20px;
+	border-top: 10px solid transparent;
+	border-left: 10px solid transparent;
+	border-right: 10px solid rgba(237, 232, 213, 1);
+	border-bottom: 10px solid transparent;
+}
+
+.pc_guide_item .Explain_icon2 {
+	top: 40%;
+	right: -20px;
+	border-top: 10px solid transparent;
+	border-left: 10px solid rgba(237, 232, 213, 1);
+	border-right: 10px solid transparent;
+	border-bottom: 10px solid transparent;
+}
+
+.pc_guide_item .Explain_icon3 {
+	top: -20px;
+	right: 5px;
+	border-top: 10px solid transparent;
+	border-left: 10px solid transparent;
+	border-right: 10px solid transparent;
+	border-bottom: 10px solid rgba(237, 232, 213, 1);
+
+}
+
+.pc_guide_item .Explain_icon4 {
+	top: 40%;
+	right: -20px;
+	border-top: 10px solid transparent;
+	border-left: 10px solid rgba(237, 232, 213, 1);
+	border-right: 10px solid transparent;
+	border-bottom: 10px solid transparent;
+
+}
+
+.bok_piz_peg {
+	position: absolute;
+	top: 0;
+	width: 339px;
+	height: 326px;
+	border-radius: 8px;
+	background-color: #f2f2f2;
+	border: 1px solid #cccccc;
+}
+
+.bok_piz_peg .guide_gary {
+	position: absolute;
+	left: 160px;
+	width: 1px;
+	height: 1px;
+	bottom: -23px;
+	border-top: 11px solid #CCCCCC;
+	border-left: 11px solid transparent;
+	border-right: 11px solid transparent;
+	border-bottom: 11px solid transparent;
+}
+
+.bok_piz_peg .guide_whit {
+	position: absolute;
+	left: 161px;
+	width: 1px;
+	height: 1px;
+	bottom: -20px;
+	border-top: 10px solid #f2f2f2;
+	border-left: 10px solid transparent;
+	border-right: 10px solid transparent;
+	border-bottom: 10px solid transparent;
+}
+
+.bok_piz_peg .scrollview {
+	padding: 12px;
+	box-sizing: border-box;
+}
+
+.bok_piz_peg .head {
+	position: relative;
+	width: 100%;
+	height: 25px;
+}
+
+.bok_piz_peg .head .pic {
+	display: inline-block;
+	width: 25px;
+	height: 25px;
+	border-radius: 50%;
+	vertical-align: middle;
+	background-size: cover;
+	background-position: center;
+}
+
+.bok_piz_peg .head .name {
+	display: inline-block;
+	width: 200px;
+	font-size: 14px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	line-height: 25px;
+	vertical-align: middle;
+}
+
+.bok_piz_peg .head .set,
+.bok_piz_peg .head .del {
+	position: absolute;
+	color: #e0b24e;
+	font-size: 14px;
+	line-height: 25px;
+}
+
+.bok_piz_peg .head .set {
+	right: 60px;
+}
+
+.bok_piz_peg .head .del {
+	right: 26px;
+}
+
+.bok_piz_peg .close {
+	position: absolute;
+	top: 1px;
+	right: 6px;
+}
+
+.bok_piz_peg .my_piz {
+	margin: 8px auto;
+	font-size: 14px;
+}
+
+.bok_piz_peg .my_coment {
+	width: 300px;
+	overflow: hidden;
+	margin: 10px auto;
+}
+
+.bok_piz_peg .my_coment .l {
+	display: block;
+	float: left;
+	width: 240px;
+	font-size: 13px;
+	overflow: hidden;
+}
+
+.bok_piz_peg .my_coment .c {
+	display: block;
+	float: left;
+	font-size: 13px;
+}
+
+.bok_piz_peg .my_coment .r {
+	display: block;
+	float: right;
+	font-size: 13px;
+}
+
+.bok_piz_peg .my_comentman {
+	position: relative;
+	width: 300px;
+	padding: 10px;
+	margin: 6px auto;
+	box-sizing: border-box;
+	background-color: #FFFFFF;
+}
+
+.bok_piz_peg .my_comentman .guide_coment {
+	position: absolute;
+	top: -16px;
+	right: 6px;
+	width: 1px;
+	height: 1px;
+	border-top: 8px solid transparent;
+	border-left: 8px solid transparent;
+	border-right: 8px solid transparent;
+	border-bottom: 8px solid #FFFFFF;
+}
+
+.bok_piz_peg .my_comentman .ipt {
+	overflow: hidden;
+}
+
+.bok_piz_peg .my_comentman .ipt input[type="text"] {
+	display: block;
+	float: left;
+	width: 235px;
+	height: 23px;
+	padding-left: 10px;
+	border: 1px solid #a9a9a9;
+}
+
+.bok_piz_peg .my_comentman .ipt input[type="button"] {
+	display: block;
+	float: left;
+	width: 45px;
+	height: 23px;
+	color: #FFFFFF;
+	background-color: #ac8200;
+	border-radius: 0px 4px 4px 0px;
+}
+
+.bok_piz_peg .my_comentman .lst .lst_item {
+	width: 100%;
+	font-size: 13px;
+	padding: 10px 0px;
+	overflow: hidden;
+	border-bottom: 1px dashed #A9A9A9;
+}
+
+.bok_piz_peg .my_comentman .lst .lst_item .t {
+	overflow: hidden;
+}
+
+.bok_piz_peg .my_comentman .lst .lst_item .t p:nth-child(1) {
+	width: 90px;
+	float: left;
+	color: #CC0000;
+}
+
+.bok_piz_peg .my_comentman .lst .lst_item .t p:nth-child(2) {
+	width: 190px;
+	float: left;
+}
+
+.bok_piz_peg .my_comentman .lst .lst_item .t p span {
+	color: #CC0000;
+}
+.bok_piz_peg .my_comentman .lst .lst_item .b span {
+	display: block;
+	float: left;
+	font-size: 12px;
+	margin-top: 6px;
+}
+
+.bok_piz_peg .my_comentman .lst .lst_item .b span:nth-child(1)  {
+	width: 210px;
+}
+.bok_piz_peg .my_comentman .lst .lst_item .b span:nth-child(2)  {
+	display: block;
+	float: left;
+	width: 40px;
+	color: #ac8200;
+	cursor: pointer;
+}
+.bok_piz_peg .my_comentman .lst .lst_item .b span:nth-child(3)  {
+	display: block;
+	float: left;
+}
+.bok_piz_peg .my_comentman .lst .more{
+	text-align: center;
+	font-size: 13px;
+	margin: 20px auto;
+	cursor: pointer;
+}
+.bok_piz_peg .my_other{
+	width: 300px;
+	margin: 20px auto;
+	padding: 12px 0px;
+	border-top: 1px dashed #A9A9A9;
+}
+.bok_piz_peg .my_other .my_other_item{
+	font-size: 13px;
+	padding-bottom: 12px;
+	border-bottom: 1px dashed #A9A9A9;
+}
+.bok_piz_peg .my_other .my_other_item .t .p{
+	display: inline-block;
+	width: 25px;
+	height: 25px;
+	border-radius: 50%;
+	vertical-align: middle;
+	background-size: cover;
+}
+.bok_piz_peg .my_other .my_other_item .t .n{
+	display: inline-block;
+	width: 190px;
+	vertical-align: middle;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+.bok_piz_peg .my_other .my_other_item .t .d{
+	display: inline-block;
+	float: right;
+	width: 80px;
+}
+.bok_piz_peg .my_other .my_other_item .t .d span{
+	display: inline-block;
+	line-height: 25px;
+	padding-left: 10px;
+	color: #AC8200;
+}
+
+.bok_piz_peg .my_other .my_other_item .c{
+	margin: 5px auto;
+}
+.bok_piz_peg .my_other .my_other_item .b{
+	margin: 5px auto;
+}
+.bok_piz_peg .my_other .my_other_item .b .dt{
+	display: inline-block;
+	width: 220px;
+}
+.bok_piz_peg .my_other .my_other_item .b .g{
+	display: inline-block;
+	width: 40px;
+}
+.bok_piz_peg .my_other .more{
+	text-align: center;
+	font-size: 13px;
+	margin: 20px auto;
+	cursor: pointer;
+}
 @media only screen and (max-width: 768px) {
 	.book {
 		width: 100%;

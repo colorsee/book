@@ -100,23 +100,10 @@
 			<div class="book">
 				<div class="bok_page_num">{{progress | percent}}</div>
 				<div class="bok_mark" @click="amark"><i class="fa fa-bookmark-o"></i></div>
-				<reader
-					ref="reader"
-					class="bok_item scrol_none"
-					:articles="content_list"
-					:info="baseinfo"
-					:bookmarks="lmarkList"
-					:annotations="lscribingList"
-					:resource-id="resource_id"
-					:progress="progress"
-					:settings="settings"
-					:current-article="currentArticle"
-					@read="handleRead"
-					@add-bookmark="amark"
-					@settings-change="changeSettings"
-					@page-change="handlePageChange"
-					@article-change="handleArticleChange"
-				></reader>
+				<reader ref="reader" class="bok_item scrol_none" :articles="content_list" :info="baseinfo" :bookmarks="lmarkList"
+				 :annotations="lscribingList" :resource-id="resource_id" :progress="progress" :settings="settings" :current-article="currentArticle"
+				 @read="handleRead" @add-bookmark="amark" @settings-change="changeSettings" @page-change="handlePageChange"
+				 @article-change="handleArticleChange"></reader>
 				<!-- <div class="bok_item scrol_none" id="content">
 					<div class="scrollview">
 						<div class="bok_item_list act">
@@ -129,6 +116,94 @@
 						
 					</div>
 				</div> -->
+				<div class="bok_piz_peg">
+					<div class="guide_gary"></div>
+					<div class="guide_whit"></div>
+					<div class="close"><i class="fa fa-times" aria-hidden="true"></i></div>
+					<div class="scrollview">
+						<div class="head">
+							<span class="pic" style="background-image: url(img/ewm.png);"></span>
+							<span class="name">云创无限的批注</span>
+							<span class="set">修改</span>
+							<span class="del">删除</span>
+						</div>
+						<div class="my_piz">适用于预测的模型已在样本内进行了检验，预测结果均落在95％的置信区间内。</div>
+						<div class="my_coment">
+							<div class="set_date">
+								<p class="l">用户于18年11月12日修改过此批注</p>
+								<p class="c"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i><span>11</span></p>
+								<p class="r"><i class="fa fa-commenting-o" aria-hidden="true"></i><span>2</span></p>
+							</div>
+						</div>
+						<div class="my_comentman">
+							<div class="guide_coment"></div>
+							<div class="ipt">
+								<input type="text" name="" id="" value="" />
+								<input type="button" id="" name="" value="评论" />
+							</div>
+							<div class="lst">
+								<div class="lst_item">
+									<div class="t">
+										<p>热心网友BBB：</p>
+										<p>回复了很有用，赞一个，引用了以下下〜</p>
+									</div>
+									<div class="b">
+										<span>3分钟前</span>
+										<span>回复</span>
+										<span><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>2</span>
+									</div>
+								</div>
+								<div class="lst_item">
+									<div class="t">
+										<p>热心网友BBB：</p>
+										<p>回复了  <span>热心网友AAA：</span>很有用，赞一个，引用了以下下〜</p>
+									</div>
+									<div class="b">
+										<span>3分钟前</span>
+										<span>回复</span>
+										<span><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>2</span>
+									</div>
+								</div>
+								<div class="more">加载更多 &gt;</div>
+							</div>
+						</div>
+						<div class="my_other">
+							<div class="my_other_item">
+								<div class="t">
+									<div class="p" style="background-image: url(img/ewm.png);"></div>
+									<div class="n">张三爱看书的批注</div>
+									<div class="d">
+										<span>修改</span>
+										<span>删除</span>
+									</div>
+								</div>
+								<div class="c">其余模块的预测和估计也都都相应地对应着GDP的三种状态进行估计。</div>
+								<div class="b">
+									<span class="dt">2018年12月23日</span>
+									<span class="g"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>12</span>
+									<span><i class="fa fa-commenting-o" aria-hidden="true"></i>2</span>
+								</div>
+							</div>
+							<div class="my_other_item">
+								<div class="t">
+									<div class="p" style="background-image: url(img/ewm.png);"></div>
+									<div class="n">张三爱看书的批注</div>
+									<div class="d">
+										<span>修改</span>
+										<span>删除</span>
+									</div>
+								</div>
+								<div class="c">其余模块的预测和估计也都都相应地对应着GDP的三种状态进行估计。</div>
+								<div class="b">
+									<span class="dt">2018年12月23日</span>
+									<span class="g"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>12</span>
+									<span><i class="fa fa-commenting-o" aria-hidden="true"></i>2</span>
+								</div>
+							</div>
+							<div class="more">加载更多 &gt;</div>
+						</div>
+					</div>
+				</div>
 				<thr ref='thr' :progress="progress"></thr>
 				<div class="book_topl">
 					<div class="book_topl_but">
@@ -154,7 +229,7 @@
 					<input class="num" type="number" min="1" max="100" placeholder="%" v-model="jump" />
 					<input class="but" type="button" id="" value="跳转" @click="jumpTo" />
 				</div>
-			
+
 				<search-box :sections="content_list" :active="isSearchBoxShow" @close="toggleSearchBar(false)"></search-box>
 				<div class="change_form scroll_book">
 					<h3>其他格式阅读</h3>
@@ -379,6 +454,80 @@
 			<div class="alt_page">
 				<span>第一页</span>
 			</div>
+			<div class="pc_guide">
+				<div class="pc_guide_item">
+					<div class="Explain_icon1 Explain_icon"></div>
+					<div class="order_1 order_num">1</div>
+					<div class="list l">
+						<span>设置翻页模式，调整文字大小，主题模式</span>
+						<span>目录，快速定位到章节</span>
+						<span>全文检索功能</span>
+						<span>点击可以复制整页文字</span>
+						<span>阅读pdf，epub版电子书</span>
+					</div>
+					<div class="pc_guide_but">
+						<span class="jump">跳过</span>
+						<span class="prev gary">上一步</span>
+						<span class="next">下一步</span>
+					</div>
+				</div>
+				<div class="pc_guide_item">
+					<div class="Explain_icon2 Explain_icon"></div>
+					<div class="order_2 order_num">2</div>
+					<div class="list r">
+						<span>我的书签</span>
+						<span>我的划线/批注</span>
+						<span>查看此本文献所有的批注内容</span>
+					</div>
+					<div class="pc_guide_but">
+						<span class="jump">跳过</span>
+						<span class="prev">上一步</span>
+						<span class="next">下一步</span>
+					</div>
+				</div>
+				<div class="pc_guide_item">
+					<div class="Explain_icon3 Explain_icon"></div>
+					<div class="order_3 order_num">3</div>
+					<div class="list r">
+						<span>打书签</span>
+					</div>
+					<div class="pc_guide_but">
+						<span class="jump">跳过</span>
+						<span class="prev">上一步</span>
+						<span class="next">下一步</span>
+					</div>
+				</div>
+				<div class="pc_guide_item">
+					<div class="Explain_icon4 Explain_icon"></div>
+					<div class="order_4 order_num">4</div>
+					<div class="list r">
+						<span>翻页：上一页/下一页</span>
+						<span>&nbsp;</span>
+						<span>跳过到指定进度</span>
+					</div>
+					<div class="pc_guide_but">
+						<span class="jump">跳过</span>
+						<span class="prev">上一步</span>
+						<span class="next gary">下一步</span>
+					</div>
+				</div>
+			</div>
+			<div class="ph_guide">
+				<div class="ph_guide_item">
+					<span>点击左侧</span>
+					<strong>上一页</strong>
+				</div>
+				<div class="ph_guide_item">
+					<span>点击中间</span>
+					<strong>菜单</strong>
+				</div>
+				<div class="ph_guide_item">
+					<span>点击右侧</span>
+					<strong>下一页</strong>
+				</div>
+				<div class="ph_guide_line1"></div>
+				<div class="ph_guide_line2"></div>
+			</div>
 			<copier ref="copier"></copier>
 		</div>
 		<script type="text/javascript" src="js/jquery-2.1.0.js"></script>
@@ -396,13 +545,35 @@
 					clickable: true,
 				},
 			});
-			$(window).on("load",function(){
+			$(window).on("load", function() {
 				var wind_w = $(window).width();
-				if (wind_w>768) {
-					console.log("pc");
-				} else{
-					console.log("ip");
+				if (wind_w > 768) {
+					//$(".pc_guide").show();
+				} else {
+					$(".ph_guide").show();
 				}
+			});
+			$(".ph_guide").click(function() {
+				$(this).fadeOut();
+			});
+			$(".pc_guide_but .next").click(function() {
+				var fat_idx = $(this).parents(".pc_guide_item").index();
+				console.log(fat_idx);
+				if (fat_idx < $(".pc_guide_item").length - 1) {
+					$(".pc_guide_item").eq(fat_idx + 1).show().siblings().hide();
+				} else if (fat_idx == $(".pc_guide_item").length - 1) {
+					$(".pc_guide").hide();
+				}
+			});
+			$(".pc_guide_but .prev").click(function() {
+				var fat_idx = $(this).parents(".pc_guide_item").index();
+				console.log(fat_idx);
+				if (fat_idx > 0) {
+					$(".pc_guide_item").eq(fat_idx - 1).show().siblings().hide();
+				}
+			});
+			$(".pc_guide_but .jump").click(function() {
+				$(".pc_guide").hide();
 			});
 		</script>
 	</body>

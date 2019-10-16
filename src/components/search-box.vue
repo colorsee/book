@@ -107,7 +107,7 @@ export default {
 <style scoped>
 .search_list.active {
   display: block;
-  height: 720px;
+  height: 680px;
   overflow-y: auto;
 }
 
