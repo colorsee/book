@@ -556,10 +556,11 @@
 			}
 			$(window).on("load", function() {
 				var wind_w = $(window).width();
-				if (wind_w > 768 && getQueryVariable("coki_name")!=="100;") {
+				if (wind_w > 768 && getQueryVariable("coki_name").replace(";","")!=="100") {
 					$(".pc_guide").show();
 					document.cookie="coki_name=100";
-				} else if(wind_w < 768 && getQueryVariable("coki_name")!=="100;") {
+					console.log(getQueryVariable("coki_name"))
+				} else if(wind_w < 768 && getQueryVariable("coki_name").replace(";","")!=="100") {
 					$(".ph_guide").show();
 					document.cookie="coki_name=100";
 				}
