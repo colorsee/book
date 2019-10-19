@@ -11,9 +11,9 @@
         <div class="title">
           <span><i class="fa fa-book"></i> {{info.title}}</span>
         </div>
-        <div class="wrapper" @click="closeToolbar">
-          <div class="tool"><i class="fa fa-bookmark"></i></div>
-          <div class="tool" @click.capture.stop.prevent="handleBookmarkAdd"><i class="fa fa-map-signs"></i></div>
+        <div class="wrapper">
+          <div class="tool" @click="closeToolbar"><i class="fa fa-bookmark"></i></div>
+          <!-- <div class="tool" @click.capture.stop.prevent="handleBookmarkAdd"><i class="fa fa-map-signs"></i></div> -->
         </div>
         <div class="footer">
           <div class="action" @click="handleActionClick('isCatalogShow')">
@@ -58,7 +58,8 @@ export default {
     },
 
     closeToolbar() {
-      this.$emit("close");
+      alt_page("成功加入标签")
+      // this.$emit("close");
     }
   },
 
