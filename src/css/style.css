@@ -1545,6 +1545,7 @@ button {
 	top: 0;
 	width: 339px;
 	height: 326px;
+	display: none;
 	border-radius: 8px;
 	background-color: #f2f2f2;
 	border: 1px solid #cccccc;

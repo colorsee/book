@@ -545,12 +545,23 @@
 					clickable: true,
 				},
 			});
+			function getQueryVariable(variable){
+				   var query = document.cookie;
+				   var vars = query.split(" ");
+				   for (var i=0;i<vars.length;i++) {
+						   var pair = vars[i].split("=");
+						   if(pair[0] == variable){return pair[1];}
+				   }
+				   return(false);
+			}
 			$(window).on("load", function() {
 				var wind_w = $(window).width();
-				if (wind_w > 768) {
-					//$(".pc_guide").show();
-				} else {
+				if (wind_w > 768 && getQueryVariable("coki_name")!=="100;") {
+					$(".pc_guide").show();
+					document.cookie="coki_name=100";
+				} else if(wind_w < 768 && getQueryVariable("coki_name")!=="100;") {
 					$(".ph_guide").show();
+					document.cookie="coki_name=100";
 				}
 			});
 			$(".ph_guide").click(function() {
