@@ -14,6 +14,8 @@
 </template>
 
 <script>
+import { restoreProgress } from "../utils/progress";
+
 export default {
   props: ["sections"],
 
@@ -51,6 +53,7 @@ export default {
   mounted() {
     this.initMouseScroll();
     this.initHashChange();
+    restoreProgress(true);
   },
 
   destroyed() {
@@ -61,6 +64,8 @@ export default {
   updated() {
     const { children } = this.$refs.content;
     const last = children[children.length - 1];
+
+    restoreProgress();
 
     if (!last) {
       this.pageCount = 1;
@@ -192,7 +197,7 @@ export default {
           ? $(container).find(`p[data-partcode="${partcode}"]`)
           : $(container).find(`#section-${section}`);
 
-        this.page = target.offsetLeft / this.readerWidth;
+        this.page = target ? target.offsetLeft / this.readerWidth : 0;
         this.emitProgress();
       });
     },

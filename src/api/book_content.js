@@ -7,15 +7,11 @@ export default {
   showart(resource_id) {
     return post('/index/read/showart', { resource_id })
   },
-  rstep(resource_id) {
-    //查询会员阅读进度
-    Axios.post(
-      'https://result.eolinker.com/GzWguRJbc6216d987a858b371cd2e4973b84ea5ed45cb4e?uri=xxsy.1i2.cn/index/read/rstep',
-      {
-        resource_id: resource_id,
-        resource_type: 1,
-      }
-    ).then(res => data.res)
+  rstep() {
+    return post('/index/read/rstep', {
+      resource_id,
+      resource_type: 1,
+    })
   },
   saveRstep(resource_id, rstep) {
     return post('/index/read/saveRstep', {

@@ -18,6 +18,7 @@ import bookAPI from './api/book_content'
 import utilsAPI from './api/book_utils'
 import markAPI from './api/mark'
 import sliblingAPI from './api/scribing'
+import { saveProgress } from './utils/progress'
 
 Vue.use(VueJsonp)
 
@@ -133,6 +134,9 @@ var vm = new Vue({
 
     handleRead(progress) {
       this.progress = progress
+      const { article_id, start_part, ...props } = this.$refs.reader.abstract()
+      const step = { article_id, start_part, start_word: 1 }
+      saveProgress(step)
     },
 
     handleControlShow(key) {

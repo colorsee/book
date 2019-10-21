@@ -81,6 +81,7 @@ import Bookmark from "./bookmark.vue";
 import Settings from "./settings.vue";
 import ProgressBar from "./progress-bar.vue";
 import Tablet from "./tablet.vue";
+import { restoreProgress } from "../utils/progress.js";
 
 const defaultSettings = {
   fontSize: 16,
@@ -287,16 +288,11 @@ export default {
       }
 
       const { verticalContainer, viewport } = this.$refs;
-      const headers = $(verticalContainer).find("h1, h2, h3, h4, h5");
-      const [targetHeader] = headers.filter(
-        (_, c) => c.offsetTop > viewport.scrollTop
-      );
-      const [, partcode] = targetHeader.id.match(/^section-(\d+)$/);
-
       const [target] = $(verticalContainer)
         .find("p")
         .filter((_, c) => c.offsetTop > viewport.scrollTop);
       const value = $(target).text();
+      const partcode = $(target).data("partcode");
 
       const [article] = $(verticalContainer)
         .find("h1, h2, h3, h4, h5")

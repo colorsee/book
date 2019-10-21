@@ -10,7 +10,17 @@
 </template>
 
 <script>
+import { restoreProgress } from "../utils/progress.js";
+
 export default {
-  props: ["current"]
+  props: ["current"],
+
+  mounted() {
+    restoreProgress(true);
+  },
+
+  updated() {
+    restoreProgress();
+  }
 };
 </script>
