@@ -12,6 +12,11 @@ steps:
   commands:
     - npm install
 
+- name: install
+  image: node:12.10.0
+  commands:
+  - npm run test
+
 - name: build
   image: node:12.10.0
   commands:
