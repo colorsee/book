@@ -27,7 +27,6 @@ export function restoreProgress(reset = false) {
     const { article_id, start_part } = posts
     const data = { section: article_id, partcode: start_part }
     history.replaceState(data, null)
-    console.log(data)
     inited = true
   })
 }

@@ -3,8 +3,6 @@ export default function getSelection() {
   const sel = document.getSelection()
   const value = sel.toString()
 
-  console.log(sel)
-
   const { anchorNode, anchorOffset, focusNode, focusOffset } = sel
   const anchorPart = $(anchorNode).parent()
   const extentPart = $(focusNode).parent()
