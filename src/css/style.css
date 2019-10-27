@@ -2323,3 +2323,7 @@ button {
 	height: 134px;
 	margin-bottom: 20px;
 }
+
+.underline {
+	text-decoration: underline wavy;
+}

@@ -6,7 +6,7 @@
   "scripts": {
     "build": "rm -rf dist/ && webpack && cp -r ./src/css ./src/img ./src/js ./src/index.html ./dist",
     "test": "jest",
-    "test:watch": "jest:watch",
+    "test:watch": "jest --watch",
     "dev": "webpack-dev-server --open  --contentBase src --hot"
   },
   "keywords": [],
@@ -23,6 +23,7 @@
   "devDependencies": {
     "@babel/core": "^7.6.0",
     "@babel/plugin-proposal-class-properties": "^7.5.5",
+    "@babel/plugin-transform-modules-commonjs": "^7.6.0",
     "@babel/preset-env": "^7.6.0",
     "@babel/preset-flow": "^7.0.0",
     "babel-loader": "^8.0.6",
@@ -35,5 +36,14 @@
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.7",
     "webpack-dev-server": "^3.8.0"
+  },
+  "babel": {
+    "env": {
+      "test": {
+        "plugins": [
+          "@babel/plugin-transform-modules-commonjs"
+        ]
+      }
+    }
   }
 }
