@@ -8,24 +8,21 @@ trigger:
 
 steps:
 - name: install
-  image: node:12.10.0
+  image: node:apline
   commands:
-    - npm install
-
-- name: install
-  image: node:12.10.0
-  commands:
+  - npm install
   - npm run test
 
+
 - name: build
-  image: node:12.10.0
+  image: node:apline
   commands:
-    - npm run build
+  - npm run build
 
 - name: pack
   image: alpine
   commands:
-    - tar zcvf dist.tar.gz dist/*
+  - tar zcvf dist.tar.gz dist/*
 
 - name: dispatch
   image: appleboy/drone-scp
