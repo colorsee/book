@@ -94,6 +94,7 @@ export default {
       this.submit(1, 0, "").then(() => {
         this.hideThr();
         alt_page("划线成功！");
+        this.$emit("change");
       });
     },
 
@@ -107,6 +108,7 @@ export default {
       this.submit(isPublic, 1, this.note).then(() => {
         this.hideDo();
         alt_page("批注成功！");
+        this.$emit("change");
       });
     },
 

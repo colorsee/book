@@ -152,7 +152,7 @@ $(document).ready(function() {
   $('.phone_page .phone_cli_erea:nth-child(3)').click(function() {
     $('.book_botomr .next').click()
   })
-  $(document.body).on('click', '.annotation', function() {
+  $(document.body).on('click', '.annotation::after', function() {
     $(this).addClass('active')
   })
 })

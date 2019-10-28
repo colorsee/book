@@ -9,6 +9,7 @@ export default {
   props: ["data"],
   methods: {
     handleClick() {
+      console.log(this.data);
       window.history.replaceState(this.data, null);
       this.$emit("click");
     }

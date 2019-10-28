@@ -77,8 +77,11 @@ export default {
         .filter(([, s]) => s.content.includes(keyword))
         .map(([i, s]) => {
           const [result, partcode] = s.content.match(
-            new RegExp(`<p data-partcode="(.*?)".*?>.*?${keyword}.*?</p>`)
+            new RegExp(`.*<p data-partcode="(.*?)".*?>.*?${keyword}.*?</p>.*`)
           );
+          console.group("aa");
+          console.log(result);
+          console.groupEnd();
           const [content] = result.match(
             new RegExp(`[^<>]{0,20}${keyword}[^<>]{0,30}`)
           );

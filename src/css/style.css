@@ -2323,11 +2323,11 @@ button {
 }
 
 .underline {
-  text-decoration: underline wavy;
+  text-decoration: underline;
 }
 
 .annotation.active {
-  text-decoration: underline wavy;
+  text-decoration: underline;
 }
 
 .annotation::after {

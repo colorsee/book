@@ -88,6 +88,7 @@ import Settings from "./settings.vue";
 import ProgressBar from "./progress-bar.vue";
 import Tablet from "./tablet.vue";
 import { restoreProgress } from "../utils/progress.js";
+import drawUnderline from "../utils/drawUnderline";
 
 const defaultSettings = {
   fontSize: 16,
@@ -127,7 +128,7 @@ export default {
 
   computed: {
     sections() {
-      return this.articles;
+      return drawUnderline(this.articles, this.annotations);
     },
 
     isLoading() {
