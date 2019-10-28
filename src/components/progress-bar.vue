@@ -1,21 +1,46 @@
 <template>
   <div class="container">
-    <div class="chapters block">
-      <div class="step">&lt;上一章</div>
+    <div
+      class="chapters block"
+      :style="{ justifyContent: isChapterVisible ? 'space-between' : 'center' }"
+    >
+      <div v-if="isChapterVisible" class="step" @click="handleChapterChange('prev')">&lt;上一章</div>
       <div class="name">
-        <h4 class="title">章节标题</h4>
-        <div class="progress">10%</div>
+        <h4 class="title">当前进度</h4>
+        <div class="progress">{{ progress | percent }}</div>
       </div>
-      <div class="step">下一章&gt;</div>
+      <div v-if="isChapterVisible" class="step" @click="handleChapterChange('next')">下一章&gt;</div>
     </div>
     <div class="range-box block">
-      <input type="range" class="range" value="20" min="0" max="100" />
+      <input
+        type="range"
+        class="range"
+        :value="progress * 100"
+        min="0"
+        max="100"
+        @change="handleProgressChange"
+      />
     </div>
   </div>
 </template>
 
 <script>
-export default {};
+import percent from "../utils/percent";
+
+export default {
+  props: ["title", "progress", "isChapterVisible"],
+  methods: {
+    handleChapterChange(type) {
+      this.$emit("change", { type });
+    },
+    handleProgressChange({ target }) {
+      this.$emit("progress", { value: target.value });
+    }
+  },
+  filters: {
+    percent
+  }
+};
 </script>
 
 <style scoped>
@@ -33,7 +58,7 @@ export default {};
 
 .chapters {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   padding: 20px;
 }

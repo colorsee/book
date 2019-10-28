@@ -67,7 +67,13 @@
       @input="handleSettingsChange"
       @close="handleControlClose"
     ></settings>
-    <progress-bar v-if="isProgressShow"></progress-bar>
+    <progress-bar
+      v-if="isProgressShow"
+      @change="handleChapterChange"
+      @progress="handleProgressChange"
+      :progress="progress"
+      :isChapterVisible="settings.mode === 'horizantol'"
+    ></progress-bar>
   </div>
 </template>
 
@@ -121,10 +127,6 @@ export default {
 
   computed: {
     sections() {
-      // if (!this.annotations) {
-      //   return this.articles;
-      // }
-
       return this.articles;
     },
 
@@ -171,6 +173,10 @@ export default {
       } else {
         this.next();
       }
+    },
+
+    handleProgressChange({ value }) {
+      this.jumpTo(value);
     },
 
     handleControlShow(key) {
@@ -220,6 +226,14 @@ export default {
     handleSettingsChange(value) {
       this.$emit("settings-change", value);
       this.restoreSettings(value);
+    },
+
+    handleChapterChange({ type }) {
+      if (this.settings.mode === "vertical") {
+        return;
+      }
+
+      this.$refs.container[`${type}Section`]();
     },
 
     jumpTo(percent) {
