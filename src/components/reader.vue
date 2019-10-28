@@ -398,3 +398,9 @@ export default {
   }
 }
 </style>
+
+<style>
+p img {
+  background: white;
+}
+</style>
