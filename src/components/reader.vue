@@ -304,6 +304,7 @@ export default {
       const { verticalContainer, viewport } = this.$refs;
       const [target] = $(verticalContainer)
         .find("p")
+        .not(":has(img)")
         .filter((_, c) => c.offsetTop > viewport.scrollTop);
       const value = $(target).text();
       const partcode = $(target).data("partcode");

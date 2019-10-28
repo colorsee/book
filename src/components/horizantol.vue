@@ -209,7 +209,9 @@ export default {
 
       const [target] = $(container)
         .find("p")
+        .not(":has(img)")
         .filter((_, c) => c.offsetLeft === offsetLeft);
+
       const value = $(target).text();
       const partcode = $(target).data("partcode");
 
