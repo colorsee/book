@@ -8,14 +8,13 @@ trigger:
 
 steps:
 - name: install
-  image: node:apline
+  image: node:12.10.0
   commands:
   - npm install
   - npm run test
 
-
 - name: build
-  image: node:apline
+  image: node:12.10.0
   commands:
   - npm run build
 
@@ -62,10 +61,10 @@ steps:
     password:
       from_secret: ssh_password
     script:
-      - cd /tmp/ebook
-      - tar zxvf dist.tar.gz
-      - rm -rf $PROJECTS/ebook
-      - mv dist $PROJECTS/ebook
+    - cd /tmp/ebook
+    - tar zxvf dist.tar.gz
+    - rm -rf $PROJECTS/ebook
+    - mv dist $PROJECTS/ebook
 
 depends_on:
-  - build
+- build
