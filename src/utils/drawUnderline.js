@@ -10,7 +10,8 @@ export default function drawUnderline(sections, scribing) {
 
     target.content = target.content.replace(
       s.excerpt,
-      s => `<span class="underline">${s}</span>`
+      t =>
+        `<span class="${s.type == 1 ? 'annotation' : 'underline'}">${t}</span>`
     )
   })
   return sections

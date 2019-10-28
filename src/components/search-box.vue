@@ -2,7 +2,9 @@
   <div :class="{search_box: true, scroll_book: true, act: active}">
     <div class="search_box_h">
       <h3>全文搜索</h3>
-      <div class="close" @click="close"><i class="fa fa-times" aria-hidden="true"></i></div>
+      <div class="close" @click="close">
+        <i class="fa fa-times" aria-hidden="true"></i>
+      </div>
       <div class="search_into">
         <input
           type="text"
@@ -75,7 +77,7 @@ export default {
         .filter(([, s]) => s.content.includes(keyword))
         .map(([i, s]) => {
           const [result, partcode] = s.content.match(
-            new RegExp(`<p data-partcode="(.*?)" .*?>.*?${keyword}.*?</p>`)
+            new RegExp(`<p data-partcode="(.*?)".*?>.*?${keyword}.*?</p>`)
           );
           const [content] = result.match(
             new RegExp(`[^<>]{0,20}${keyword}[^<>]{0,30}`)

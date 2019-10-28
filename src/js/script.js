@@ -152,6 +152,9 @@ $(document).ready(function() {
   $('.phone_page .phone_cli_erea:nth-child(3)').click(function() {
     $('.book_botomr .next').click()
   })
+  $(document.body).on('click', '.annotation', function() {
+    $(this).addClass('active')
+  })
 })
 var alt_ps = true
 
