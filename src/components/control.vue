@@ -9,23 +9,34 @@
 
       <div class="toolbar fullscreen" v-if="isShow">
         <div class="title">
-          <span><i class="fa fa-book"></i> {{info.title}}</span>
+          <span>
+            <i class="fa fa-book"></i>
+            {{info.title}}
+          </span>
         </div>
-        <div class="wrapper">
-          <div class="tool" @click="closeToolbar"><i class="fa fa-bookmark"></i></div>
+        <div class="wrapper" @click="closeToolbar">
+          <div class="tool">
+            <i class="fa fa-bookmark" @click.capture.stop.prevent="handleBookmarkAdd"></i>
+          </div>
           <!-- <div class="tool" @click.capture.stop.prevent="handleBookmarkAdd"><i class="fa fa-map-signs"></i></div> -->
         </div>
         <div class="footer">
           <div class="action" @click="handleActionClick('isCatalogShow')">
-            <span><i class="fa fa-book"></i></span>
+            <span>
+              <i class="fa fa-book"></i>
+            </span>
             <span>目录</span>
           </div>
           <div class="action" @click="handleActionClick('isBookmarkShow')">
-            <span><i class="fa fa-bookmark"></i></span>
+            <span>
+              <i class="fa fa-bookmark"></i>
+            </span>
             <span>书签</span>
           </div>
           <div class="action" @click="handleActionClick('isSettingsShow')">
-            <span><i class="fa fa-cog"></i></span>
+            <span>
+              <i class="fa fa-cog"></i>
+            </span>
             <span>设置</span>
           </div>
           <div class="action" @click="handleActionClick('isProgressShow')">
@@ -55,11 +66,11 @@ export default {
 
     handleBookmarkAdd() {
       this.$emit("add-bookmark");
+      alt_page("成功加入标签");
     },
 
     closeToolbar() {
-      alt_page("成功加入标签")
-      // this.$emit("close");
+      this.$emit("close");
     }
   },
 
