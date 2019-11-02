@@ -1,18 +1,19 @@
 export default function drawUnderline(sections, scribing) {
-  scribing.forEach(s => {
-    const target = sections.find(sec =>
-      sec.content.match(`partcode="${s.start_part}"`)
-    )
+  return sections.map(sec => {
+    const target = { ...sec }
 
-    if (!target) {
-      return
-    }
+    scribing
+      .filter(s => sec.content.match(`partcode="${s.start_part}"`))
+      .forEach(s => {
+        target.content = target.content.replace(
+          s.excerpt,
+          t =>
+            `<span class="${
+              s.type == 1 ? 'annotation' : 'underline'
+            }">${t}</span>`
+        )
+      })
 
-    target.content = target.content.replace(
-      s.excerpt,
-      t =>
-        `<span class="${s.type == 1 ? 'annotation' : 'underline'}">${t}</span>`
-    )
+    return target
   })
-  return sections
 }
