@@ -36,17 +36,17 @@ export default {
       scribing_id,
     }
 
-    return post('/index/read/ascribing', data)
+    return post('/s1/read/ascribing', data)
   },
   lscribing(order = 0) {
-    return post('/index/read/lscribing', {
+    return post('/s1/read/lscribing', {
       resource_id: window.resource_id,
       order,
       resource_type: 1,
     })
   },
   dscribing(scribing_id) {
-    return post('/index/read/rscribing', {
+    return post('/s1/read/rscribing', {
       scribing_id,
     })
   },

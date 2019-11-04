@@ -10,7 +10,7 @@ import { post } from '../utils/request'
 
 export default {
   amark({ resource_id, article_id, start_part, start_word, excerpt, percent }) {
-    return post('/index/read/amark', {
+    return post('/s1/read/amark', {
       resource_type: 1,
       start_word: 0,
       resource_id,
@@ -22,7 +22,7 @@ export default {
   },
 
   lmark(resource_id, page) {
-    return post('/index/read/lmark', {
+    return post('/s1/read/lmark', {
       resource_id: resource_id,
       resource_type: 1,
       pagenum: page,
@@ -30,7 +30,7 @@ export default {
   },
 
   rmark(mark_id, callback) {
-    return post('/index/read/rmark', {
+    return post('/s1/read/rmark', {
       mark_id,
     })
   },

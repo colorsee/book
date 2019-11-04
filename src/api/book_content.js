@@ -6,23 +6,23 @@ import scribing from './scribing'
 
 export default {
   showart(resource_id) {
-    return post('/index/read/showart', { resource_id })
+    return post('/s1/read/showart', { resource_id })
   },
   rstep() {
-    return post('/index/read/rstep', {
+    return post('/s1/read/rstep', {
       resource_id,
       resource_type: 1,
     })
   },
   saveRstep(resource_id, rstep) {
-    return post('/index/read/saveRstep', {
+    return post('/s1/read/srstep', {
       resource_id: resource_id,
       resource_type: 1,
       rstep: rstep,
     }).then(res => res.data)
   },
   show(resource_id) {
-    return post('/index/read/show', {
+    return post('/s1/read/show', {
       resource_id,
       resource_type: 1,
       page: 1,
@@ -30,32 +30,8 @@ export default {
   },
   info(resource_id) {
     //图书阅读--加载基础信息
-    return post('/index/read/info', {
+    return post('/s1/read/info', {
       resource_id,
     })
-  },
-  article(resource_id, callback) {
-    //篇章阅读--加载基础信息
-    API.POST(
-      'http://xxsy.1i2.cn/index/read/article',
-      {
-        resource_id: resource_id,
-        callbacktype: 'jsonp',
-        Authorization: token,
-      },
-      callback
-    )
-  },
-  probation(resource_id, resource_type, callback) {
-    //加载试读数据
-    API.POST(
-      'http://xxsy.1i2.cn/index/read/probation',
-      {
-        resource_id: resource_id,
-        resource_type: resource_type,
-        callbacktype: 'jsonp',
-      },
-      callback
-    )
   },
 }

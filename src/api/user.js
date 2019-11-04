@@ -14,7 +14,7 @@ export default {
     }
 
     user = axios
-      .post('/index/member/login', {
+      .post('/s1/member/login', {
         account: username,
         password: password,
         callbacktype: 'json',

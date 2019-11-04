@@ -50,12 +50,6 @@ var vm = new Vue({
     currentArticle: '',
   }),
   methods: {
-    collection() {
-      //收藏
-      //var status = utilsAPI.collectStatus(this.resource_id)
-      utilsAPI.collectArt(this.resource_id)
-      // var status = utilsAPI.collectStatus(this.resource_id)
-    },
     amark() {
       markAPI.amark({
         resource_id,

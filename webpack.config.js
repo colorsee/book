@@ -47,13 +47,13 @@ module.exports = {
   devServer: {
     host: '0.0.0.0',
     proxy: {
-      '/index': {
-        target: 'http://xxsy.1i2.cn',
+      '/s1': {
+        target: 'http://xxsy.ctft.net',
         secure: false,
         changeOrigin: true,
       },
       '/resourcePic': {
-        target: 'http://xxsy.1i2.cn',
+        target: 'http://xxsy.ctft.net',
         secure: false,
         changeOrigin: true,
       },
