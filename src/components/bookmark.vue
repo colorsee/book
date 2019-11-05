@@ -2,7 +2,9 @@
   <action>
     <div class="header">
       <h3>书签</h3>
-      <div class="close" @click="close"><i class="fa fa-times" aria-hidden="true"></i></div>
+      <div class="close" @click="close">
+        <i class="fa fa-times" aria-hidden="true"></i>
+      </div>
     </div>
     <div class="list">
       <div :key="item.id" class="item" v-for="item in bookmarks">
@@ -24,6 +26,7 @@
         </div>
       </div>
     </div>
+    <button class="load" @click="load">加载更多...</button>
   </action>
 </template>
 
@@ -38,7 +41,8 @@ export default {
   props: ["sections"],
 
   data: () => ({
-    bookmarks: []
+    bookmarks: [],
+    page: 1
   }),
 
   mounted() {
@@ -47,12 +51,17 @@ export default {
 
   methods: {
     load() {
-      markAPI.lmark(resource_id, 1).then(({ posts }) => {
+      markAPI.lmark(resource_id, this.page++).then(({ posts }) => {
+        if (!posts || posts.length === 0) {
+          return;
+        }
+
         posts.forEach(b => {
           const target = this.sections.find(s => s.id == b.article_id);
           b.title = (target && target.title) || "";
         });
-        this.bookmarks = posts;
+
+        this.bookmarks = [...this.bookmarks, ...posts];
       });
     },
 
@@ -126,5 +135,9 @@ export default {
   background-color: #ff3300;
   border: 1px solid #cc0000;
   color: white;
+}
+
+.load {
+  margin-top: 16px;
 }
 </style>>
