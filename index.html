@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<meta name="Keywords" content="" />
+		<meta http-equiv="Pragma" content="no-cache" />
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<link rel="stylesheet" href="css/swiper.min.css" />
+		<link rel="stylesheet" href="css/style.css" />
+		<link rel="stylesheet" href="css/iconfont.css" />
+		<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+		<link rel="stylesheet" href="//at.alicdn.com/t/font_1439379_njlj9lkxbu.css">
+		<title>图书</title>
+	</head>
+
+	<body>
+		<div class="box" id="app">
+			<div class="box_l">
+				<div class="out_read">
+					<strong>&lt;</strong>
+					<span>退出阅读</span>
+				</div>
+				<div class="this_bok">
+					<div class="tit">{{baseinfo.title}}</div>
+					<div class="money" :style="{backgroundImage: 'url(' + baseinfo.cover_src + ')' }">
+						<span>￥{{baseinfo.price}}</span>
+					</div>
+					<div class="buy_but">购买</div>
+					<div class="colect_but">收藏</div>
+				</div>
+				<div class="about_bok">
+					<div class="txt"><span>分享（100）</span></div>
+					<div class="txt"><span>收藏（100）</span></div>
+				</div>
+				<div class="erm_box">
+					<span>扫一扫手机阅读</span>
+					<img src="img/ewm.png" />
+				</div>
+				<div class="erm_box">
+					<span>手机APP下载</span>
+					<img src="img/ewm.png" />
+				</div>
+				<div class="close_but">
+					<span>&nbsp;</span>
+				</div>
+			</div>
+			<div class="box_r">
+				<h3>大家都在看</h3>
+				<div class="swiper-container">
+					<div class="swiper-wrapper">
+						<div class="swiper-slide">
+							<div class="ment_list">
+								<a href="">
+									<div class="pic" style="background-image: url(img/bok.jpg);"><span>免费</span></div>
+									<div class="txt">这里时第一本推荐</div>
+								</a>
+							</div>
+							<div class="ment_list">
+								<a href="">
+									<div class="pic" style="background-image: url(img/bok.jpg);"><span>免费</span></div>
+									<div class="txt">这里时第二本推荐</div>
+								</a>
+							</div>
+							<div class="ment_list">
+								<a href="">
+									<div class="pic" style="background-image: url(img/bok.jpg);"><span>免费</span></div>
+									<div class="txt">世界十大古奇迹之谜推荐</div>
+								</a>
+							</div>
+						</div>
+						<div class="swiper-slide">
+							<div class="ment_list">
+								<a href="">
+									<div class="pic" style="background-image: url(img/bok.jpg);"><span>免费</span></div>
+									<div class="txt">这里时第三本推荐</div>
+								</a>
+							</div>
+							<div class="ment_list">
+								<a href="">
+									<div class="pic" style="background-image: url(img/bok.jpg);"><span>免费</span></div>
+									<div class="txt">这里时第四本推荐</div>
+								</a>
+							</div>
+							<div class="ment_list">
+								<a href="">
+									<div class="pic" style="background-image: url(img/bok.jpg);"><span>免费</span></div>
+									<div class="txt">世界十大古奇迹之谜推荐</div>
+								</a>
+							</div>
+						</div>
+					</div>
+					<div class="swiper-pagination"></div>
+				</div>
+				<div class="close_but">
+					<span>&nbsp;</span>
+				</div>
+			</div>
+			<div class="book">
+				<div class="bok_page_num">{{progress | percent}}</div>
+				<div class="bok_mark" @click="amark"><i class="fa fa-bookmark-o"></i></div>
+				<reader ref="reader" class="bok_item scrol_none" :articles="content_list" :info="baseinfo" :bookmarks="lmarkList"
+				 :annotations="lscribingList" :resource-id="resource_id" :progress="progress" :settings="settings" :current-article="currentArticle"
+				 @read="handleRead" @add-bookmark="amark" @settings-change="changeSettings" @page-change="handlePageChange"
+				 @article-change="handleArticleChange"></reader>
+				<!-- <div class="bok_item scrol_none" id="content">
+					<div class="scrollview">
+						<div class="bok_item_list act">
+							<p><img :style="{backgroundImage: 'url(' + baseinfo.cover_src + ')' }" :src="baseinfo.cover_src" /></p>
+						</div>
+						<div :id="getArticleId(item)" class="bok_item_list" v-for="(item,index) in content_list" :key="item.id">
+							<h4 align="center">{{item.title}}</h4>
+							<p v-html="item.content"></p>
+						</div>
+						
+					</div>
+				</div> -->
+				<!--<div class="bok_piz_peg">
+					<div class="guide_gary"></div>
+					<div class="guide_whit"></div>
+					<div class="close"><i class="fa fa-times" aria-hidden="true"></i></div>
+					<div class="scrollview">
+						<div class="head">
+							<span class="pic" style="background-image: url(img/ewm.png);"></span>
+							<span class="name">云创无限的批注</span>
+							<span class="set">修改</span>
+							<span class="del">删除</span>
+						</div>
+						<div class="my_piz">适用于预测的模型已在样本内进行了检验，预测结果均落在95％的置信区间内。</div>
+						<div class="my_coment">
+							<div class="set_date">
+								<p class="l">用户于18年11月12日修改过此批注</p>
+								<p class="c"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i><span>11</span></p>
+								<p class="r"><i class="fa fa-commenting-o" aria-hidden="true"></i><span>2</span></p>
+							</div>
+						</div>
+						<div class="my_comentman">
+							<div class="guide_coment"></div>
+							<div class="ipt">
+								<input type="text" name="" id="" value="" />
+								<input type="button" id="" name="" value="评论" />
+							</div>
+							<div class="lst">
+								<div class="lst_item">
+									<div class="t">
+										<p>热心网友BBB：</p>
+										<p>回复了很有用，赞一个，引用了以下下〜</p>
+									</div>
+									<div class="b">
+										<span>3分钟前</span>
+										<span>回复</span>
+										<span><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>2</span>
+									</div>
+								</div>
+								<div class="lst_item">
+									<div class="t">
+										<p>热心网友BBB：</p>
+										<p>回复了  <span>热心网友AAA：</span>很有用，赞一个，引用了以下下〜</p>
+									</div>
+									<div class="b">
+										<span>3分钟前</span>
+										<span>回复</span>
+										<span><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>2</span>
+									</div>
+								</div>
+								<div class="more">加载更多 &gt;</div>
+							</div>
+						</div>
+						<div class="my_other">
+							<div class="my_other_item">
+								<div class="t">
+									<div class="p" style="background-image: url(img/ewm.png);"></div>
+									<div class="n">张三爱看书的批注</div>
+									<div class="d">
+										<span>修改</span>
+										<span>删除</span>
+									</div>
+								</div>
+								<div class="c">其余模块的预测和估计也都都相应地对应着GDP的三种状态进行估计。</div>
+								<div class="b">
+									<span class="dt">2018年12月23日</span>
+									<span class="g"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>12</span>
+									<span><i class="fa fa-commenting-o" aria-hidden="true"></i>2</span>
+								</div>
+							</div>
+							<div class="my_other_item">
+								<div class="t">
+									<div class="p" style="background-image: url(img/ewm.png);"></div>
+									<div class="n">张三爱看书的批注</div>
+									<div class="d">
+										<span>修改</span>
+										<span>删除</span>
+									</div>
+								</div>
+								<div class="c">其余模块的预测和估计也都都相应地对应着GDP的三种状态进行估计。</div>
+								<div class="b">
+									<span class="dt">2018年12月23日</span>
+									<span class="g"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>12</span>
+									<span><i class="fa fa-commenting-o" aria-hidden="true"></i>2</span>
+								</div>
+							</div>
+							<div class="more">加载更多 &gt;</div>
+						</div>
+					</div>
+				</div>-->
+				<thr ref='thr' @reload='lscribling' :progress="progress" @change="lscribling"></thr>
+				<div class="book_topl">
+					<div class="book_topl_but">
+						<div class="bt_1 bt_itm" @click="handleControlShow('isSettingsShow')"><span>显示设置</span><i class="fa fa-cog"></i></div>
+						<div class="bt_2 bt_itm" @click="handleControlShow('isCatalogShow')"><span>目录</span><i class="fa fa-book"></i></div>
+						<div class="bt_3 bt_itm" @click="toggleSearchBar(!isSearchBoxShow)"><span>内容检索</span><i class="fa fa-search"></i></div>
+						<div class="bt_4 bt_itm" @click="handleWholePageCopy"><span>整页复制</span><i class="fa fa-files-o"></i></div>
+						<div class="bt_5 bt_itm"><span>其他格式</span><i class="fa fa-folder-open"></i></div>
+					</div>
+				</div>
+				<div class="book_topr">
+					<div class="book_topr_but">
+						<div class="bt_6 bt_itm" @click='lmark'><i class="fa fa-bookmark"></i><span>书签</span></div>
+						<div class="bt_7 bt_itm" @click='lscribling(0)'><i class="fa fa-map-signs"></i><span>我的划线/批注</span></div>
+						<div class="bt_8 bt_itm" @click='lscribling(0)'><i class="fa fa-thumb-tack"></i><span>全部批注</span></div>
+					</div>
+				</div>
+				<div class="book_botomr">
+					<div class="page-control">
+						<span :class="{prve: true, active: lastPagination === 'prev'}" @click="prev()" v-if="settings.mode === 'horizantol'">上一页</span>
+						<span :class="{next: true, active: lastPagination === 'next'}" @click="next()" v-if="settings.mode === 'horizantol'">下一页</span>
+					</div>
+					<input class="num" type="number" min="1" max="100" placeholder="%" v-model="jump" />
+					<input class="but" type="button" id="" value="跳转" @click="jumpTo" />
+				</div>
+
+				<search-box :sections="content_list" :active="isSearchBoxShow" @close="toggleSearchBar(false)"></search-box>
+				<div class="change_form scroll_book">
+					<h3>其他格式阅读</h3>
+					<div class="PDF_read" v-show="baseinfo.read_pdf == '0' ? false:true">PDF格式</div>
+					<div class="EPUB_read" v-show="baseinfo.read_epub == '0'?false:true">EPUB格式</div>
+				</div>
+				<div class="mypsg mypsg_2 scroll_book">
+					<div class="scrollview">
+						<h3>我的划线/批注</h3>
+						<div class="mypsg_rice mypsg_2_spet">
+							<span class="bg_gary" @click='lscribling(0)'>按批注时间</span>
+							<span @click='lscribling(1)'>按内容顺序</span>
+						</div>
+						<annotations :list="lscribingList" @reload='lscribling'></annotations>
+					</div>
+				</div>
+				<div class="mypsg mypsg_3 scroll_book">
+					<div class="scrollview">
+						<h3>全部批注</h3>
+						<div class="mypsg_rice mypsg_3_spet">
+							<span class="bg_gary" @click='lscribling(0)'>按批注时间</span>
+							<span @click='lscribling(1)'>按内容顺序</span>
+						</div>
+						<other-annotations :list="lscribingList.filter(i => i.type === '1')"></other-annotations>
+					</div>
+				</div>
+				<div class="phone_list phone phone_list_1">
+					<div class="phone_list_box">
+						<div class="tit">
+							<h3>目录</h3>
+							<div class="close"><i class="fa fa-times" aria-hidden="true"></i></div>
+						</div>
+						<div class="phone_list_scroll">
+							<div class="scrollview">
+								<div class="text_ind_0">
+									<div class="ready_buy item">
+										<a href="">这是第一章节</a><i></i>
+										<a href="">1%</a>
+									</div>
+									<div class="text_ind_1">
+										<div class="neet_buy item">
+											<a href="">这是第一章节</a><i></i>
+											<a href="">未购买</a>
+										</div>
+										<div class="text_ind_2">
+											<div class="neet_buy item">
+												<a href="">这是第一章节</a><i></i>
+												<a href="">未购买</a>
+											</div>
+											<div class="text_ind_3">
+												<div class="neet_buy item">
+													<a href="">这是第一章节</a><i></i>
+													<a href="">未购买</a>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="text_ind_0">
+									<div class="ready_buy item">
+										<a href="">这是第一章节</a><i></i>
+										<a href="">1%</a>
+									</div>
+									<div class="text_ind_1">
+										<div class="neet_buy item">
+											<a href="">这是第一章节</a><i></i>
+											<a href="">未购买</a>
+										</div>
+										<div class="text_ind_2">
+											<div class="neet_buy item">
+												<a href="">这是第一章节</a><i></i>
+												<a href="">未购买</a>
+											</div>
+											<div class="text_ind_3">
+												<div class="neet_buy item">
+													<a href="">这是第一章节</a><i></i>
+													<a href="">未购买</a>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="text_ind_0">
+									<div class="ready_buy item">
+										<a href="">这是第一章节</a><i></i>
+										<a href="">1%</a>
+									</div>
+									<div class="text_ind_1">
+										<div class="neet_buy item">
+											<a href="">这是第一章节</a><i></i>
+											<a href="">未购买</a>
+										</div>
+										<div class="text_ind_2">
+											<div class="neet_buy item">
+												<a href="">这是第一章节</a><i></i>
+												<a href="">未购买</a>
+											</div>
+											<div class="text_ind_3">
+												<div class="neet_buy item">
+													<a href="">这是第一章节</a><i></i>
+													<a href="">未购买</a>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="phone_list phone phone_list_2">
+					<div class="phone_list_box">
+						<div class="tit">
+							<h3>书签</h3>
+							<div class="close"><i class="fa fa-times"></i></div>
+						</div>
+						<div class="phone_list_scroll">
+							<div class="scrollview">
+								<div class="phone_list_actibe">
+									<h4>我是书签的章节名称</h4>
+									<div class="actibe">
+										<p>...这里是书签页面段落的一部分摘录语句这里是书签页面段落的一部分摘录语句这里是书签页面段落的一部分摘录语句</p>
+										<p>
+											<span>进度：13%</span>
+											<span class="open">点击打开此页</span>
+											<span class="del">删除</span>
+											<span>2019-09-03 17:14:10</span>
+										</p>
+									</div>
+									<div class="actibe">
+										<p>...这里是书签页面段落的一部分摘录语句这里是书签页面段落的一部分摘录语句这里是书签页面段落的一部分摘录语句</p>
+										<p>
+											<span>进度：13%</span>
+											<span class="open">点击打开此页</span>
+											<span class="del">删除</span>
+											<span>2019-09-03 17:14:10</span>
+										</p>
+									</div>
+								</div>
+								<div class="phone_list_actibe">
+									<h4>我是书签的章节名称</h4>
+									<div class="actibe">
+										<p>...这里是书签页面段落的一部分摘录语句这里是书签页面段落的一部分摘录语句这里是书签页面段落的一部分摘录语句</p>
+										<p>
+											<span>进度：13%</span>
+											<span class="open">点击打开此页</span>
+											<span class="del">删除</span>
+											<span>2019-09-03 17:14:10</span>
+										</p>
+									</div>
+									<div class="actibe">
+										<p>...这里是书签页面段落的一部分摘录语句这里是书签页面段落的一部分摘录语句这里是书签页面段落的一部分摘录语句</p>
+										<p>
+											<span>进度：13%</span>
+											<span class="open">点击打开此页</span>
+											<span class="del">删除</span>
+											<span>2019-09-03 17:14:10</span>
+										</p>
+									</div>
+								</div>
+								<div class="phone_list_actibe">
+									<h4>我是书签的章节名称</h4>
+									<div class="actibe">
+										<p>...这里是书签页面段落的一部分摘录语句这里是书签页面段落的一部分摘录语句这里是书签页面段落的一部分摘录语句</p>
+										<p>
+											<span>进度：13%</span>
+											<span class="open">点击打开此页</span>
+											<span class="del">删除</span>
+											<span>2019-09-03 17:14:10</span>
+										</p>
+									</div>
+									<div class="actibe">
+										<p>...这里是书签页面段落的一部分摘录语句这里是书签页面段落的一部分摘录语句这里是书签页面段落的一部分摘录语句</p>
+										<p>
+											<span>进度：13%</span>
+											<span class="open">点击打开此页</span>
+											<span class="del">删除</span>
+											<span>2019-09-03 17:14:10</span>
+										</p>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="phone_set phone">
+					<div class="phone_set_list">
+						<input type="range" name="" id="" value="16" min="12" max="22" />
+						<span class="les">A-</span>
+						<span class="add">A+</span>
+					</div>
+					<div class="phone_set_list">
+						<span class="color faf7ed"></span>
+						<span class="color e6f2e6"></span>
+						<span class="color e4f1f5"></span>
+						<span class="color e0e0e0"></span>
+						<span class="color f5e4e4"></span>
+						<span class="color c_191b1c"></span>
+						<span class="color c_52585c"></span>
+					</div>
+					<div class="phone_set_list">
+						<p>
+							<span class="read h selcte">&#xe661; 左右翻页</span>
+							<span class="read s">&#xe662; 上下翻页</span>
+						</p>
+					</div>
+				</div>
+				<div class="phone_speet phone">
+					<div class="phone_speet_list">
+						<div class="tit">
+							<span>这里是章节的标题</span>
+							<span>1.27%</span>
+						</div>
+						<div class="prve">&lt;上一章</div>
+						<div class="next">下一章&gt;</div>
+					</div>
+					<div class="phone_speet_list">
+						<input type="range" value="10" />
+					</div>
+				</div>
+			</div>
+			<div class="alt_page">
+				<span>第一页</span>
+			</div>
+			<div class="pc_guide">
+				<div class="pc_guide_item">
+					<div class="Explain_icon1 Explain_icon"></div>
+					<div class="order_1 order_num">1</div>
+					<div class="list l">
+						<span>设置翻页模式，调整文字大小，主题模式</span>
+						<span>目录，快速定位到章节</span>
+						<span>全文检索功能</span>
+						<span>点击可以复制整页文字</span>
+						<span>阅读pdf，epub版电子书</span>
+					</div>
+					<div class="pc_guide_but">
+						<span class="jump">跳过</span>
+						<span class="prev gary">上一步</span>
+						<span class="next">下一步</span>
+					</div>
+				</div>
+				<div class="pc_guide_item">
+					<div class="Explain_icon2 Explain_icon"></div>
+					<div class="order_2 order_num">2</div>
+					<div class="list r">
+						<span>我的书签</span>
+						<span>我的划线/批注</span>
+						<span>查看此本文献所有的批注内容</span>
+					</div>
+					<div class="pc_guide_but">
+						<span class="jump">跳过</span>
+						<span class="prev">上一步</span>
+						<span class="next">下一步</span>
+					</div>
+				</div>
+				<div class="pc_guide_item">
+					<div class="Explain_icon3 Explain_icon"></div>
+					<div class="order_3 order_num">3</div>
+					<div class="list r">
+						<span>打书签</span>
+					</div>
+					<div class="pc_guide_but">
+						<span class="jump">跳过</span>
+						<span class="prev">上一步</span>
+						<span class="next">下一步</span>
+					</div>
+				</div>
+				<div class="pc_guide_item">
+					<div class="Explain_icon4 Explain_icon"></div>
+					<div class="order_4 order_num">4</div>
+					<div class="list r">
+						<span>翻页：上一页/下一页</span>
+						<span>&nbsp;</span>
+						<span>跳过到指定进度</span>
+					</div>
+					<div class="pc_guide_but">
+						<span class="jump">跳过</span>
+						<span class="prev">上一步</span>
+						<span class="next gary">下一步</span>
+					</div>
+				</div>
+			</div>
+			<div class="ph_guide">
+				<div class="ph_guide_item">
+					<span>点击左侧</span>
+					<strong>上一页</strong>
+				</div>
+				<div class="ph_guide_item">
+					<span>点击中间</span>
+					<strong>菜单</strong>
+				</div>
+				<div class="ph_guide_item">
+					<span>点击右侧</span>
+					<strong>下一页</strong>
+				</div>
+				<div class="ph_guide_line1"></div>
+				<div class="ph_guide_line2"></div>
+			</div>
+			<copier ref="copier"></copier>
+		</div>
+		<script type="text/javascript" src="js/jquery-2.1.0.js"></script>
+		<script type="text/javascript" src="js/swiper.min.js"></script>
+		<script type="text/javascript" src="js/sweetalert2@8.js"></script>
+		<script type="text/javascript" src="js/set.js"></script>
+		<script type="text/javascript" src="js/script.js"></script>
+		<script type="text/javascript" src="js/iconfont.js"></script>
+		<script type="text/javascript" src="/bundle.nocache.js"></script>
+		<script>
+			var mySwiper = new Swiper('.swiper-container', {
+				loop: true,
+				pagination: {
+					el: '.swiper-pagination',
+					clickable: true,
+				},
+			});
+			$(window).on("load", function() {
+				var wind_w = $(window).width();
+				if (wind_w > 768 && localStorage.getItem("temp")!=="master") {
+					$(".pc_guide").show();
+					localStorage.setItem("temp","master");
+				} else if(wind_w < 768 && localStorage.getItem("temp")!=="master") {
+					$(".ph_guide").show();
+					localStorage.setItem("temp","master");
+				}
+			});
+			$(".ph_guide").click(function() {
+				$(this).fadeOut();
+			});
+			$(".pc_guide_but .next").click(function() {
+				var fat_idx = $(this).parents(".pc_guide_item").index();
+				console.log(fat_idx);
+				if (fat_idx < $(".pc_guide_item").length - 1) {
+					$(".pc_guide_item").eq(fat_idx + 1).show().siblings().hide();
+				} else if (fat_idx == $(".pc_guide_item").length - 1) {
+					$(".pc_guide").hide();
+				}
+			});
+			$(".pc_guide_but .prev").click(function() {
+				var fat_idx = $(this).parents(".pc_guide_item").index();
+				console.log(fat_idx);
+				if (fat_idx > 0) {
+					$(".pc_guide_item").eq(fat_idx - 1).show().siblings().hide();
+				}
+			});
+			$(".pc_guide_but .jump").click(function() {
+				$(".pc_guide").hide();
+			});
+		</script>
+	</body>
+
+</html>
