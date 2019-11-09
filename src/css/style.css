@@ -23,7 +23,14 @@ td {
   padding: 0;
   font-family: 'iconfont';
 }
-
+.bouncedfa{
+	    margin-left: -30px;
+	    pointer-events: none;
+	    color: red;
+	    position: relative;
+	    
+	    /*top: -8px;*/
+}
 ul,
 li {
   list-style: none;
@@ -933,6 +940,7 @@ button {
   width: 100%;
   max-height: 100%;
   padding: 10px;
+  overflow: hidden;
   box-sizing: border-box;
   background-color: #f7f7f7;
   box-shadow: 2px 2px 5px #a6a6a6;
@@ -1539,11 +1547,15 @@ button {
 }
 
 .bok_piz_peg {
-  position: absolute;
+  position: fixed;
   top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  margin: auto;
   width: 339px;
   height: 326px;
-  display: none;
+  /*display: none;*/
   border-radius: 8px;
   background-color: #f2f2f2;
   border: 1px solid #cccccc;
@@ -1625,6 +1637,7 @@ button {
   position: absolute;
   top: 1px;
   right: 6px;
+  z-index: 11;
 }
 
 .bok_piz_peg .my_piz {
@@ -1986,7 +1999,9 @@ button {
     font-size: 14px;
     background-color: #f7f7f7;
   }
-
+ .bouncedfa{
+ 	display: none !important;
+ }
   .phone_list_scroll .item i {
     position: absolute;
     width: 100%;
@@ -2325,14 +2340,17 @@ button {
 .underline {
   text-decoration: underline;
 }
-
+.annotation{
+	cursor: pointer;
+}
 .annotation.active {
+	
   text-decoration: underline;
 }
 
-.annotation::after {
+/*.annotation::after {
   content: '标';
   color: red;
   font-size: 0.8em;
   margin-left: -0.5em;
-}
+}*/

@@ -57,6 +57,7 @@ var vm = new Vue({
       })
     },
     lmark() {
+    	console.log(this.$refs,this.$refs.reader)
       this.$refs.reader.handleControlShow('isBookmarkShow')
       markAPI.lmark(1, 1, res => {
         this.lmarkList = res.posts
@@ -71,6 +72,7 @@ var vm = new Vue({
       //删除一个批注
       sliblingAPI.dscribing(item.id) //处理DOM，删除DOM
     },
+    
     loadArticle(id) {
       bookAPI.show(id).then(sections => {
         this.content_list = sections
@@ -164,17 +166,21 @@ var vm = new Vue({
     handleArticleChange(value) {
       this.currentArticle = value
     },
+    notation(){
+    	console.log(34)
+    }
   },
   created: function() {
     //判断类型
-    userAPI.login('caoxiaomo', '123456')
+    userAPI.login('ceshi123', 'aa123456')
   },
 
   mounted() {
     this.$refs.thr.init()
     this.loadArticle(resource_id)
     this.loadInfo(resource_id)
-    this.lscribling()
+    this.lscribling();
+    
   },
 
   components: {

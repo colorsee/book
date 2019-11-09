@@ -116,7 +116,7 @@
 						
 					</div>
 				</div> -->
-				<div class="bok_piz_peg">
+				<!--<div class="bok_piz_peg">
 					<div class="guide_gary"></div>
 					<div class="guide_whit"></div>
 					<div class="close"><i class="fa fa-times" aria-hidden="true"></i></div>
@@ -203,8 +203,8 @@
 							<div class="more">加载更多 &gt;</div>
 						</div>
 					</div>
-				</div>
-				<thr ref='thr' :progress="progress" @change="lscribling"></thr>
+				</div>-->
+				<thr ref='thr' @reload='lscribling' :progress="progress" @change="lscribling"></thr>
 				<div class="book_topl">
 					<div class="book_topl_but">
 						<div class="bt_1 bt_itm" @click="handleControlShow('isSettingsShow')"><span>显示设置</span><i class="fa fa-cog"></i></div>
