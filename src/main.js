@@ -42,6 +42,7 @@ var vm = new Vue({
     content_list: [],
     lmarkList: [],
     lscribingList: [],
+    lscribingListAll:[],
     progress: 0,
     jump: '',
     isSearchBoxShow: false,
@@ -57,6 +58,7 @@ var vm = new Vue({
       })
     },
     lmark() {
+    	console.log(this.$refs,this.$refs.reader)
       this.$refs.reader.handleControlShow('isBookmarkShow')
       markAPI.lmark(1, 1, res => {
         this.lmarkList = res.posts
@@ -67,10 +69,16 @@ var vm = new Vue({
         this.lscribingList = res.posts || []
       })
     },
+    lscriblingAll(){
+    	sliblingAPI.lscribingAll(0).then(res => {
+        this.lscribingListAll = res.posts || []
+      })
+    },
     delete_scribing(item) {
       //删除一个批注
       sliblingAPI.dscribing(item.id) //处理DOM，删除DOM
     },
+    
     loadArticle(id) {
       bookAPI.show(id).then(sections => {
         this.content_list = sections
@@ -164,17 +172,24 @@ var vm = new Vue({
     handleArticleChange(value) {
       this.currentArticle = value
     },
+    notation(){
+    	console.log(34)
+    },
+   
   },
-  created: function() {
-    //判断类型
-    userAPI.login('caoxiaomo', '123456')
+  created: function() { 
+    //判断类型  ceshi123   aa123456  caoxiaomo  123456
+    userAPI.login('caoxiaomo', '123456').then((data)=>{
+    	localStorage.setItem("access-user",JSON.stringify(data)) ;
+    })
   },
 
   mounted() {
     this.$refs.thr.init()
     this.loadArticle(resource_id)
     this.loadInfo(resource_id)
-    this.lscribling()
+    this.lscribling();
+    f
   },
 
   components: {

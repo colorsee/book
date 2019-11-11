@@ -22,29 +22,83 @@
       <div class="gary top"></div>
       <div class="withe top"></div>
     </div>
+     <bounced 
+     	:lscribingS='lscribingS'
+     	 @deletelscribing='deletelscribing' 
+     	 @updatelscribing="updatelscribing" 
+     	 v-if='isBouncedShow' 
+     	 @closeFun='closeFun'
+     	 ></bounced>
   </div>
+ 
 </template>
 
 <script>
 import scribing from "../api/scribing";
 import getSelection from "../utils/getSelection";
-
+import Bounced from "./bounced.vue";
 export default {
   props: ["progress"],
 
   data: () => ({
+  	isBouncedShow:false,
     isPrivate: false,
-    note: ""
+    note: "",
+    lscribingList: [],
+    lscribingdq:'',
+    lscribingS:{}
   }),
-
+ mounted() {
+    this.load();
+   
+  },
   methods: {
+  	load(){
+  		scribing.lscribing(0).then(res => {
+        this.lscribingList = res.posts || []
+      })
+  	},
+//	更新批注
+    updatelscribing(id){
+    	scribing.lscribing(0).then(res => {
+        this.lscribingList = res.posts || [];
+        this.lscribingList.forEach(b => {
+          	  
+		          if(b.id == id){
+		          	this.lscribingS = b;
+//		          	console.log(this.lscribingS)
+		          }
+		        });
+      })
+    },
+//  删除批注
+    deletelscribing(){
+    	this.isBouncedShow = false;
+    	this.$emit("reload")
+    },
+    loadlscribing(text){
+    	scribing.lscribing(0).then(res => {
+        this.lscribingList = res.posts || []
+        
+          	this.lscribingList.forEach(b => {
+          	  
+		          if(b.excerpt == text){
+		          	this.lscribingS = b;
+		          	
+		          		this.isBouncedShow = true;
+		          	
+		          }
+		        });		      
+      })
+    },
     init() {
       this.selection = null;
-
+      var that = this;
       $("#content")
         .on("mousedown", e => {
           this.selection = null;
-
+          
+          
           $(".monse_thr").hide();
           $(".monse_do").hide();
 
@@ -74,7 +128,12 @@ export default {
               .removeClass("top");
           }
         })
-        .on("mouseup", () => {
+        .on("mouseup", (e) => {
+        	if(e.target.className == 'annotation active' || e.target.className == 'annotation' || e.target.className == 'bouncedfa'){
+
+          	this.loadlscribing(e.target.innerText);
+
+          }
           this.selection = getSelection();
 
           if (this.selection.value.length > 0) {
@@ -82,8 +141,14 @@ export default {
             document.execCommand("Copy");
           }
         });
+        $('.annotation')
+        .on('click',function(){
+    	console.log(123)
+    })
     },
-
+    closeFun(){
+    	this.isBouncedShow = false;
+    },
     handleCopy() {
       document.execCommand("Copy", false);
       alt_page("成功复制到粘贴板");
@@ -146,6 +211,11 @@ export default {
         note
       );
     }
+  },
+  components: {
+   
+    Bounced
+   
   }
 };
 </script>

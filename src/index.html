@@ -116,7 +116,7 @@
 						
 					</div>
 				</div> -->
-				<div class="bok_piz_peg">
+				<!--<div class="bok_piz_peg">
 					<div class="guide_gary"></div>
 					<div class="guide_whit"></div>
 					<div class="close"><i class="fa fa-times" aria-hidden="true"></i></div>
@@ -203,8 +203,8 @@
 							<div class="more">加载更多 &gt;</div>
 						</div>
 					</div>
-				</div>
-				<thr ref='thr' :progress="progress" @change="lscribling"></thr>
+				</div>-->
+				<thr ref='thr' @reload='lscribling' :progress="progress" @change="lscribling"></thr>
 				<div class="book_topl">
 					<div class="book_topl_but">
 						<div class="bt_1 bt_itm" @click="handleControlShow('isSettingsShow')"><span>显示设置</span><i class="fa fa-cog"></i></div>
@@ -218,7 +218,7 @@
 					<div class="book_topr_but">
 						<div class="bt_6 bt_itm" @click='lmark'><i class="fa fa-bookmark"></i><span>书签</span></div>
 						<div class="bt_7 bt_itm" @click='lscribling(0)'><i class="fa fa-map-signs"></i><span>我的划线/批注</span></div>
-						<div class="bt_8 bt_itm" @click='lscribling(0)'><i class="fa fa-thumb-tack"></i><span>全部批注</span></div>
+						<div class="bt_8 bt_itm" @click='lscriblingAll'><i class="fa fa-thumb-tack"></i><span>全部批注</span></div>
 					</div>
 				</div>
 				<div class="book_botomr">
@@ -253,7 +253,7 @@
 							<span class="bg_gary" @click='lscribling(0)'>按批注时间</span>
 							<span @click='lscribling(1)'>按内容顺序</span>
 						</div>
-						<other-annotations :list="lscribingList.filter(i => i.type === '1')"></other-annotations>
+						<other-annotations :list="lscribingListAll.filter(i => i.type === '1')"></other-annotations>
 					</div>
 				</div>
 				<div class="phone_list phone phone_list_1">

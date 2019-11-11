@@ -74,6 +74,8 @@
       :progress="progress"
       :isChapterVisible="settings.mode === 'horizantol'"
     ></progress-bar>
+    
+    
   </div>
 </template>
 
@@ -89,6 +91,7 @@ import ProgressBar from "./progress-bar.vue";
 import Tablet from "./tablet.vue";
 import { restoreProgress } from "../utils/progress.js";
 import drawUnderline from "../utils/drawUnderline";
+//import notation from "../utils/notation";
 
 const defaultSettings = {
   fontSize: 16,
@@ -114,12 +117,14 @@ export default {
     isCatalogShow: false,
     isBookmarkShow: false,
     isSettingsShow: false,
-    isProgressShow: false
+    isProgressShow: false,
+    isBouncedShow:false
   }),
 
   mounted() {
     this.loadSettings();
     this.initHashChange();
+    
   },
 
   destroyed() {
@@ -137,10 +142,12 @@ export default {
   },
 
   methods: {
+  	notation(){
+  		console.log(345)
+  	},
     emitProgress(progress) {
       Promise.resolve().then(() => this.$emit("read", progress));
     },
-
     initHashChange() {
       window.addEventListener("replaceState", this.handleHistoryStateChange);
     },
@@ -166,6 +173,12 @@ export default {
 
     handleVerticalClick() {
       this.isToolbarShow = true;
+    
+	    this.isCatalogShow = false;
+	    this.isBookmarkShow = false;
+	    this.isSettingsShow = false;
+	    this.isProgressShow = false;
+	    this.isBouncedShow = false;
     },
 
     handlePageChange(step) {
@@ -183,6 +196,43 @@ export default {
     handleControlShow(key) {
       this.closeControls();
       this[key] = true;
+      if(key == 'isToolbarShow'){     	 
+			    this.isCatalogShow = false;
+			    this.isBookmarkShow = false;
+			    this.isSettingsShow = false;
+			    this.isProgressShow = false;
+			    this.isBouncedShow = false;
+      }else if(key == 'isCatalogShow'){     	 
+			    this.isToolbarShow = false;
+			    this.isBookmarkShow = false;
+			    this.isSettingsShow = false;
+			    this.isProgressShow = false;
+			    this.isBouncedShow = false;
+      }else if(key == 'isBookmarkShow'){     	 
+			    this.isToolbarShow = false;
+			    this.isCatalogShow = false;
+			    this.isSettingsShow = false;
+			    this.isProgressShow = false;
+			    this.isBouncedShow = false;
+      }else if(key == 'isSettingsShow'){     	 
+			    this.isToolbarShow = false;
+			    this.isCatalogShow = false;
+			    this.isBookmarkShow = false;
+			    this.isProgressShow = false;
+			    this.isBouncedShow = false;
+      }else if(key == 'isProgressShow'){     	 
+			    this.isToolbarShow = false;
+			    this.isCatalogShow = false;
+			    this.isBookmarkShow = false;
+			    this.isSettingsShow = false;
+			    this.isBouncedShow = false;
+      }else if(key == 'isBouncedShow'){     	 
+			    this.isToolbarShow = false;
+			    this.isCatalogShow = false;
+			    this.isBookmarkShow = false;
+			    this.isSettingsShow = false;
+			    this.isProgressShow = false;
+      }
     },
 
     handleControlClose() {
@@ -196,6 +246,43 @@ export default {
 
     toggle(key, shouldShow) {
       this[`is${key}Show`] = shouldShow;
+      if(key == 'Toolbar'){     	 
+			    this.isCatalogShow = false;
+			    this.isBookmarkShow = false;
+			    this.isSettingsShow = false;
+			    this.isProgressShow = false;
+			    this.isBouncedShow = false;
+      }else if(key == 'Catalog'){     	 
+			    this.isToolbarShow = false;
+			    this.isBookmarkShow = false;
+			    this.isSettingsShow = false;
+			    this.isProgressShow = false;
+			    this.isBouncedShow = false;
+      }else if(key == 'Bookmark'){     	 
+			    this.isToolbarShow = false;
+			    this.isCatalogShow = false;
+			    this.isSettingsShow = false;
+			    this.isProgressShow = false;
+			    this.isBouncedShow = false;
+      }else if(key == 'Settings'){     	 
+			    this.isToolbarShow = false;
+			    this.isCatalogShow = false;
+			    this.isBookmarkShow = false;
+			    this.isProgressShow = false;
+			    this.isBouncedShow = false;
+      }else if(key == 'Progress'){     	 
+			    this.isToolbarShow = false;
+			    this.isCatalogShow = false;
+			    this.isBookmarkShow = false;
+			    this.isSettingsShow = false;
+			    this.isBouncedShow = false;
+      }else if(key == 'Bounced'){     	 
+			    this.isToolbarShow = false;
+			    this.isCatalogShow = false;
+			    this.isBookmarkShow = false;
+			    this.isSettingsShow = false;
+			    this.isProgressShow = false;
+      }
     },
 
     next() {
@@ -209,10 +296,12 @@ export default {
     },
 
     closeControls() {
-      this.isCatalogShow = false;
-      this.isBookmarkShow = false;
-      this.isSettingsShow = false;
-      this.isProgressShow = false;
+       this.isToolbarShow = false;
+	    this.isCatalogShow = false;
+	    this.isBookmarkShow = false;
+	    this.isSettingsShow = false;
+	    this.isProgressShow = false;
+	    this.isBouncedShow = false;
     },
 
     restoreSettings(value) {
@@ -338,7 +427,8 @@ export default {
     Bookmark,
     Settings,
     ProgressBar,
-    Tablet
+    Tablet,
+    
   }
 };
 </script>
