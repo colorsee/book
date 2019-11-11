@@ -174,6 +174,7 @@ var vm = new Vue({
     },
     notation(){
     	console.log(34)
+<<<<<<< HEAD
     },
    
   },
@@ -182,6 +183,13 @@ var vm = new Vue({
     userAPI.login('caoxiaomo', '123456').then((data)=>{
     	localStorage.setItem("access-user",JSON.stringify(data)) ;
     })
+=======
+    }
+  },
+  created: function() {
+    //判断类型
+    userAPI.login('ceshi123', 'aa123456')
+>>>>>>> 38b7d0bfda8750717bc2bd942315faedc95bf323
   },
 
   mounted() {
@@ -189,7 +197,11 @@ var vm = new Vue({
     this.loadArticle(resource_id)
     this.loadInfo(resource_id)
     this.lscribling();
+<<<<<<< HEAD
     f
+=======
+    
+>>>>>>> 38b7d0bfda8750717bc2bd942315faedc95bf323
   },
 
   components: {
