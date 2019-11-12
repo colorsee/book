@@ -78,11 +78,15 @@
       :isChapterVisible="settings.mode === 'horizantol'"
     ></progress-bar>
     
+<<<<<<< HEAD
      <div v-if="tkshow" class="tk">
 							<div class="qrsc">需要购买吗？小主</div>
 							<span class="confirm" @click="confirm">急需</span>
         					<span class="cancel" @click="cancel">取消</span>
 						</div>
+=======
+    
+>>>>>>> 1d94ed0cc2687a7d31e4dbfb9345a04367b1ab57
   </div>
 </template>
 
@@ -126,15 +130,22 @@ export default {
     isBookmarkShow: false,
     isSettingsShow: false,
     isProgressShow: false,
+<<<<<<< HEAD
     isBouncedShow:false,
     tkshow:false
+=======
+    isBouncedShow:false
+>>>>>>> 1d94ed0cc2687a7d31e4dbfb9345a04367b1ab57
   }),
 
   mounted() {
     this.loadSettings();
     this.initHashChange();
     
+<<<<<<< HEAD
     this.tis();
+=======
+>>>>>>> 1d94ed0cc2687a7d31e4dbfb9345a04367b1ab57
   },
 
   destroyed() {
@@ -153,6 +164,7 @@ export default {
   },
 
   methods: {
+<<<<<<< HEAD
   	tis(){
   		var that = this;
   		var i = setInterval(function(){  			
@@ -179,6 +191,8 @@ export default {
         cancel(){
         	this.tkshow = false;
         },
+=======
+>>>>>>> 1d94ed0cc2687a7d31e4dbfb9345a04367b1ab57
   	notation(){
   		console.log(345)
   	},

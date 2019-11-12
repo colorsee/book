@@ -2386,9 +2386,12 @@ button {
   text-decoration: underline;
 }
 
+<<<<<<< HEAD
 .fa-bullhorn{
 	margin-left: -40px;
 }
+=======
+>>>>>>> 1d94ed0cc2687a7d31e4dbfb9345a04367b1ab57
 /*.annotation::after {
   content: '标';
   color: red;

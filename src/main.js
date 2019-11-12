@@ -43,7 +43,10 @@ var vm = new Vue({
     lmarkList: [],
     lscribingList: [],
     lscribingListAll:[],
+<<<<<<< HEAD
     permissions_list:[],
+=======
+>>>>>>> 1d94ed0cc2687a7d31e4dbfb9345a04367b1ab57
     progress: 0,
     jump: '',
     isSearchBoxShow: false,
@@ -71,8 +74,13 @@ var vm = new Vue({
         this.lscribingList = res.posts || []
       })
     },
+<<<<<<< HEAD
     lscriblingAll(order){
     	sliblingAPI.lscribingAll(order).then(res => {
+=======
+    lscriblingAll(){
+    	sliblingAPI.lscribingAll(0).then(res => {
+>>>>>>> 1d94ed0cc2687a7d31e4dbfb9345a04367b1ab57
         this.lscribingListAll = res.posts || []
       })
     },
@@ -80,6 +88,7 @@ var vm = new Vue({
       //删除一个批注
       sliblingAPI.dscribing(item.id) //处理DOM，删除DOM
     },
+<<<<<<< HEAD
 //  篇 章权限
     loadvrs(id){
     	bookAPI.vrs(id).then(data => {
@@ -92,6 +101,9 @@ var vm = new Vue({
         this.permissions_list = data.posts;       
       })
     },
+=======
+    
+>>>>>>> 1d94ed0cc2687a7d31e4dbfb9345a04367b1ab57
     loadArticle(id) {
       bookAPI.show(id).then(sections => {
         this.content_list = sections;
@@ -193,6 +205,7 @@ var vm = new Vue({
     },
     notation(){
     	console.log(34)
+<<<<<<< HEAD
     },
    
   },
@@ -201,6 +214,24 @@ var vm = new Vue({
     userAPI.login('ceshi123', 'aa123456').then((data)=>{
     	localStorage.setItem("access-user",JSON.stringify(data));
     })
+=======
+<<<<<<< HEAD
+    },
+   
+  },
+  created: function() { 
+    //判断类型  ceshi123   aa123456  caoxiaomo  123456
+    userAPI.login('caoxiaomo', '123456').then((data)=>{
+    	localStorage.setItem("access-user",JSON.stringify(data)) ;
+    })
+=======
+    }
+  },
+  created: function() {
+    //判断类型
+    userAPI.login('ceshi123', 'aa123456')
+>>>>>>> 38b7d0bfda8750717bc2bd942315faedc95bf323
+>>>>>>> 1d94ed0cc2687a7d31e4dbfb9345a04367b1ab57
   },
 
   mounted() {
@@ -210,6 +241,14 @@ var vm = new Vue({
     this.loadvrs(resource_id);
     this.loadInfo(resource_id)
     this.lscribling();
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+    f
+=======
+    
+>>>>>>> 38b7d0bfda8750717bc2bd942315faedc95bf323
+>>>>>>> 1d94ed0cc2687a7d31e4dbfb9345a04367b1ab57
   },
 
   components: {
