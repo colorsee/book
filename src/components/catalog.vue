@@ -10,6 +10,7 @@
       :sum="0"
       :index="0"
       :currentArticle="currentArticle"
+      :permissions="permissionsNum"
       class="list"
       @close="handleClose"
     ></catalog-list>
@@ -19,14 +20,27 @@
 <script>
 import CatalogList from "./catalog-list.vue";
 import Action from "./action.vue";
-
 export default {
-  props: ["catalog", "progress", "currentArticle"],
+  props: ["catalog", "progress", "currentArticle","permissions"],
+  data: () => ({
+    permissionsNum:0,
+  }),
+  mounted(){
+	this.load();
+  },
   methods: {
     handleClose() {
       this.$emit("close");
-    }
+    },
+    load(){               
+        this.permissionsNum = this.permissions[this.permissions.length-1].id;
+        console.log(this.permissionsNum)
+      
+  		
+//		console.log(this.permissionsNum)
+  	},
   },
+  
   components: { CatalogList, Action }
 };
 </script>

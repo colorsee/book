@@ -8,6 +8,7 @@ var _wr = function(type) {
     return rv
   }
 }
+var shareClick = true;
 history.pushState = _wr('pushState')
 history.replaceState = _wr('replaceState')
 
@@ -66,6 +67,16 @@ $(document).ready(function() {
       .find('span')
       .toggleClass('close')
     $('.box_l').toggleClass('left_0')
+  })
+  $('.box_l .shareClick').click(function(){
+  	if(shareClick){
+  		$('.bdsharebuttonbox').css('animation','left1 1s ease-out forwards');
+  		shareClick = false;
+  	}else{
+  		$('.bdsharebuttonbox').css('animation','left2 1s ease-out forwards');
+  		shareClick = true;
+  	}
+    
   })
   $('.box_r .close_but').click(function() {
     $(this)

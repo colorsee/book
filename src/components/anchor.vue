@@ -2,16 +2,23 @@
   <a @click="handleClick" class="anchor">
     <slot></slot>
   </a>
+  
 </template>
 
 <script>
 export default {
   props: ["data"],
   methods: {
-    handleClick() {
-      console.log(this.data);
+    handleClick(e) {
+      console.log(this.data,e.target.className);
+      if(e.target.className == 'anchor title red'){
+      	this.$emit("tk",this.data.section);
+      	return
+      }
+//    for(var )
       window.history.replaceState(this.data, null);
-      this.$emit("click");
+      this.$emit("handleClick");
+      this.$emit("handleClick1");
     }
   }
 };

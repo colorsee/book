@@ -23,9 +23,11 @@
       <horizantol
         v-if="settings.mode === 'horizantol'"
         :sections="sections"
+        :permissions="permissions"
         :style="{fontSize: settings.fontSize + 'px'}"
         class="content"
         ref="container"
+        @tk='tk'
         v-on="$listeners"
       ></horizantol>
 
@@ -44,7 +46,7 @@
     <control
       :info="info"
       :mode="settings.mode"
-      :isShow="isToolbarShow"
+      :isShow="isToolbarShow"      
       @pageChange="handlePageChange"
       @show="handleControlShow"
       @close="handleControlClose"
@@ -55,6 +57,7 @@
       v-if="isCatalogShow"
       :catalog="info.catalog_list"
       :progress="progress"
+      :permissions="permissions"
       :current-article="currentArticle"
       @close="toggle('Catalog', false)"
     ></catalog>
@@ -74,6 +77,12 @@
       :progress="progress"
       :isChapterVisible="settings.mode === 'horizantol'"
     ></progress-bar>
+    
+     <div v-if="tkshow" class="tk">
+							<div class="qrsc">需要购买吗？小主</div>
+							<span class="confirm" @click="confirm">急需</span>
+        					<span class="cancel" @click="cancel">取消</span>
+						</div>
   </div>
 </template>
 
@@ -89,6 +98,7 @@ import ProgressBar from "./progress-bar.vue";
 import Tablet from "./tablet.vue";
 import { restoreProgress } from "../utils/progress.js";
 import drawUnderline from "../utils/drawUnderline";
+//import notation from "../utils/notation";
 
 const defaultSettings = {
   fontSize: 16,
@@ -101,6 +111,7 @@ export default {
   props: [
     "articles",
     "info",
+    "permissions",
     "bookmarks",
     "resourceId",
     "progress",
@@ -114,12 +125,16 @@ export default {
     isCatalogShow: false,
     isBookmarkShow: false,
     isSettingsShow: false,
-    isProgressShow: false
+    isProgressShow: false,
+    isBouncedShow:false,
+    tkshow:false
   }),
 
   mounted() {
     this.loadSettings();
     this.initHashChange();
+    
+    this.tis();
   },
 
   destroyed() {
@@ -133,14 +148,43 @@ export default {
 
     isLoading() {
       return !this.articles || this.articles.length === 0;
-    }
+    },
+    
   },
 
   methods: {
+  	tis(){
+  		var that = this;
+  		var i = setInterval(function(){  			
+  			 if(!that.isLoading){
+  			 	setTimeout(function(){
+//					$("sup").addClass('fa').addClass('fa-bullhorn');
+					  $("sup").find("span").html("<span class='fa fa-bullhorn'></span>")
+				   },500);
+				   console.log(234)
+				   clearInterval(i);
+  			 }
+  		},500)
+  	},
+  	tk(){
+  		this.tkshow = true;
+  	},
+  	 confirm(){
+//      	markAPI.delP(this.lscribingS.id).then(res => {
+        		alt_page('购买成功');
+        		this.tkshow = false;
+//	  			this.$emit("deletelscribing");
+//             })
+        },
+        cancel(){
+        	this.tkshow = false;
+        },
+  	notation(){
+  		console.log(345)
+  	},
     emitProgress(progress) {
       Promise.resolve().then(() => this.$emit("read", progress));
     },
-
     initHashChange() {
       window.addEventListener("replaceState", this.handleHistoryStateChange);
     },
@@ -166,6 +210,12 @@ export default {
 
     handleVerticalClick() {
       this.isToolbarShow = true;
+    
+	    this.isCatalogShow = false;
+	    this.isBookmarkShow = false;
+	    this.isSettingsShow = false;
+	    this.isProgressShow = false;
+	    this.isBouncedShow = false;
     },
 
     handlePageChange(step) {
@@ -183,6 +233,43 @@ export default {
     handleControlShow(key) {
       this.closeControls();
       this[key] = true;
+      if(key == 'isToolbarShow'){     	 
+			    this.isCatalogShow = false;
+			    this.isBookmarkShow = false;
+			    this.isSettingsShow = false;
+			    this.isProgressShow = false;
+			    this.isBouncedShow = false;
+      }else if(key == 'isCatalogShow'){     	 
+			    this.isToolbarShow = false;
+			    this.isBookmarkShow = false;
+			    this.isSettingsShow = false;
+			    this.isProgressShow = false;
+			    this.isBouncedShow = false;
+      }else if(key == 'isBookmarkShow'){     	 
+			    this.isToolbarShow = false;
+			    this.isCatalogShow = false;
+			    this.isSettingsShow = false;
+			    this.isProgressShow = false;
+			    this.isBouncedShow = false;
+      }else if(key == 'isSettingsShow'){     	 
+			    this.isToolbarShow = false;
+			    this.isCatalogShow = false;
+			    this.isBookmarkShow = false;
+			    this.isProgressShow = false;
+			    this.isBouncedShow = false;
+      }else if(key == 'isProgressShow'){     	 
+			    this.isToolbarShow = false;
+			    this.isCatalogShow = false;
+			    this.isBookmarkShow = false;
+			    this.isSettingsShow = false;
+			    this.isBouncedShow = false;
+      }else if(key == 'isBouncedShow'){     	 
+			    this.isToolbarShow = false;
+			    this.isCatalogShow = false;
+			    this.isBookmarkShow = false;
+			    this.isSettingsShow = false;
+			    this.isProgressShow = false;
+      }
     },
 
     handleControlClose() {
@@ -196,6 +283,43 @@ export default {
 
     toggle(key, shouldShow) {
       this[`is${key}Show`] = shouldShow;
+      if(key == 'Toolbar'){     	 
+			    this.isCatalogShow = false;
+			    this.isBookmarkShow = false;
+			    this.isSettingsShow = false;
+			    this.isProgressShow = false;
+			    this.isBouncedShow = false;
+      }else if(key == 'Catalog'){     	 
+			    this.isToolbarShow = false;
+			    this.isBookmarkShow = false;
+			    this.isSettingsShow = false;
+			    this.isProgressShow = false;
+			    this.isBouncedShow = false;
+      }else if(key == 'Bookmark'){     	 
+			    this.isToolbarShow = false;
+			    this.isCatalogShow = false;
+			    this.isSettingsShow = false;
+			    this.isProgressShow = false;
+			    this.isBouncedShow = false;
+      }else if(key == 'Settings'){     	 
+			    this.isToolbarShow = false;
+			    this.isCatalogShow = false;
+			    this.isBookmarkShow = false;
+			    this.isProgressShow = false;
+			    this.isBouncedShow = false;
+      }else if(key == 'Progress'){     	 
+			    this.isToolbarShow = false;
+			    this.isCatalogShow = false;
+			    this.isBookmarkShow = false;
+			    this.isSettingsShow = false;
+			    this.isBouncedShow = false;
+      }else if(key == 'Bounced'){     	 
+			    this.isToolbarShow = false;
+			    this.isCatalogShow = false;
+			    this.isBookmarkShow = false;
+			    this.isSettingsShow = false;
+			    this.isProgressShow = false;
+      }
     },
 
     next() {
@@ -209,10 +333,12 @@ export default {
     },
 
     closeControls() {
-      this.isCatalogShow = false;
-      this.isBookmarkShow = false;
-      this.isSettingsShow = false;
-      this.isProgressShow = false;
+       this.isToolbarShow = false;
+	    this.isCatalogShow = false;
+	    this.isBookmarkShow = false;
+	    this.isSettingsShow = false;
+	    this.isProgressShow = false;
+	    this.isBouncedShow = false;
     },
 
     restoreSettings(value) {
@@ -338,12 +464,50 @@ export default {
     Bookmark,
     Settings,
     ProgressBar,
-    Tablet
+    Tablet,
+    
   }
 };
 </script>
 
 <style scoped>
+	.tk{
+		position: fixed;
+		top: 0;
+		left: 0;
+		bottom: 0;
+		right: 0;
+		width: 200px;
+		height: 100px;
+		margin: auto;
+		border: 1px solid gray;
+		border-radius: 10px;
+		background: white;
+		z-index: 10;
+	}
+	.qrsc{
+		text-align: center;
+		padding: 17px;
+		color: black;
+	}
+	.confirm {
+    display: inline-block;
+    color: #ffffff;
+    margin-left: 31px;
+    padding: 2px 8px;
+    border-radius: 3px;
+    border: 1px solid #ff3300;
+    background-color: #ff3300;
+    }
+    .cancel {
+    display: inline-block;
+    color: #666666;
+    padding: 2px 8px;
+    margin-left: 31px;
+    border-radius: 3px;
+    border: 1px solid #dfdfdf;
+    background-color: #ebebeb;
+    }
 .loading {
   height: 100%;
   display: flex;

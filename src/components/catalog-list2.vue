@@ -4,44 +4,34 @@
       :key="item.id"
       :class="{item: true, active: currentArticle == item.id}"
       v-for="(item, i) in source"
-      
-      
+           
     >
       <div class="detail" >
       	
-        <anchor :class="{red:item.id>permissions}" @tk='tk' @handleClick='handleClick' class="title" v-html="item.title" :data="{section: item.id}"></anchor>
-        <div class="line" @click="handleClick"></div>
+        <anchor :class="{red:item.id>permissions}" @tk='tk' @handleClick1='handleClick1' class="title" v-html="item.title" :data="{section: item.id}"></anchor>
+        <div class="line"></div>
         <div class="status">{{ percent(i) | percentFilter }}</div>
-      </div>
-      <div v-if="tkshow" class="tk">
-				<div class="qrsc">需要购买吗？小主！！！</div>
-				<span class="confirm" @click="confirm">急需</span>
-				<span class="cancel" @click="cancel">放弃</span>
-			</div>
-      <catalog-list2
-      
-        v-if="item.child && item.child.length"
-        :sum="percent(i)"
-        :source="item.child"
-        :level="step"
-        :permissions="permissions"
-        :currentArticle="currentArticle"
-        @handleClick="handleClick"
-      ></catalog-list2>
+      </div>     
     </div>
+    
+    <div v-if="tkshow" class="tk">
+		<div class="qrsc">需要购买吗？小主！！！</div>
+		<span class="confirm" @click="confirm">急需</span>
+		<span class="cancel" @click="cancel">放弃</span>
+	</div>
   </div>
 </template>
 
 <script>
-	import CatalogList2 from "./catalog-list2.vue";
 import Anchor from "./anchor.vue";
 import percent from "../utils/percent";
 
 export default {
- 
+  name: "catalog-list",
   props: ["source", "level", "index", "sum", "currentArticle","permissions"],
    data: () => ({
-   tkshow:false,
+    permissionsNum:0,
+    tkshow:false,
     chapterId:0
   }),
   computed: {
@@ -49,15 +39,19 @@ export default {
       return (1 / this.source.length) * this.level;
     }
   },
-  mounted(){ 	
-	
+  mounted(){
+//	console.log(this.source)
+//	this.load();
   },
   methods: {
-  	
-    handleClick() {
-      this.$emit("close");
+  	load(){
+  		this.permissionsNum = this.permissions;
+  		console.log(this.permissionsNum)
+  	},
+    handleClick1() {
+      this.$emit("handleClick");
     },
-   tk(id){
+    tk(id){
     	console.log(id)
     	this.tkshow= true;
     	this.chapterId = id;
@@ -66,8 +60,7 @@ export default {
 //      	markAPI.delP().then(res => {
         		alt_page('购买成功');
         		this.tkshow = false;
-        		this.$emit("close");
-//	  			this.$emit("deletelscribing");
+	  			this.$emit("handleClick");
 //             })
         },
         cancel(){
@@ -79,13 +72,16 @@ export default {
     }
   },
   filters: { percentFilter: percent },
-  components: { Anchor ,CatalogList2}
+  components: { Anchor }
 };
 </script>
 
 <style scoped>
 .list {
   font-size: 0.9rem;
+}
+.red{
+	color: gainsboro;
 }
 .tk{
 		position: fixed;
@@ -124,9 +120,6 @@ export default {
     border: 1px solid #dfdfdf;
     background-color: #ebebeb;
     }
-.red{
-	color: gainsboro;
-}
 .item {
   color: #666;
   display: block;

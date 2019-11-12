@@ -28,11 +28,23 @@
 						<span>￥{{baseinfo.price}}</span>
 					</div>
 					<div class="buy_but">购买</div>
-					<div class="colect_but">收藏</div>
+					<div class="colect_but " @click="collectionD" v-if="collectStatus ==0">未收藏</div>
+					<div class="colect_but " @click="collectionD" v-else>已收藏</div>
 				</div>
 				<div class="about_bok">
-					<div class="txt"><span>分享（100）</span></div>
-					<div class="txt"><span>收藏（100）</span></div>
+					<div class="colect_but shareClick" >分享</div>
+					
+					<div class="bdsharebuttonbox">
+						<a href="#" class="bds_qzone" data-cmd="qzone"></a>
+						<a href="#" class="bds_tsina" data-cmd="tsina"></a>
+						<a href="#" class="bds_tqq" data-cmd="tqq"></a>
+						<a href="#" class="bds_renren" data-cmd="renren"></a>
+						<a href="#" class="bds_weixin" data-cmd="weixin"></a>						
+						<a href="#" class="bds_more" data-cmd="more"></a>
+						
+						</div>
+						
+					<div class="txt"><span>收藏（{{baseinfo.collect_num}}）</span></div>
 				</div>
 				<div class="erm_box">
 					<span>扫一扫手机阅读</span>
@@ -100,7 +112,7 @@
 			<div class="book">
 				<div class="bok_page_num">{{progress | percent}}</div>
 				<div class="bok_mark" @click="amark"><i class="fa fa-bookmark-o"></i></div>
-				<reader ref="reader" class="bok_item scrol_none" :articles="content_list" :info="baseinfo" :bookmarks="lmarkList"
+				<reader ref="reader" class="bok_item scrol_none" :permissions='permissions_list' :articles="content_list" :info="baseinfo" :bookmarks="lmarkList"
 				 :annotations="lscribingList" :resource-id="resource_id" :progress="progress" :settings="settings" :current-article="currentArticle"
 				 @read="handleRead" @add-bookmark="amark" @settings-change="changeSettings" @page-change="handlePageChange"
 				 @article-change="handleArticleChange"></reader>
@@ -116,7 +128,7 @@
 						
 					</div>
 				</div> -->
-				<div class="bok_piz_peg">
+				<!--<div class="bok_piz_peg">
 					<div class="guide_gary"></div>
 					<div class="guide_whit"></div>
 					<div class="close"><i class="fa fa-times" aria-hidden="true"></i></div>
@@ -203,8 +215,8 @@
 							<div class="more">加载更多 &gt;</div>
 						</div>
 					</div>
-				</div>
-				<thr ref='thr' :progress="progress" @change="lscribling"></thr>
+				</div>-->
+				<thr ref='thr' @reload='lscribling' :progress="progress" @change="lscribling"></thr>
 				<div class="book_topl">
 					<div class="book_topl_but">
 						<div class="bt_1 bt_itm" @click="handleControlShow('isSettingsShow')"><span>显示设置</span><i class="fa fa-cog"></i></div>
@@ -218,7 +230,7 @@
 					<div class="book_topr_but">
 						<div class="bt_6 bt_itm" @click='lmark'><i class="fa fa-bookmark"></i><span>书签</span></div>
 						<div class="bt_7 bt_itm" @click='lscribling(0)'><i class="fa fa-map-signs"></i><span>我的划线/批注</span></div>
-						<div class="bt_8 bt_itm" @click='lscribling(0)'><i class="fa fa-thumb-tack"></i><span>全部批注</span></div>
+						<div class="bt_8 bt_itm" @click='lscriblingAll(0)'><i class="fa fa-thumb-tack"></i><span>全部批注</span></div>
 					</div>
 				</div>
 				<div class="book_botomr">
@@ -250,10 +262,10 @@
 					<div class="scrollview">
 						<h3>全部批注</h3>
 						<div class="mypsg_rice mypsg_3_spet">
-							<span class="bg_gary" @click='lscribling(0)'>按批注时间</span>
-							<span @click='lscribling(1)'>按内容顺序</span>
+							<span class="bg_gary" @click='lscriblingAll(0)'>按批注时间</span>
+							<span @click='lscriblingAll(1)'>按内容顺序</span>
 						</div>
-						<other-annotations :list="lscribingList.filter(i => i.type === '1')"></other-annotations>
+						<other-annotations :list="lscribingListAll.filter(i => i.type === '1')"></other-annotations>
 					</div>
 				</div>
 				<div class="phone_list phone phone_list_1">
@@ -537,6 +549,25 @@
 		<script type="text/javascript" src="js/script.js"></script>
 		<script type="text/javascript" src="js/iconfont.js"></script>
 		<script type="text/javascript" src="/bundle.nocache.js"></script>
+		<script>window._bd_share_config = {
+			 "common": {
+			 "bdSnsKey": {},
+			 "bdText": "",
+			 "bdMini": "2",
+			 "bdMiniList": false,
+			 "bdPic": "",
+			 "bdStyle": "0",
+			 "bdSize": "32"
+			 },
+			 "share": {},
+			 "image": {
+			 "viewList": ["qzone", "tsina", "tqq", "renren", "weixin"],
+			 "viewText": "分享到：",
+			 "viewSize": "16"
+			 }
+			 };
+			 with(document) 0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion=' + ~(-new Date() / 36e5)];
+		</script>
 		<script>
 			var mySwiper = new Swiper('.swiper-container', {
 				loop: true,
@@ -554,6 +585,8 @@
 					$(".ph_guide").show();
 					localStorage.setItem("temp","master");
 				}
+				
+				
 			});
 			$(".ph_guide").click(function() {
 				$(this).fadeOut();
@@ -577,6 +610,10 @@
 			$(".pc_guide_but .jump").click(function() {
 				$(".pc_guide").hide();
 			});
+			var tip = {};
+			tip.start = function(x){				
+				$(x)[0].title = $(x)[0].attributes.tips.value;
+			}
 		</script>
 	</body>
 

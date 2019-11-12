@@ -2,12 +2,12 @@
 export default function getSelection() {
   const sel = document.getSelection()
   const value = sel.toString()
-
+   
   const { anchorNode, anchorOffset, focusNode, focusOffset } = sel
   const anchorPart = $(anchorNode).parent()
   const extentPart = $(focusNode).parent()
   const [article] = $(anchorPart).prevAll('[id]')
-
+  
   const [, article_id] = article.id.match(/^section-(\d+)$/)
   let start_part = anchorPart.data('partcode')
   let end_part = extentPart.data('partcode')

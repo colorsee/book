@@ -112,7 +112,7 @@ export default {
       ["52585c", "#f9f9f9", "c_52585c"]
     ]
   }),
-
+  
   methods: {
     handleFontSizeChange(e) {
       this.emitChange("fontSize", parseInt(e.currentTarget.value));

@@ -10,6 +10,7 @@
       :id="`section-${current.id}`"
     >{{current.title}}</component>
     <div class="paragraphs" v-html="current.content" ref="content" :data-id="current.id"></div>
+   
   </div>
 </template>
 
@@ -17,12 +18,14 @@
 import { restoreProgress } from "../utils/progress";
 
 export default {
-  props: ["sections"],
+  props: ["sections","permissions"],
 
   data: () => ({
     section: 0,
     page: 0,
-    pageCount: 1
+    pageCount: 1,
+    current1:0,
+    tkshow:false
   }),
 
   computed: {
@@ -64,6 +67,9 @@ export default {
   updated() {
     const { children } = this.$refs.content;
     const last = children[children.length - 1];
+    const du = $('#section-2796')[0];
+//  
+//  console.log($('#section-2796')[0])
 
     restoreProgress();
 
@@ -71,31 +77,41 @@ export default {
       this.pageCount = 1;
       return;
     }
-
+    
     const { width } = getComputedStyle(last);
+//  console.log(last.offsetLeft)
     const widthNumber = parseInt(width) + 80;
+    
     this.pageCount = Math.floor(last.offsetLeft / widthNumber) + 1;
-
     this.emitArticles();
   },
 
   methods: {
+  	
     emitProgress() {
       Promise.resolve().then(() => this.$emit("read", this.progress));
     },
 
     emitArticles() {
       const headers = this.currentNodes.filter("[id]");
+//    console.log(headers)
+//    console.log(headers.length)
       if (!headers.length) {
+//    	console.log(123)
         return;
       }
 
       const [latest] = headers.last();
+//    console.log(latest)
       const [, current] = latest.id.match(/^section-(.*)$/);
+      
+      this.current1 = current;
+//    console.log(current)
       this.$emit("article-change", current);
     },
 
     nextSection() {
+//  	console.log(this.section,this.sections.length-1)
       if (this.section >= this.sections.length - 1) {
         return;
       }
@@ -105,6 +121,7 @@ export default {
     },
 
     prevSection() {
+//  	console.log(this.section)
       if (this.section < 1) {
         return Promise.resolve();
       }
@@ -115,16 +132,25 @@ export default {
     },
 
     next() {
+//  	console.log(this.permissions)
+    	if(this.current1 == this.permissions[this.permissions.length-1].id){
+    	
+      	this.$emit("tk");
+      	
+      	return
+      }
       if (this.page + 1 >= this.pageCount) {
         this.nextSection();
       } else {
         this.page += 1;
       }
+      
       this.emitProgress();
       this.$emit("page-change", "next");
     },
 
     prev() {
+//  	console.log(this.page + 1,this.pageCount)
       if (this.page < 1) {
         this.prevSection().then(this.emitProgress);
         return;
@@ -144,10 +170,11 @@ export default {
       let st = null;
 
       return delta => {
+      	
         if (st) {
           return;
         }
-
+       
         if (delta < 0) {
           this.prev();
         } else {
@@ -190,7 +217,7 @@ export default {
       this.section = this.sections.findIndex(
         s => s.id == section || s.content.includes(`section-${section}`)
       );
-
+    
       this.page = 10000;
       Promise.resolve().then(() => {
         const [target] = partcode
@@ -227,6 +254,7 @@ export default {
 </script>
 
 <style scoped>
+	
 .content {
   width: 100%;
   column-width: 620px;

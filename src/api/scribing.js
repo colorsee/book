@@ -2,7 +2,8 @@ import * as API from '../main'
 import { jsonp } from 'vue'
 import { post } from '../utils/request'
 
-let token = ''
+
+
 
 export default {
   ascribing(
@@ -39,10 +40,19 @@ export default {
     return post('/s1/read/ascribing', data)
   },
   lscribing(order = 0) {
-    return post('/s1/read/lscribing', {
+    return post('/s1/read/lscribingone', {
       resource_id: window.resource_id,
       order,
       resource_type: 1,
+      member_id:JSON.parse(localStorage.getItem('access-user')).member_id
+    })
+  },
+   lscribingAll(order = 0) {
+    return post('/s1/read/lscribing', {
+      resource_id: window.resource_id,
+      order,
+      resource_type: 1
+    
     })
   },
   dscribing(scribing_id) {

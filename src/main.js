@@ -42,12 +42,15 @@ var vm = new Vue({
     content_list: [],
     lmarkList: [],
     lscribingList: [],
+    lscribingListAll:[],
+    permissions_list:[],
     progress: 0,
     jump: '',
     isSearchBoxShow: false,
     settings: {},
     lastPagination: '',
     currentArticle: '',
+    collectStatus:0
   }),
   methods: {
     amark() {
@@ -57,23 +60,43 @@ var vm = new Vue({
       })
     },
     lmark() {
+    	console.log(this.$refs,this.$refs.reader)
       this.$refs.reader.handleControlShow('isBookmarkShow')
       markAPI.lmark(1, 1, res => {
         this.lmarkList = res.posts
       })
     },
-    lscribling(order = 0) {
+    lscribling(order) {
       sliblingAPI.lscribing(order).then(res => {
         this.lscribingList = res.posts || []
+      })
+    },
+    lscriblingAll(order){
+    	sliblingAPI.lscribingAll(order).then(res => {
+        this.lscribingListAll = res.posts || []
       })
     },
     delete_scribing(item) {
       //删除一个批注
       sliblingAPI.dscribing(item.id) //处理DOM，删除DOM
     },
+//  篇 章权限
+    loadvrs(id){
+    	bookAPI.vrs(id).then(data => {
+//      this.content_list = data
+        
+      })
+    },
+    loadProbation(id){
+    	 bookAPI.probation(id).then(data => {
+        this.permissions_list = data.posts;       
+      })
+    },
     loadArticle(id) {
       bookAPI.show(id).then(sections => {
-        this.content_list = sections
+        this.content_list = sections;
+        
+        
       })
       // //加载内容
       // //1.加载篇章基础信息
@@ -101,7 +124,11 @@ var vm = new Vue({
       // console.log(content_list)
     },
     loadInfo(id) {
-      bookAPI.info(id).then(({ posts }) => (this.baseinfo = posts))
+      bookAPI.info(id).then(({ posts }) => (this.baseinfo = posts));
+      bookAPI.collectstatus(id).then(({ posts }) => (this.collectStatus = posts.collectStatus));
+    },
+    collectionD(){
+    	bookAPI.collectArt(this.resource_id).then(({ posts }) => (this.collectStatus = posts.collectStatus));
     },
     showArticle(pid, id) {
       //滚动到指定位置
@@ -164,17 +191,25 @@ var vm = new Vue({
     handleArticleChange(value) {
       this.currentArticle = value
     },
+    notation(){
+    	console.log(34)
+    },
+   
   },
-  created: function() {
-    //判断类型
-    userAPI.login('caoxiaomo', '123456')
+  created: function() { 
+    //判断类型  ceshi123   aa123456  caoxiaomo  123456
+    userAPI.login('ceshi123', 'aa123456').then((data)=>{
+    	localStorage.setItem("access-user",JSON.stringify(data));
+    })
   },
 
   mounted() {
     this.$refs.thr.init()
     this.loadArticle(resource_id)
+    this.loadProbation(resource_id)
+    this.loadvrs(resource_id);
     this.loadInfo(resource_id)
-    this.lscribling()
+    this.lscribling();
   },
 
   components: {
