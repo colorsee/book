@@ -521,7 +521,7 @@ export default {
 }
 
 .viewport {
-  /* width: 800px; */
+  width: 800px;
   box-sizing: border-box;
   padding: 40px;
   height: 100% !important;
@@ -566,6 +566,13 @@ export default {
   .viewport {
     width: 100%;
     padding: 40px;
+  }
+  .fa{
+  	display: none !important; 
+  }
+  
+  .underline{
+  	text-decoration: none !important;
   }
 }
 </style>

@@ -17,7 +17,7 @@
               <anchor
                 class="action"
                 :data="{section: item.article_id, partcode: item.start_part}"
-                @click="close"
+                @close="close"
               >打开</anchor>
               <button class="action dangerous" @click="remove(item.id)">删除</button>
             </div>

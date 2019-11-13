@@ -1865,11 +1865,25 @@ button {
   margin: 20px auto;
   cursor: pointer;
 }
+@media only screen and (max-width: 1200px) {
+	.box_l{
+		display: none !important;
+	}
+	.box_r{
+		display: none !important;
+	}
+}
 @media only screen and (max-width: 768px) {
   .book {
     width: 100%;
   }
-
+   .fa{
+  	display: none !important; 
+  }
+  
+  .underline{
+  	text-decoration: none !important;
+  }
   .box_l,
   .box_r,
   .bok_mark {

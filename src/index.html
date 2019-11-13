@@ -579,6 +579,20 @@
 					clickable: true,
 				},
 			});
+			function IsPC() {
+			   var userAgentInfo = navigator.userAgent;
+			   var Agents = ["Android", "iPhone",
+			      "SymbianOS", "Windows Phone",
+			      "iPad", "iPod"];
+			   var flag = true;
+			   for (var v = 0; v < Agents.length; v++) {
+			      if (userAgentInfo.indexOf(Agents[v]) > 0) {
+			         flag = false;
+			         break;
+			      }
+			   }
+			   return flag;
+			}
 			$(window).on("load", function() {
 				var wind_w = $(window).width();
 				if (wind_w > 768 && localStorage.getItem("temp")!=="master") {
@@ -588,9 +602,17 @@
 					$(".ph_guide").show();
 					localStorage.setItem("temp","master");
 				}
+//				if(IsPC()){
+//					localStorage.setItem("ispc","true");
 					setTimeout(function(){
 					  $("sup").find("span").html("<span class='fa fa-bullhorn'></span>")
 				   },30000);
+//				}else{
+//					localStorage.setItem("ispc","false");
+//					setTimeout(function(){
+//					  $("sup").find("span").html("<span></span>")
+//				   },30000);
+//				}
 				
 			});
 			$(".ph_guide").click(function() {

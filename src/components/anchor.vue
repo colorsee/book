@@ -19,6 +19,10 @@ export default {
       window.history.replaceState(this.data, null);
       this.$emit("handleClick");
       this.$emit("handleClick1");
+      this.$emit("close");
+      $(
+      '.set_style,.bok_Catalog,.search_box,change_form,.mypsg_1,.mypsg_2,.mypsg_3'
+    ).removeClass('act')
     }
   }
 };
