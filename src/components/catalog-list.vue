@@ -114,6 +114,7 @@ export default {
     border-radius: 3px;
     border: 1px solid #ff3300;
     background-color: #ff3300;
+    cursor: pointer;
     }
     .cancel {
     display: inline-block;
@@ -123,6 +124,7 @@ export default {
     border-radius: 3px;
     border: 1px solid #dfdfdf;
     background-color: #ebebeb;
+    cursor: pointer;
     }
 .red{
 	color: gainsboro;

@@ -267,6 +267,7 @@ export default {
 @media only screen and (max-width: 768px) {
   .content {
     column-width: calc(100vw - 80px);
+    -webkit-column-width:calc(100vw - 80px) ;
   }
 }
 </style>
