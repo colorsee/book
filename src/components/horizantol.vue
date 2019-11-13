@@ -64,7 +64,7 @@ export default {
          this.pingguo = '-80px'
     } else if (u.indexOf('iPhone') > -1) {
          //苹果手机
-         this.pingguo = '0'
+         this.pingguo = '-1px'
      } else if (u.indexOf('Windows Phone') > -1) {
          //winphone手机
      }
