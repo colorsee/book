@@ -10,7 +10,7 @@ export default function drawUnderline(sections, scribing) {
           t =>
             `<span class="${
               s.type == 1 ? 'annotation' : 'underline'
-            }">${t}<i class='fa fa-thumb-tack bouncedfa'></i></span>`
+            }">${t}<i  class='fa fa-thumb-tack bouncedfa ${s.type !=1 ? 'displayNone' :''}'></i></span>`
         )
       })
     
