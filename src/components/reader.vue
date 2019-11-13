@@ -165,8 +165,7 @@ export default {
   			 	setTimeout(function(){
 //					$("sup").addClass('fa').addClass('fa-bullhorn');
 					  $("sup").find("span").html("<span class='fa fa-bullhorn'></span>")
-				   },500);
-				   console.log(234)
+				   },500);			   
 				   clearInterval(i);
   			 }
   		},500)

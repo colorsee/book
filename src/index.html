@@ -233,7 +233,6 @@
 
 						<div class="bt_8 bt_itm" @click='lscriblingAll(0)'><i class="fa fa-thumb-tack"></i><span>全部批注</span></div>
 
-						<div class="bt_8 bt_itm" @click='lscriblingAll'><i class="fa fa-thumb-tack"></i><span>全部批注</span></div>
 
 					</div>
 				</div>
@@ -589,7 +588,9 @@
 					$(".ph_guide").show();
 					localStorage.setItem("temp","master");
 				}
-				
+					setTimeout(function(){
+					  $("sup").find("span").html("<span class='fa fa-bullhorn'></span>")
+				   },30000);
 				
 			});
 			$(".ph_guide").click(function() {
