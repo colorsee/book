@@ -77,6 +77,7 @@ export default {
     	this.$emit("reload")
     },
     loadlscribing(text){
+    	this.isBouncedShow = true;
     	scribing.lscribing(0).then(res => {
         this.lscribingList = res.posts || []
         
@@ -85,7 +86,7 @@ export default {
 		          if(b.excerpt == text){
 		          	this.lscribingS = b;
 		          	
-		          		this.isBouncedShow = true;
+		          		
 		          	
 		          }
 		        });		      
