@@ -33,11 +33,11 @@
 									</div>
 									<div class="b">
 										<span>{{dateTime(item.create_time)}}</span>
-<<<<<<< HEAD
+
 										<!--<span @click="reply(item.id)">回复</span>-->
-=======
+
 										<span @click="reply(item.id)">回复</span>
->>>>>>> 1d94ed0cc2687a7d31e4dbfb9345a04367b1ab57
+
 										<span @click="giveLikepl(item.id)"><i :class="[{'fa':true},item.is_digg ==1?'fa-thumbs-up' :'fa-thumbs-o-up']" aria-hidden="true"></i>{{item.digg_count}}</span>
 									</div>
 								</div>
@@ -137,10 +137,6 @@
 	  		if($('#comments').val().replace(/\s+/g,"") == ''){
 	  			return;
 	  		}else{
-<<<<<<< HEAD
-	  			
-=======
->>>>>>> 1d94ed0cc2687a7d31e4dbfb9345a04367b1ab57
 	  			markAPI.comments(this.lscribingS.id,$('#comments').val(),this.replyId).then(({posts})=>{
 	  				$('#comments').val('');
 	  				this.isreplyshow = false;
