@@ -2,7 +2,7 @@
   <div
     class="content"
     ref="container"
-    :style="{transform: `translateX(calc((-80px - 100%) * ${page})`}"
+    :style="{transform: `translateX(calc((${pingguo} - 100%) * ${page})`}"
   >
     <component
       v-if="Number.isInteger(current.level)"
@@ -25,7 +25,8 @@ export default {
     page: 0,
     pageCount: 1,
     current1:0,
-    tkshow:false
+    tkshow:false,
+    pingguo:0
   }),
 
   computed: {
@@ -57,6 +58,16 @@ export default {
     this.initMouseScroll();
     this.initHashChange();
     restoreProgress(true);
+    var u = navigator.userAgent;
+     if (u.indexOf('Android') > -1 || u.indexOf('Linux') > -1) {
+         //安卓手机
+         this.pingguo = '-80px'
+    } else if (u.indexOf('iPhone') > -1) {
+         //苹果手机
+         this.pingguo = '0'
+     } else if (u.indexOf('Windows Phone') > -1) {
+         //winphone手机
+     }
   },
 
   destroyed() {
