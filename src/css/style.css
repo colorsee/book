@@ -1877,10 +1877,12 @@ button {
   .book {
     width: 100%;
   }
-   .fa{
+   .bouncedfa {
   	display: none !important; 
   }
-  
+  .fa-bullhorn{
+  	display: none !important; 
+  }
   .underline{
   	text-decoration: none !important;
   }
