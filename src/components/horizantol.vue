@@ -70,7 +70,7 @@ export default {
     const du = $('#section-2796')[0];
 //  
 //  console.log($('#section-2796')[0])
-
+   $("sup").find("span").html("<span class='fa fa-bullhorn'></span>")
     restoreProgress();
 
     if (!last) {
