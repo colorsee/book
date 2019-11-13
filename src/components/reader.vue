@@ -521,7 +521,7 @@ export default {
 }
 
 .viewport {
-  width: 800px;
+  /* width: 800px; */
   box-sizing: border-box;
   padding: 40px;
   height: 100% !important;

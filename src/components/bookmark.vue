@@ -28,10 +28,10 @@
     </div>
     <button v-if='bookmarks.length>8' class="load" @click="load">加载更多...</button>
     <div v-if="tkshow" class="tk">
-							<div class="qrsc">确认删除吗？</div>
-							<span class="confirm" @click="confirm">确认</span>
-        					<span class="cancel" @click="cancel">取消</span>
-						</div>
+		<div class="qrsc">确认删除吗？</div>
+		<span class="confirm" @click="confirm">确认</span>
+		<span class="cancel" @click="cancel">取消</span>
+	</div>
   </action>
 </template>
 
@@ -163,40 +163,40 @@ export default {
   margin-top: 16px;
 }
 .tk{
-		position: fixed;
-		top: 0;
-		left: 0;
-		bottom: 0;
-		right: 0;
-		width: 200px;
-		height: 100px;
-		margin: auto;
-		border: 1px solid gray;
-		border-radius: 10px;
-		background: white;
-		z-index: 10;
+	position: fixed;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	width: 200px;
+	height: 100px;
+	margin: auto;
+	border: 1px solid gray;
+	border-radius: 10px;
+	background: white;
+	z-index: 10;
+}
+.qrsc{
+	text-align: center;
+	padding: 17px;
+	color: black;
+}
+.confirm {
+	display: inline-block;
+	color: #ffffff;
+	margin-left: 31px;
+	padding: 2px 8px;
+	border-radius: 3px;
+	border: 1px solid #ff3300;
+	background-color: #ff3300;
 	}
-	.qrsc{
-		text-align: center;
-		padding: 17px;
-		color: black;
-	}
-	.confirm {
-    display: inline-block;
-    color: #ffffff;
-    margin-left: 31px;
-    padding: 2px 8px;
-    border-radius: 3px;
-    border: 1px solid #ff3300;
-    background-color: #ff3300;
-    }
-    .cancel {
-    display: inline-block;
-    color: #666666;
-    padding: 2px 8px;
-    margin-left: 31px;
-    border-radius: 3px;
-    border: 1px solid #dfdfdf;
-    background-color: #ebebeb;
-    }
-</style>>
+	.cancel {
+	display: inline-block;
+	color: #666666;
+	padding: 2px 8px;
+	margin-left: 31px;
+	border-radius: 3px;
+	border: 1px solid #dfdfdf;
+	background-color: #ebebeb;
+}
+</style>
