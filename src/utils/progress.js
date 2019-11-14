@@ -6,7 +6,9 @@ let inited = false
 
 export function saveProgress(step: any) {
   const rstep = JSON.stringify(step)
-
+if(rstep.indexOf('start_part')<0){
+	return
+}
   if (st) {
     clearTimeout(st)
   }

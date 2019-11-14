@@ -233,9 +233,7 @@ export default {
       Promise.resolve().then(() => {
         const [target] = partcode
           ? $(container).find(`p[data-partcode="${partcode}"]`)
-          : $(container).find(`#section-${section}`);
-        console.log(target.offsetLeft / this.readerWidth)
-        console.log(Math.floor(target.offsetLeft / this.readerWidth))
+          : $(container).find(`#section-${section}`);        
         this.page = target ? Math.floor(target.offsetLeft / this.readerWidth) : 0;    
         this.emitProgress();
       });
