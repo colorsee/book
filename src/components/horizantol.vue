@@ -229,13 +229,15 @@ export default {
         s => s.id == section || s.content.includes(`section-${section}`)
       );
     
-      this.page = 1;
+      this.page = 10000;
       Promise.resolve().then(() => {
         const [target] = partcode
           ? $(container).find(`p[data-partcode="${partcode}"]`)
           : $(container).find(`#section-${section}`);
 
         this.page = target ? target.offsetLeft / this.readerWidth : 0;
+        $('.content').css('transform',`translateX(calc((-80px - 100%) * ${this.page})`)
+     
         this.emitProgress();
       });
     },
