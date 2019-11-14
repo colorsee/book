@@ -234,12 +234,9 @@ export default {
         const [target] = partcode
           ? $(container).find(`p[data-partcode="${partcode}"]`)
           : $(container).find(`#section-${section}`);
-
-        this.page = target ? target.offsetLeft / this.readerWidth : 0;
-        console.log($('.content')[0])
-        console.log($('.content'))
-        $('.content').css('transform',`translateX(calc((-80px - 100%) * ${this.page})`)
-     
+        console.log(target.offsetLeft / this.readerWidth)
+        console.log(Math.floor(target.offsetLeft / this.readerWidth))
+        this.page = target ? Math.floor(target.offsetLeft / this.readerWidth) : 0;    
         this.emitProgress();
       });
     },
