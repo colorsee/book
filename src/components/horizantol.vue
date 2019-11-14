@@ -83,7 +83,7 @@ export default {
 //  console.log($('#section-2796')[0])
    $("sup").find("span").html("<span class='fa fa-bullhorn'></span>")
     restoreProgress();
-
+   
     if (!last) {
       this.pageCount = 1;
       return;
@@ -224,12 +224,12 @@ export default {
     handleHistoryStateChange(e) {
       const { container } = this.$refs;
       const [{ section, partcode }] = e.arguments;
-
+     
       this.section = this.sections.findIndex(
         s => s.id == section || s.content.includes(`section-${section}`)
       );
     
-      this.page = 10000;
+      this.page = 1;
       Promise.resolve().then(() => {
         const [target] = partcode
           ? $(container).find(`p[data-partcode="${partcode}"]`)

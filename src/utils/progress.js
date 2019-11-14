@@ -26,8 +26,7 @@ export function restoreProgress(reset = false) {
   bookContent.rstep().then(({ posts }) => {
     const { article_id, start_part } = posts
     const data = { section: article_id, partcode: start_part }
-    history.replaceState(data, null)
- 
+    history.replaceState(data, null)   
     inited = true
   })
 }

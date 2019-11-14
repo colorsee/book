@@ -15,7 +15,6 @@ export default {
       	this.$emit("tk",this.data.section);
       	return
       }
-//    for(var )
       window.history.replaceState(this.data, null);
       this.$emit("handleClick");
       this.$emit("handleClick1");
